@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AeroTrail | Data Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body data-page="hub">
+  <header class="topbar">
+    <div class="brand">AeroTrail</div>
+    <nav class="top-links">
+      <a href="index.html" data-page="dashboard">Dashboard</a>
+      <a href="packages.html" data-page="packages">Packages</a>
+      <a href="bookings.html" data-page="bookings">Bookings</a>
+      <a href="payments.html" data-page="payments">Payments</a>
+      <a href="reviews.html" data-page="reviews">Reviews</a>
+      <a href="hub.html" data-page="hub">Data Hub</a>
+    </nav>
+    <button id="quickBookBtn" class="btn btn-primary">Quick Book</button>
+  </header>
+
+  <div class="layout">
+<main class="content">
+      <div class="page-head">
+        <div>
+          <h1>Data Hub</h1>
+          <p>Tables: `users`, `destinations`, `hotels`, `transport`</p>
+        </div>
+      </div>
+
+      <div class="hub-grid">
+        <article class="hub-card"><h3>Users</h3><ul id="userList"></ul></article>
+        <article class="hub-card"><h3>Destinations</h3><ul id="destinationList"></ul></article>
+        <article class="hub-card"><h3>Hotels</h3><ul id="hotelList"></ul></article>
+        <article class="hub-card"><h3>Transport</h3><ul id="transportList"></ul></article>
+      </div>
+    </main>
+
+    <footer class="footer">© <span id="year"></span> AeroTrail Travel Management System</footer>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
+
+
