@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class TravelDao {
@@ -159,6 +160,23 @@ public class TravelDao {
         }
 
         return packages;
+    }
+
+    public void addCustomer(String name, String email, String phone, String password) throws SQLException {
+        String sql = """
+                INSERT INTO users (name, email, password, phone, role, profile_image)
+                VALUES (?, ?, ?, ?, 'Customer', ?)
+                """;
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, name.trim());
+            ps.setString(2, email.trim().toLowerCase(Locale.ROOT));
+            ps.setString(3, password.trim());
+            ps.setString(4, phone.trim());
+            ps.setString(5, "https://picsum.photos/seed/" + profileSeed(email) + "/300/300");
+            ps.executeUpdate();
+        }
     }
 
     public void createBookingWithPayment(int userId, int packageId, Date travelDate, int people,
@@ -393,5 +411,9 @@ public class TravelDao {
         row.put("hotelName", rs.getString("hotel_name"));
         row.put("hotelRating", rs.getBigDecimal("hotel_rating"));
         return row;
+    }
+
+    private String profileSeed(String email) {
+        return email.trim().toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]+", "-");
     }
 }

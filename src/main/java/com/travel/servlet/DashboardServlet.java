@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet({"/", "/dashboard"})
+@WebServlet("/dashboard")
 public class DashboardServlet extends HttpServlet {
 
     private final TravelDao travelDao = new TravelDao();
