@@ -1,0 +1,286 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AeroTrail | Admin Console</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body data-page="admin" class="admin-body">
+  <header class="admin-topbar">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <div class="brand-text">
+        <div class="brand-name">AeroTrail Admin</div>
+        <div class="brand-tag">Management Console</div>
+      </div>
+    </div>
+    <div class="admin-actions">
+      <button id="adminRefreshBtn" class="btn btn-ghost" type="button">Refresh</button>
+      <button id="adminLogoutBtn" class="btn btn-primary" type="button">Logout</button>
+    </div>
+  </header>
+
+  <div class="admin-shell">
+    <aside class="admin-nav">
+      <a href="#overview" class="admin-link">Overview</a>
+      <a href="#packages-admin" class="admin-link">Packages</a>
+      <a href="#destinations-admin" class="admin-link">Destinations</a>
+      <a href="#experiences-admin" class="admin-link">Experiences</a>
+      <a href="#bookings-admin" class="admin-link">Bookings</a>
+      <a href="#users-admin" class="admin-link">Users</a>
+      <a href="#memories-admin" class="admin-link">Memory Gallery</a>
+      <a href="#budget-admin" class="admin-link">Budget Rules</a>
+      <a href="#trip-admin" class="admin-link">Trip Generator</a>
+      <a href="#pricing-admin" class="admin-link">Dynamic Pricing</a>
+      <a href="#weather-admin" class="admin-link">Weather Info</a>
+    </aside>
+
+    <main class="admin-content">
+      <section id="overview" class="admin-section">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Dashboard Overview</h2>
+            <p>Quick visibility into platform health and recent activity.</p>
+          </div>
+        </div>
+        <div id="adminStats" class="admin-grid"></div>
+        <div class="panel" style="margin-top: 16px;">
+          <h3 style="margin-bottom: 8px;">Recent Bookings</h3>
+          <div id="adminRecentBookings" class="table-wrap"></div>
+        </div>
+      </section>
+
+      <section id="packages-admin" class="admin-section">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Travel Package Management</h2>
+            <p>Create, update, and manage holiday packages.</p>
+          </div>
+        </div>
+        <div class="admin-split">
+          <form id="packageForm" class="panel admin-form">
+            <h3>Package Editor</h3>
+            <input type="hidden" id="packageId" />
+            <input id="packageTitle" type="text" placeholder="Package Name" required />
+            <select id="packageDestination"></select>
+            <input id="packageDuration" type="number" min="1" placeholder="Duration (days)" required />
+            <input id="packagePrice" type="number" min="1000" placeholder="Price" required />
+            <input id="packageImage" type="text" placeholder="Main Image URL" required />
+            <textarea id="packageDesc" rows="3" placeholder="Description"></textarea>
+            <div class="admin-inline">
+              <button class="btn btn-primary" type="submit">Save Package</button>
+              <button id="packageReset" class="btn btn-ghost" type="button">Reset</button>
+            </div>
+          </form>
+          <div class="panel">
+            <h3>Packages</h3>
+            <div id="packageTable" class="table-wrap"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="destinations-admin" class="admin-section">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Destination Management</h2>
+            <p>Maintain destination details and media.</p>
+          </div>
+        </div>
+        <div class="admin-split">
+          <form id="destinationForm" class="panel admin-form">
+            <h3>Destination Editor</h3>
+            <input type="hidden" id="destinationId" />
+            <input id="destinationCity" type="text" placeholder="City" required />
+            <input id="destinationCountry" type="text" placeholder="Country" required />
+            <input id="destinationImage" type="text" placeholder="Image URL" />
+            <textarea id="destinationDesc" rows="3" placeholder="Description"></textarea>
+            <div class="admin-inline">
+              <button class="btn btn-primary" type="submit">Save Destination</button>
+              <button id="destinationReset" class="btn btn-ghost" type="button">Reset</button>
+            </div>
+          </form>
+          <div class="panel">
+            <h3>Destinations</h3>
+            <div id="destinationTable" class="table-wrap"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="experiences-admin" class="admin-section">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Local Experience Management</h2>
+            <p>Add cultural, adventure, and sightseeing experiences.</p>
+          </div>
+        </div>
+        <div class="admin-split">
+          <form id="experienceForm" class="panel admin-form">
+            <h3>Experience Editor</h3>
+            <input type="hidden" id="experienceId" />
+            <input id="experienceTitle" type="text" placeholder="Experience Title" required />
+            <select id="experienceDestination"></select>
+            <input id="experienceType" type="text" placeholder="Type (Culture/Adventure)" required />
+            <input id="experiencePrice" type="number" min="100" placeholder="Price" />
+            <input id="experienceDuration" type="number" min="1" placeholder="Duration (hours)" />
+            <div class="admin-inline">
+              <button class="btn btn-primary" type="submit">Save Experience</button>
+              <button id="experienceReset" class="btn btn-ghost" type="button">Reset</button>
+            </div>
+          </form>
+          <div class="panel">
+            <h3>Experiences</h3>
+            <div id="experienceTable" class="table-wrap"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="bookings-admin" class="admin-section">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Booking Management</h2>
+            <p>Review and update bookings, statuses, and traveler data.</p>
+          </div>
+        </div>
+        <div class="panel">
+          <div id="bookingAdminTable" class="table-wrap"></div>
+        </div>
+      </section>
+
+      <section id="users-admin" class="admin-section">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">User Management</h2>
+            <p>Monitor user accounts and manage access.</p>
+          </div>
+        </div>
+        <div class="panel">
+          <div id="userAdminTable" class="table-wrap"></div>
+        </div>
+      </section>
+
+      <section id="memories-admin" class="admin-section">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Travel Memory Gallery</h2>
+            <p>Approve or remove uploaded travel memories.</p>
+          </div>
+        </div>
+        <div class="panel">
+          <div id="memoryTable" class="table-wrap"></div>
+        </div>
+      </section>
+
+      <section id="budget-admin" class="admin-section">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Budget-Based Recommendations</h2>
+            <p>Manage package recommendation rules.</p>
+          </div>
+        </div>
+        <div class="admin-split">
+          <form id="budgetForm" class="panel admin-form">
+            <h3>Budget Rule</h3>
+            <input type="hidden" id="budgetRuleId" />
+            <input id="budgetMin" type="number" min="0" placeholder="Min Budget" required />
+            <input id="budgetMax" type="number" min="0" placeholder="Max Budget" required />
+            <input id="budgetDaysMin" type="number" min="1" placeholder="Min Days" required />
+            <input id="budgetDaysMax" type="number" min="1" placeholder="Max Days" required />
+            <input id="budgetRecommendation" type="text" placeholder="Recommendation" required />
+            <div class="admin-inline">
+              <button class="btn btn-primary" type="submit">Save Rule</button>
+              <button id="budgetReset" class="btn btn-ghost" type="button">Reset</button>
+            </div>
+          </form>
+          <div class="panel">
+            <h3>Rules</h3>
+            <div id="budgetTable" class="table-wrap"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="trip-admin" class="admin-section">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Trip Generator Configuration</h2>
+            <p>Tag packages for smart trip suggestions.</p>
+          </div>
+        </div>
+        <div class="admin-split">
+          <form id="tripTagForm" class="panel admin-form">
+            <h3>Package Tags</h3>
+            <select id="tripPackage"></select>
+            <input id="tripTags" type="text" placeholder="Tags (comma separated)" />
+            <button class="btn btn-primary" type="submit">Save Tags</button>
+          </form>
+          <div class="panel">
+            <h3>Current Tags</h3>
+            <div id="tripTagTable" class="table-wrap"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="pricing-admin" class="admin-section">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Dynamic Price Configuration</h2>
+            <p>Adjust pricing parameters for the trip calculator.</p>
+          </div>
+        </div>
+        <div class="admin-split">
+          <form id="pricingForm" class="panel admin-form">
+            <h3>Pricing Rule</h3>
+            <input type="hidden" id="pricingRuleId" />
+            <input id="pricingLabel" type="text" placeholder="Rule Name" required />
+            <input id="pricingBase" type="number" min="0" placeholder="Base Price" required />
+            <input id="pricingPer" type="number" min="0" placeholder="Per Person" required />
+            <input id="pricingMultiplier" type="number" step="0.1" min="1" placeholder="Duration Multiplier" required />
+            <div class="admin-inline">
+              <button class="btn btn-primary" type="submit">Save Pricing</button>
+              <button id="pricingReset" class="btn btn-ghost" type="button">Reset</button>
+            </div>
+          </form>
+          <div class="panel">
+            <h3>Pricing Rules</h3>
+            <div id="pricingTable" class="table-wrap"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="weather-admin" class="admin-section">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Weather & Destination Info</h2>
+            <p>Maintain seasonal info and travel highlights.</p>
+          </div>
+        </div>
+        <div class="admin-split">
+          <form id="weatherForm" class="panel admin-form">
+            <h3>Destination Info</h3>
+            <input type="hidden" id="weatherId" />
+            <select id="weatherDestination"></select>
+            <input id="weatherSeason" type="text" placeholder="Best Season" required />
+            <input id="weatherClimate" type="text" placeholder="Climate" required />
+            <input id="weatherHighlights" type="text" placeholder="Highlights" required />
+            <div class="admin-inline">
+              <button class="btn btn-primary" type="submit">Save Info</button>
+              <button id="weatherReset" class="btn btn-ghost" type="button">Reset</button>
+            </div>
+          </form>
+          <div class="panel">
+            <h3>Destination Info</h3>
+            <div id="weatherTable" class="table-wrap"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

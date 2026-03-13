@@ -4,6 +4,9 @@ const db = {
     { user_id: 2, name: 'Meera Singh', email: 'meera@mail.com', phone: '9811122233', role: 'Customer' },
     { user_id: 3, name: 'Admin Team', email: 'admin@mail.com', phone: '9899999999', role: 'Admin' }
   ],
+  admin_users: [
+    { admin_id: 1, name: 'Admin Team', email: 'admin@aerotrail.com', password: 'admin123' }
+  ],
   destinations: [
     { destination_id: 1, city: 'Goa', country: 'India', description: 'Beaches and nightlife', image_url: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1200&q=80' },
     { destination_id: 2, city: 'Manali', country: 'India', description: 'Mountains and snow', image_url: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1200&q=80' },
@@ -40,5 +43,29 @@ const db = {
   reviews: [
     { review_id: 1, user_id: 1, package_id: 1, rating: 5, comment: 'Great stay and smooth booking.' },
     { review_id: 2, user_id: 2, package_id: 2, rating: 4, comment: 'Wonderful trip with good support.' }
+  ],
+  experiences: [
+    { experience_id: 1, destination_id: 1, title: 'Dolphin Cruise', type: 'Adventure', price: 1200, duration_hours: 2 },
+    { experience_id: 2, destination_id: 2, title: 'Heritage Walk', type: 'Culture', price: 900, duration_hours: 3 }
+  ],
+  memories: [
+    { memory_id: 1, user_id: 1, destination_id: 1, image_url: 'https://picsum.photos/seed/memory-goa/800/600', caption: 'Sunset at Candolim', status: 'Approved' },
+    { memory_id: 2, user_id: 2, destination_id: 2, image_url: 'https://picsum.photos/seed/memory-jaipur/800/600', caption: 'Amber Fort view', status: 'Pending' }
+  ],
+  budget_rules: [
+    { rule_id: 1, min_budget: 10000, max_budget: 25000, min_days: 3, max_days: 4, recommendation: 'Goa Beach Escape' },
+    { rule_id: 2, min_budget: 25000, max_budget: 45000, min_days: 4, max_days: 6, recommendation: 'Jaipur Royal Heritage Trail' }
+  ],
+  trip_tags: [
+    { package_id: 1, tags: ['beach', 'family', 'relaxed'] },
+    { package_id: 2, tags: ['culture', 'heritage'] },
+    { package_id: 3, tags: ['nature', 'scenic'] }
+  ],
+  pricing_rules: [
+    { rule_id: 1, label: 'Base', base_price: 15000, per_person: 2500, duration_multiplier: 1.1 }
+  ],
+  destination_info: [
+    { destination_id: 1, best_season: 'Nov - Feb', climate: 'Pleasant and dry', highlights: 'Beach shacks, nightlife' },
+    { destination_id: 2, best_season: 'Oct - Mar', climate: 'Cool evenings', highlights: 'Forts, palaces, markets' }
   ]
 };
