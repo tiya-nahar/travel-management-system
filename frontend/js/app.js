@@ -1,4 +1,4 @@
-$(function () {
+﻿$(function () {
   function destinationById(id) { return db.destinations.find((d) => d.destination_id === id); }
   function packageDetail(pkgId) { return db.package_details.find((p) => p.package_id === pkgId); }
   function hotelById(id) { return db.hotels.find((h) => h.hotel_id === id); }
@@ -13,11 +13,32 @@ $(function () {
     $('#year').text(new Date().getFullYear());
   }
 
+  const storageKey = 'aerotrail_db';
+  const stored = localStorage.getItem(storageKey);
+  if (stored) {
+    try { Object.assign(db, JSON.parse(stored)); } catch (e) { /* ignore */ }
+  }
+
+  function persist() {
+    localStorage.setItem(storageKey, JSON.stringify(db));
+  }
+
+  function showToast(message) {
+    const $toast = $(`<div class="toast">${message}</div>`);
+    $('body').append($toast);
+    setTimeout(() => $toast.addClass('show'), 10);
+    setTimeout(() => {
+      $toast.removeClass('show');
+      setTimeout(() => $toast.remove(), 200);
+    }, 2200);
+  }
+
   function renderStats() {
     const paid = db.payments.filter((p) => p.payment_status === 'Paid').reduce((sum, p) => sum + p.amount, 0);
     if ($('#liveStats').length) {
       $('#liveStats').html(`
         <h3>Live Snapshot</h3>
+        <p class="meta">Updated just now</p>
         <p>Total Users: <strong>${db.users.length}</strong></p>
         <p>Total Packages: <strong>${db.packages.length}</strong></p>
         <p>Active Bookings: <strong>${db.bookings.length}</strong></p>
@@ -89,6 +110,65 @@ $(function () {
     `).join(''));
   }
 
+  function renderDeals() {
+    if (!$('#dealGrid').length) return;
+    const deals = db.packages.slice().sort((a, b) => a.price - b.price).slice(0, 4);
+    const html = deals.map((pkg) => {
+      const destination = destinationById(pkg.destination_id);
+      return `
+        <article class="deal-card" data-city="${destination.city}">
+          <div class="media" style="background-image: url('${pkg.main_image}');"></div>
+          <div class="deal-body">
+            <h3>${pkg.title}</h3>
+            <p class="deal-meta">${destination.city}, ${destination.country} - ${pkg.duration_days} days</p>
+            <p class="price">INR ${pkg.price.toLocaleString('en-IN')}</p>
+            <button class="btn btn-primary book-now" data-id="${pkg.package_id}">Grab Deal</button>
+          </div>
+        </article>
+      `;
+    }).join('');
+
+    $('#dealGrid').html(html);
+  }
+
+  function renderDestinations() {
+    if (!$('#destinationGrid').length) return;
+    const html = db.destinations.map((d) => `
+      <article class="destination-card" data-city="${d.city}">
+        <div class="media" style="background-image: url('${d.image_url}');"></div>
+        <div class="dest-body">
+          <h3>${d.city}</h3>
+          <p class="meta">${d.country} - ${d.description}</p>
+        </div>
+      </article>
+    `).join('');
+
+    $('#destinationGrid').html(html);
+  }
+
+  function populateItineraryCities() {
+    if (!$('#tripCity').length) return;
+    const options = db.destinations.map((d) => `<option value="${d.city}">${d.city}, ${d.country}</option>`).join('');
+    $('#tripCity').html(options || '<option value="Your destination">Your destination</option>');
+  }
+
+  function buildItinerary(days, city, pace, interests, budget) {
+    const morning = ['Cafe breakfast and local market', 'Sunrise viewpoint', 'Old town heritage walk', 'Street art trail'];
+    const afternoon = ['Museum or cultural center', 'Local food trail', 'Waterfront stroll', 'Guided city tour'];
+    const evening = ['Rooftop dinner', 'Night market and shopping', 'Live music spot', 'Sunset cruise'];
+
+    const pick = (list, i) => list[(i + list.length) % list.length];
+    const paceNote = pace === 'packed' ? 'Full day with back to back activities.' : pace === 'relaxed' ? 'Easy pace with long breaks.' : 'Balanced pace with room to explore.';
+    const budgetNote = budget === 'premium' ? 'Premium stays and curated experiences.' : budget === 'value' ? 'Value stays and local picks.' : 'Comfort hotels with easy transfers.';
+
+    let output = `<div class="itinerary-summary"><h3>${city} - ${days} day plan</h3><p class="meta">${paceNote} ${budgetNote}</p></div><div class="itinerary-days">`;
+    for (let i = 1; i <= days; i += 1) {
+      output += `<div class="itinerary-day"><strong>Day ${i}</strong><p>Morning: ${pick(morning, i)}</p><p>Afternoon: ${pick(afternoon, i * 2)}</p><p>Evening: ${pick(evening, i * 3)}</p><p class="meta">Focus: ${interests.length ? interests.join(', ') : 'Sightseeing'}</p></div>`;
+    }
+    output += '</div>';
+    return output;
+  }
+
   function renderBookingTable() {
     if (!$('#bookingTableWrap').length) return;
     const rows = db.bookings.map((b) => {
@@ -115,7 +195,7 @@ $(function () {
     const html = db.reviews.slice().reverse().map((r) => {
       const user = db.users.find((u) => u.user_id === r.user_id);
       const pkg = db.packages.find((p) => p.package_id === r.package_id);
-      return `<article class='review-item'><p><strong>${user?.name || 'Guest'}</strong> on <strong>${pkg?.title || 'Package'}</strong></p><p>${'?'.repeat(r.rating)}${'?'.repeat(5 - r.rating)}</p><p>${r.comment}</p></article>`;
+      return `<article class='review-item'><p><strong>${user?.name || 'Guest'}</strong> on <strong>${pkg?.title || 'Package'}</strong></p><p>${'*'.repeat(r.rating)}${'*'.repeat(5 - r.rating)}</p><p>${r.comment}</p></article>`;
     }).join('');
 
     $('#reviewList').html(html || '<p class="panel">No reviews yet.</p>');
@@ -149,10 +229,21 @@ $(function () {
 
   function closeBookingModal() { $('#bookingModal').addClass('hidden'); }
 
+  function applyPackageFiltersFromQuery() {
+    if (!$('#packageGrid').length) return;
+    const params = new URLSearchParams(window.location.search);
+    const q = params.get('q');
+    const city = params.get('city');
+    if (q && $('#searchInput').length) $('#searchInput').val(q);
+    if (city && $('#cityFilter').length) $('#cityFilter').val(city);
+  }
+
   function rerenderAll() {
     renderStats();
     renderPackages();
     renderPackages('#topPackages');
+    renderDeals();
+    renderDestinations();
     renderBookingTable();
     renderPaymentTable();
     renderReviews();
@@ -161,6 +252,11 @@ $(function () {
 
   $('#searchInput, #cityFilter, #durationFilter, #sortFilter').on('input change', () => renderPackages());
   $(document).on('click', '.book-now', function () { openBookingModal(Number($(this).data('id'))); });
+  $(document).on('click', '.deal-card, .destination-card', function (e) {
+    if ($(e.target).closest('button, a').length) return;
+    const city = $(this).data('city');
+    if (city) window.location.href = `packages.html?city=${encodeURIComponent(city)}`;
+  });
   $('#quickBookBtn, #openBookingBtn').on('click', () => openBookingModal());
   $('#closeBookingModal').on('click', closeBookingModal);
   $('#bookingModal').on('click', function (e) { if (e.target === this) closeBookingModal(); });
@@ -177,21 +273,174 @@ $(function () {
     db.bookings.push({ booking_id: bookingId, user_id: Number($('#bookingUser').val()), package_id: packageId, booking_date: new Date().toISOString().slice(0, 10), travel_date: $('#travelDate').val(), number_of_people: people, status });
     db.payments.push({ payment_id: paymentId, booking_id: bookingId, amount: pkg.price * people, payment_method: $('#paymentMethod').val(), payment_status: status === 'Confirmed' ? 'Paid' : 'Pending', payment_date: new Date().toISOString().slice(0, 10) });
 
+    persist();
     rerenderAll();
     closeBookingModal();
     this.reset();
+    showToast('Booking created successfully.');
   });
 
   $('#reviewForm').on('submit', function (e) {
     e.preventDefault();
     db.reviews.push({ review_id: db.reviews.length ? db.reviews[db.reviews.length - 1].review_id + 1 : 1, user_id: Number($('#reviewUser').val()), package_id: Number($('#reviewPackage').val()), rating: Number($('#reviewRating').val()), comment: $('#reviewComment').val() });
+    persist();
     renderReviews();
     this.reset();
+    showToast('Review submitted.');
+  });
+
+  $('#itineraryForm').on('submit', function (e) {
+    e.preventDefault();
+    const days = Number($('#tripDays').val()) || 3;
+    const city = $('#tripCity').val() || 'Your destination';
+    const pace = $('#tripPace').val() || 'balanced';
+    const budget = $('#tripBudget').val() || 'comfort';
+    const interests = $("input[name='interest']:checked").map(function () { return $(this).val(); }).get();
+    const html = buildItinerary(days, city, pace, interests, budget);
+    $('#itineraryOutput').html(html);
+  });
+
+  $('#searchTripsBtn').on('click', function () {
+    const mode = ($(this).data('mode') || 'flights').toString();
+    const sectionMap = {
+      flights: 'flights',
+      hotels: 'hotels',
+      trains: 'trains',
+      cabs: 'cabs',
+      buses: 'buses',
+      holidays: 'packages'
+    };
+    const sectionId = sectionMap[mode] || 'packages';
+    const target = document.getElementById(sectionId);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+      showToast(`${mode.charAt(0).toUpperCase() + mode.slice(1)} options loaded.`);
+      return;
+    }
+    const toCity = ($('#toCity').val() || '').trim();
+    const q = toCity || ($('#fromCity').val() || '').trim();
+    const url = q ? `packages.html?q=${encodeURIComponent(q)}&city=${encodeURIComponent(toCity)}` : 'packages.html';
+    window.location.href = url;
+  });
+
+  $('#exploreDealsBtn, #viewAllOffersBtn').on('click', function () {
+    const deals = document.getElementById('deals');
+    if (deals) deals.scrollIntoView({ behavior: 'smooth' });
+  });
+
+  $(document).on('click', '[data-action="notify"]', function () {
+    const msg = $(this).data('message') || 'Action completed.';
+    showToast(msg);
+  });
+
+  $('.support-btn').on('click', function () {
+    const modalId = 'supportModal';
+    if (!document.getElementById(modalId)) {
+      $('body').append(`
+        <div id="${modalId}" class="modal hidden">
+          <div class="modal-content">
+            <button class="close-btn" data-close="support">x</button>
+            <h3 style="margin-bottom: 8px;">Support</h3>
+            <p class="meta" style="margin-bottom: 12px;">Tell us what you need help with and we will reach out.</p>
+            <form id="supportForm" class="booking-form">
+              <input id="supportName" type="text" placeholder="Your Name" required />
+              <input id="supportEmail" type="email" placeholder="Email Address" required />
+              <select id="supportTopic">
+                <option value="booking">Booking Help</option>
+                <option value="payment">Payment Issue</option>
+                <option value="itinerary">Itinerary Assistance</option>
+                <option value="other">Other</option>
+              </select>
+              <input id="supportMessage" type="text" placeholder="Brief message" required />
+              <button class="btn btn-primary" type="submit">Submit Request</button>
+            </form>
+          </div>
+        </div>
+      `);
+    }
+    $(`#${modalId}`).removeClass('hidden');
+  });
+
+  $(document).on('click', '[data-close="support"]', function () {
+    $('#supportModal').addClass('hidden');
+  });
+
+  $(document).on('click', '#supportModal', function (e) {
+    if (e.target === this) $('#supportModal').addClass('hidden');
+  });
+
+  $(document).on('submit', '#supportForm', function (e) {
+    e.preventDefault();
+    showToast('Support request submitted.');
+    $('#supportModal').addClass('hidden');
+    this.reset();
+  });
+
+  $(document).on('click', '[data-info]', function (e) {
+    e.preventDefault();
+    const key = $(this).data('info');
+    const infoMap = {
+      'Help Center': 'Browse guides for bookings, cancellations, and trip changes.',
+      'Safety': 'Partner verified stays and trusted transport providers.',
+      'Refunds': 'Refunds are processed within 5-7 working days.',
+      'About': 'AeroTrail helps you plan and book complete trips in one place.',
+      'Careers': 'We are hiring travel designers, engineers, and support teams.',
+      'Partner With Us': 'List your hotel or transport business with AeroTrail.'
+    };
+    const message = infoMap[key] || 'More details coming soon.';
+    const modalId = 'infoModal';
+    if (!document.getElementById(modalId)) {
+      $('body').append(`
+        <div id="${modalId}" class="modal hidden">
+          <div class="modal-content">
+            <button class="close-btn" data-close="info">x</button>
+            <h3 id="infoTitle" style="margin-bottom: 8px;"></h3>
+            <p id="infoMessage" class="meta"></p>
+          </div>
+        </div>
+      `);
+    }
+    $('#infoTitle').text(key);
+    $('#infoMessage').text(message);
+    $(`#${modalId}`).removeClass('hidden');
+  });
+
+  $(document).on('click', '[data-close="info"]', function () {
+    $('#infoModal').addClass('hidden');
+  });
+
+  $(document).on('click', '#infoModal', function (e) {
+    if (e.target === this) $('#infoModal').addClass('hidden');
+  });
+
+  $('#saveShareBtn').on('click', function () {
+    const text = $('#itineraryOutput').text().trim();
+    if (!text || text.includes('Your plan will appear here')) {
+      showToast('Generate an itinerary first.');
+      return;
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => showToast('Itinerary copied to clipboard.'));
+    } else {
+      window.prompt('Copy your itinerary:', text);
+    }
+  });
+
+  $('.tab-btn').on('click', function () {
+    $('.tab-btn').removeClass('active');
+    $(this).addClass('active');
+    const mode = $(this).text().trim();
+    const modeKey = mode.toLowerCase();
+    $('#searchTripsBtn').text(`Search ${mode}`);
+    $('#searchTripsBtn').attr('data-mode', modeKey);
   });
 
   setActiveTopLinks();
   setFooterYear();
   fillSelects();
   renderPackageFilters();
+  populateItineraryCities();
+  applyPackageFiltersFromQuery();
   rerenderAll();
+  if (window.location.hash === '#book') openBookingModal();
 });

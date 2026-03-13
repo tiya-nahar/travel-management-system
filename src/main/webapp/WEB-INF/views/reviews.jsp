@@ -1,12 +1,12 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <c:set var="pageTitle" value="Reviews" />
 <%@ include file="fragments/header.jspf" %>
 
 <div class="page-head">
     <div>
-        <h1>Reviews</h1>
-        <p>Table: reviews linked with users and packages</p>
+        <h1>Traveler Reviews</h1>
+        <p>Share what you loved and help others plan smarter trips.</p>
     </div>
 </div>
 
@@ -39,11 +39,11 @@
 </form>
 
 <div class="review-list">
-    <c:forEach var="review" items="${reviews}">
+    <c:forEach var="r" items="${reviews}">
         <article class="review-item">
-            <p><strong>${review.userName}</strong> on <strong>${review.packageTitle}</strong></p>
-            <p>Rating: ${review.rating}/5</p>
-            <p>${review.comment}</p>
+            <p><strong>${r.userName}</strong> on <strong>${r.packageTitle}</strong></p>
+            <p>Rating: ${r.rating}/5</p>
+            <p>${r.comment}</p>
         </article>
     </c:forEach>
 </div>

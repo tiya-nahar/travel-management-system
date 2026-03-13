@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AeroTrail | Packages</title>
+  <title>AeroTrail | Holidays</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
@@ -11,56 +11,105 @@
 </head>
 <body data-page="packages">
   <header class="topbar">
-    <div class="brand">AeroTrail</div>
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <div class="brand-text">
+        <div class="brand-name">AeroTrail</div>
+        <div class="brand-tag">Plan. Book. Go.</div>
+      </div>
+    </div>
     <nav class="top-links">
-      <a href="index.html" data-page="dashboard">Dashboard</a>
-      <a href="packages.html" data-page="packages">Packages</a>
-      <a href="bookings.html" data-page="bookings">Bookings</a>
+      <a href="index.html" data-page="dashboard">Discover</a>
+      <a href="packages.html" data-page="packages">Holidays</a>
+      <a href="bookings.html" data-page="bookings">My Trips</a>
       <a href="payments.html" data-page="payments">Payments</a>
       <a href="reviews.html" data-page="reviews">Reviews</a>
-      <a href="hub.html" data-page="hub">Data Hub</a>
+      <a href="hub.html" data-page="hub">Travel Hub</a>
     </nav>
-    <button id="quickBookBtn" class="btn btn-primary">Quick Book</button>
+    <div class="top-actions">
+      <button class="btn btn-ghost support-btn" type="button">Support</button>
+      <button id="quickBookBtn" class="btn btn-primary">Plan Trip</button>
+    </div>
   </header>
 
   <div class="layout">
-<main class="content">
-      <div class="page-head">
-        <div>
-          <h1>Packages</h1>
-          <p>Tables: `destinations`, `packages`, `package_details`, `hotels`, `transport`</p>
+    <main class="content">
+      <section class="hero" style="grid-template-columns: 1fr;">
+        <div class="hero-copy">
+          <p class="eyebrow">Holidays and bundles</p>
+          <h1>Curated packages with stays, transfers, and experiences.</h1>
+          <p class="lead">Filter by city, duration, price, and hotel rating. Book instantly or save for later.</p>
+          <div class="chip-row">
+            <span class="chip">Family trips</span>
+            <span class="chip">Honeymoon picks</span>
+            <span class="chip">Weekend escapes</span>
+          </div>
         </div>
-        <button class="btn btn-soft" id="openBookingBtn">Open Booking Form</button>
-      </div>
+      </section>
 
-      <div class="filters">
-        <input id="searchInput" type="search" placeholder="Search title or city" />
-        <select id="cityFilter"></select>
-        <select id="durationFilter">
-          <option value="">Any Duration</option>
-          <option value="3">Up to 3 Days</option>
-          <option value="5">Up to 5 Days</option>
-          <option value="7">Up to 7 Days</option>
-        </select>
-        <select id="sortFilter">
-          <option value="">Sort By</option>
-          <option value="price_asc">Price Low to High</option>
-          <option value="price_desc">Price High to Low</option>
-          <option value="rating_desc">Hotel Rating</option>
-        </select>
-      </div>
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Find your holiday</h2>
+            <p>Use filters to narrow by destination, duration, and rating.</p>
+          </div>
+          <button class="btn btn-soft" id="openBookingBtn">Open Booking Form</button>
+        </div>
 
-      <div id="packageGrid" class="package-grid"></div>
+        <div class="filters">
+          <input id="searchInput" type="search" placeholder="Search title or city" />
+          <select id="cityFilter"></select>
+          <select id="durationFilter">
+            <option value="">Any Duration</option>
+            <option value="3">Up to 3 Days</option>
+            <option value="5">Up to 5 Days</option>
+            <option value="7">Up to 7 Days</option>
+          </select>
+          <select id="sortFilter">
+            <option value="">Sort By</option>
+            <option value="price_asc">Price Low to High</option>
+            <option value="price_desc">Price High to Low</option>
+            <option value="rating_desc">Hotel Rating</option>
+          </select>
+        </div>
+
+        <div id="packageGrid" class="package-grid"></div>
+      </section>
     </main>
 
-    <footer class="footer">© <span id="year"></span> AeroTrail Travel Management System</footer>
+    <footer class="footer">
+      <div class="footer-grid">
+        <div>
+          <h4>AeroTrail</h4>
+          <p>Plan flights, stays, and holidays in one place. Built for quick breaks and long escapes.</p>
+        </div>
+        <div>
+          <h4>Explore</h4>
+          <a href="index.html#packages">Holidays</a>
+          <a href="index.html#destinations">Destinations</a>
+          <a href="index.html#stories">Traveler Stories</a>
+        </div>
+        <div>
+          <h4>Support</h4>
+          <a href="#" data-info="Help Center">Help Center</a>
+          <a href="#" data-info="Safety">Safety</a>
+          <a href="#" data-info="Refunds">Refunds</a>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <a href="#" data-info="About">About</a>
+          <a href="#" data-info="Careers">Careers</a>
+          <a href="#" data-info="Partner With Us">Partner With Us</a>
+        </div>
+      </div>
+      <div class="footer-bottom">(c) 2026 AeroTrail Travel Management System</div>
+    </footer>
   </div>
 
   <div id="bookingModal" class="modal hidden">
     <div class="modal-content" id="book">
       <button class="close-btn" id="closeBookingModal">x</button>
       <h3 style="margin-bottom: 8px;">Create Booking</h3>
-      <p style="margin-bottom: 12px; color: #607182;">Mapped: `bookings` + `payments` tables</p>
       <form id="bookingForm" class="booking-form">
         <select id="bookingUser"></select>
         <select id="bookingPackage"></select>
@@ -87,5 +136,7 @@
   <script src="js/app.js"></script>
 </body>
 </html>
+
+
 
 

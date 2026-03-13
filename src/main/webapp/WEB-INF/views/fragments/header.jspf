@@ -13,16 +13,25 @@
 </head>
 <body>
 <header class="topbar">
-    <div class="brand">AeroTrail</div>
+    <div class="brand">
+        <span class="brand-mark"></span>
+        <div class="brand-text">
+            <div class="brand-name">AeroTrail</div>
+            <div class="brand-tag">Plan. Book. Go.</div>
+        </div>
+    </div>
     <nav class="top-links">
-        <a href="${pageContext.request.contextPath}/dashboard" class="${activePage eq 'dashboard' ? 'active' : ''}">Dashboard</a>
-        <a href="${pageContext.request.contextPath}/packages" class="${activePage eq 'packages' ? 'active' : ''}">Packages</a>
-        <a href="${pageContext.request.contextPath}/bookings" class="${activePage eq 'bookings' ? 'active' : ''}">Bookings</a>
+        <a href="${pageContext.request.contextPath}/dashboard" class="${activePage eq 'dashboard' ? 'active' : ''}">Discover</a>
+        <a href="${pageContext.request.contextPath}/packages" class="${activePage eq 'packages' ? 'active' : ''}">Holidays</a>
+        <a href="${pageContext.request.contextPath}/bookings" class="${activePage eq 'bookings' ? 'active' : ''}">My Trips</a>
         <a href="${pageContext.request.contextPath}/payments" class="${activePage eq 'payments' ? 'active' : ''}">Payments</a>
         <a href="${pageContext.request.contextPath}/reviews" class="${activePage eq 'reviews' ? 'active' : ''}">Reviews</a>
-        <a href="${pageContext.request.contextPath}/hub" class="${activePage eq 'hub' ? 'active' : ''}">Data Hub</a>
+        <a href="${pageContext.request.contextPath}/hub" class="${activePage eq 'hub' ? 'active' : ''}">Travel Hub</a>
     </nav>
-    <a class="btn btn-primary" href="${pageContext.request.contextPath}/packages#book">Quick Book</a>
+    <div class="top-actions">
+        <button class="btn btn-ghost">Support</button>
+        <a class="btn btn-primary" href="${pageContext.request.contextPath}/packages#book">Plan Trip</a>
+    </div>
 </header>
 <div class="layout">
 <main class="content">

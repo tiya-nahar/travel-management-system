@@ -1,80 +1,94 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
-<c:set var="pageTitle" value="Packages" />
+<c:set var="pageTitle" value="Holidays" />
 <%@ include file="fragments/header.jspf" %>
 
-<div class="page-head">
-    <div>
-        <h1>Packages</h1>
-        <p>Tables: destinations, packages, package_details, hotels, transport</p>
+<section class="hero" style="grid-template-columns: 1fr;">
+    <div class="hero-copy">
+        <p class="eyebrow">Holidays and bundles</p>
+        <h1>Curated packages with stays, transfers, and experiences.</h1>
+        <p class="lead">Filter by city, duration, price, and hotel rating. Book instantly or save for later.</p>
+        <div class="chip-row">
+            <span class="chip">Family trips</span>
+            <span class="chip">Honeymoon picks</span>
+            <span class="chip">Weekend escapes</span>
+        </div>
     </div>
-</div>
+</section>
 
-<c:if test="${not empty param.msg}">
-    <div class="panel" style="margin-bottom:12px;">${param.msg}</div>
-</c:if>
+<div class="section">
+    <div class="section-head">
+        <div>
+            <h2 class="section-title">Find your holiday</h2>
+            <p>Use filters to narrow by destination, duration, and rating.</p>
+        </div>
+    </div>
 
-<form method="get" action="${pageContext.request.contextPath}/packages" class="filters">
-    <input name="search" type="search" placeholder="Search title or city" value="${search}" />
-    <select name="city">
-        <option value="">All Cities</option>
-        <c:forEach var="cityName" items="${cities}">
-            <option value="${cityName}" ${city eq cityName ? 'selected' : ''}>${cityName}</option>
-        </c:forEach>
-    </select>
-    <select name="duration">
-        <option value="">Any Duration</option>
-        <option value="3" ${duration eq '3' ? 'selected' : ''}>Up to 3 Days</option>
-        <option value="5" ${duration eq '5' ? 'selected' : ''}>Up to 5 Days</option>
-        <option value="7" ${duration eq '7' ? 'selected' : ''}>Up to 7 Days</option>
-    </select>
-    <select name="sort">
-        <option value="">Sort By</option>
-        <option value="price_asc" ${sort eq 'price_asc' ? 'selected' : ''}>Price Low to High</option>
-        <option value="price_desc" ${sort eq 'price_desc' ? 'selected' : ''}>Price High to Low</option>
-        <option value="rating_desc" ${sort eq 'rating_desc' ? 'selected' : ''}>Hotel Rating</option>
-    </select>
-    <button class="btn btn-soft" type="submit">Apply</button>
-</form>
+    <c:if test="${not empty param.msg}">
+        <div class="panel" style="margin-bottom:12px;">${param.msg}</div>
+    </c:if>
 
-<div class="package-grid">
-    <c:choose>
-        <c:when test="${empty packages}">
-            <p class="panel">No packages matched current filters.</p>
-        </c:when>
-        <c:otherwise>
-            <c:forEach var="pkg" items="${packages}">
-                <article class="card">
-                    <img src="${pkg.mainImage}" alt="${pkg.title}" />
-                    <div class="card-body">
-                        <h3>${pkg.title}</h3>
-                        <p class="meta">${pkg.city}, ${pkg.country} | ${pkg.durationDays} days</p>
-                        <p class="meta">Hotel: ${pkg.hotelName} (${pkg.hotelRating} star)</p>
-                        <p class="price">Rs. <fmt:formatNumber value="${pkg.price}" type="number" /></p>
-                    </div>
-                </article>
+    <form method="get" action="${pageContext.request.contextPath}/packages" class="filters">
+        <input name="search" type="search" placeholder="Search title or city" value="${search}" />
+        <select name="city">
+            <option value="">All Cities</option>
+            <c:forEach var="cityName" items="${cities}">
+                <option value="${cityName}" ${city eq cityName ? 'selected' : ''}>${cityName}</option>
             </c:forEach>
-        </c:otherwise>
-    </c:choose>
+        </select>
+        <select name="duration">
+            <option value="">Any Duration</option>
+            <option value="3" ${duration eq '3' ? 'selected' : ''}>Up to 3 Days</option>
+            <option value="5" ${duration eq '5' ? 'selected' : ''}>Up to 5 Days</option>
+            <option value="7" ${duration eq '7' ? 'selected' : ''}>Up to 7 Days</option>
+        </select>
+        <select name="sort">
+            <option value="">Sort By</option>
+            <option value="price_asc" ${sort eq 'price_asc' ? 'selected' : ''}>Price Low to High</option>
+            <option value="price_desc" ${sort eq 'price_desc' ? 'selected' : ''}>Price High to Low</option>
+            <option value="rating_desc" ${sort eq 'rating_desc' ? 'selected' : ''}>Hotel Rating</option>
+        </select>
+        <button class="btn btn-soft" type="submit">Apply</button>
+    </form>
+
+    <div class="package-grid">
+        <c:choose>
+            <c:when test="${empty packages}">
+                <p class="panel">No packages matched current filters.</p>
+            </c:when>
+            <c:otherwise>
+                <c:forEach var="pkg" items="${packages}">
+                    <article class="card">
+                        <img src="${pkg.mainImage}" alt="${pkg.title}" />
+                        <div class="card-body">
+                            <h3>${pkg.title}</h3>
+                            <p class="meta">${pkg.city}, ${pkg.country} | ${pkg.durationDays} days</p>
+                            <p class="meta">Hotel: ${pkg.hotelName} (${pkg.hotelRating} star)</p>
+                            <p class="price">Rs. <fmt:formatNumber value="${pkg.price}" type="number" /></p>
+                        </div>
+                    </article>
+                </c:forEach>
+            </c:otherwise>
+        </c:choose>
+    </div>
 </div>
 
 <div class="action-grid">
     <div id="add-user" class="panel">
-        <h3 style="margin-bottom: 8px;">Add User</h3>
-        <p style="margin-bottom: 12px; color: #607182;">Create a new customer before making a booking.</p>
+        <h3 style="margin-bottom: 8px;">Add Traveler</h3>
+        <p class="meta" style="margin-bottom: 12px;">Create a new customer profile before making a booking.</p>
         <form action="${pageContext.request.contextPath}/users/add" method="post" class="booking-form">
             <input name="name" type="text" placeholder="Full Name" required />
             <input name="email" type="email" placeholder="Email Address" required />
             <input name="phone" type="tel" placeholder="Phone Number" required />
             <input name="password" type="text" placeholder="Temporary Password" required />
-            <button class="btn btn-soft" type="submit">Save User</button>
+            <button class="btn btn-soft" type="submit">Save Traveler</button>
         </form>
     </div>
 
     <div id="book" class="panel">
         <h3 style="margin-bottom: 8px;">Create Booking</h3>
-        <p style="margin-bottom: 12px; color: #607182;">Mapped: bookings + payments tables</p>
         <form action="${pageContext.request.contextPath}/bookings/create" method="post" class="booking-form">
             <select name="userId" required>
                 <option value="">Select User</option>
