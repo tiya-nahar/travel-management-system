@@ -25,103 +25,112 @@
 </c:url>
 <c:set var="closeTarget" value="${not empty next ? next : '/dashboard'}" />
 <body class="auth-body">
-<div class="auth-duo-stage" data-auth-root>
-    <div class="auth-duo-decor">
-        <span class="auth-duo-blob auth-duo-blob--sky"></span>
-        <span class="auth-duo-blob auth-duo-blob--coral"></span>
-        <span class="auth-duo-blob auth-duo-blob--gold"></span>
-        <span class="auth-duo-gridline auth-duo-gridline--one"></span>
-        <span class="auth-duo-gridline auth-duo-gridline--two"></span>
+<div class="auth-swap ${authMode eq 'register' ? 'is-register' : 'is-login'}" data-auth-root>
+    <div class="auth-swap__decor">
+        <span class="auth-swap__shape auth-swap__shape--ring"></span>
+        <span class="auth-swap__shape auth-swap__shape--glow"></span>
+        <span class="auth-swap__shape auth-swap__shape--spark"></span>
     </div>
 
     <c:if test="${not empty message}">
-        <div class="auth-duo-banner ${authMode eq 'register' ? 'is-register' : 'is-login'}">${message}</div>
+        <div class="auth-swap__banner">${message}</div>
     </c:if>
 
-    <div class="auth-duo-grid">
-        <section class="auth-duo-card auth-duo-card--login ${authMode eq 'login' ? 'is-current' : ''}" data-auth-card="login">
-            <div class="auth-duo-card__shine"></div>
-            <div class="auth-duo-card__inner">
-                <div class="auth-duo-brand">
-                    <span class="auth-duo-brand__mark"></span>
+    <div class="auth-swap__container">
+        <div class="auth-swap__forms">
+            <section class="auth-panel auth-panel--login" data-auth-panel="login">
+                <div class="auth-panel__brand">
+                    <span class="auth-panel__mark"></span>
                     <div>
-                        <div class="auth-duo-brand__name">AeroTrail</div>
-                        <div class="auth-duo-brand__tag">Traveler Login</div>
+                        <div class="auth-panel__name">AeroTrail</div>
+                        <div class="auth-panel__tag">Traveler Login</div>
                     </div>
                 </div>
 
-                <div class="auth-duo-copy">
+                <div class="auth-panel__copy">
                     <h1>Sign In</h1>
                     <p>Access your bookings, payments, and reviews with your own session.</p>
                 </div>
 
-                <form class="auth-duo-form" method="post" action="${pageContext.request.contextPath}/login">
+                <form class="auth-form" method="post" action="${pageContext.request.contextPath}/login">
                     <input type="hidden" name="next" value="${next}" />
 
-                    <label class="auth-duo-field-label" for="loginEmail">Email Address</label>
-                    <input class="auth-duo-input auth-duo-input--warm" id="loginEmail" name="email" type="email" autocomplete="username" placeholder="ar@gmail.com" required />
+                    <label class="auth-field" for="loginEmail">Email Address</label>
+                    <input class="auth-input" id="loginEmail" name="email" type="email" autocomplete="username" placeholder="ar@gmail.com" required />
 
-                    <label class="auth-duo-field-label" for="loginPassword">Password</label>
-                    <input class="auth-duo-input auth-duo-input--warm" id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="Enter password" required />
+                    <label class="auth-field" for="loginPassword">Password</label>
+                    <input class="auth-input" id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="Enter password" required />
 
-                    <button class="auth-duo-button auth-duo-button--login" type="submit">Sign In</button>
+                    <button class="auth-primary" type="submit">Sign In</button>
                 </form>
 
-                <div class="auth-duo-footer">
+                <div class="auth-panel__footer">
                     <a href="${pageContext.request.contextPath}${closeTarget}">Back to site</a>
-                    <span>Already registered travelers can sign in here.</span>
+                    <button class="auth-inline-toggle" type="button" data-auth-toggle="register">Need an account?</button>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="auth-duo-card auth-duo-card--register ${authMode eq 'register' ? 'is-current' : ''}" data-auth-card="register">
-            <div class="auth-duo-card__shine"></div>
-            <div class="auth-duo-card__inner">
-                <div class="auth-duo-header-row">
-                    <div class="auth-duo-brand">
-                        <span class="auth-duo-brand__mark"></span>
+            <section class="auth-panel auth-panel--register" data-auth-panel="register">
+                <div class="auth-panel__header-row">
+                    <div class="auth-panel__brand">
+                        <span class="auth-panel__mark"></span>
                         <div>
-                            <div class="auth-duo-brand__name">Create Account</div>
-                            <div class="auth-duo-brand__tag">New Traveler</div>
+                            <div class="auth-panel__name">Create Account</div>
+                            <div class="auth-panel__tag">New Traveler</div>
                         </div>
                     </div>
-                    <div class="auth-duo-socials" aria-hidden="true">
+                    <div class="auth-panel__socials" aria-hidden="true">
                         <span>f</span>
                         <span>G+</span>
                         <span>in</span>
                     </div>
                 </div>
 
-                <div class="auth-duo-copy auth-duo-copy--register">
+                <div class="auth-panel__copy">
                     <h1>Register</h1>
                     <p>Create your customer account and start your own booking session right away.</p>
                 </div>
 
-                <form class="auth-duo-form auth-duo-form--register" method="post" action="${pageContext.request.contextPath}/users/add">
+                <form class="auth-form" method="post" action="${pageContext.request.contextPath}/users/add">
                     <input type="hidden" name="autoLogin" value="true" />
                     <input type="hidden" name="next" value="${next}" />
 
-                    <label class="auth-duo-field-label" for="registerName">Full Name</label>
-                    <input class="auth-duo-input" id="registerName" name="name" type="text" autocomplete="name" required />
+                    <label class="auth-field" for="registerName">Full Name</label>
+                    <input class="auth-input" id="registerName" name="name" type="text" autocomplete="name" required />
 
-                    <label class="auth-duo-field-label" for="registerEmail">Email Address</label>
-                    <input class="auth-duo-input" id="registerEmail" name="email" type="email" autocomplete="email" required />
+                    <label class="auth-field" for="registerEmail">Email Address</label>
+                    <input class="auth-input" id="registerEmail" name="email" type="email" autocomplete="email" required />
 
-                    <label class="auth-duo-field-label" for="registerPhone">Phone Number</label>
-                    <input class="auth-duo-input" id="registerPhone" name="phone" type="tel" autocomplete="tel" required />
+                    <label class="auth-field" for="registerPhone">Phone Number</label>
+                    <input class="auth-input" id="registerPhone" name="phone" type="tel" autocomplete="tel" required />
 
-                    <label class="auth-duo-field-label" for="registerPassword">Password</label>
-                    <input class="auth-duo-input" id="registerPassword" name="password" type="password" autocomplete="new-password" required />
+                    <label class="auth-field" for="registerPassword">Password</label>
+                    <input class="auth-input" id="registerPassword" name="password" type="password" autocomplete="new-password" required />
 
-                    <button class="auth-duo-button auth-duo-button--register" type="submit">Create Account</button>
+                    <button class="auth-primary auth-primary--alt" type="submit">Create Account</button>
                 </form>
 
-                <div class="auth-duo-register-links">
-                    <a href="${loginUrl}">Already have an account?</a>
+                <div class="auth-panel__footer">
+                    <button class="auth-inline-toggle" type="button" data-auth-toggle="login">Already registered?</button>
                     <a href="${registerUrl}">Stay on register view</a>
                 </div>
+            </section>
+        </div>
+
+        <div class="auth-swap__overlay">
+            <div class="auth-overlay">
+                <div class="auth-overlay__panel auth-overlay__panel--left">
+                    <h2>Welcome Back!</h2>
+                    <p>Keep your bookings handy by signing in with your personal details.</p>
+                    <button class="auth-ghost" type="button" data-auth-toggle="login">Sign In</button>
+                </div>
+                <div class="auth-overlay__panel auth-overlay__panel--right">
+                    <h2>New Here?</h2>
+                    <p>Create an account and start tracking your trips and reviews.</p>
+                    <button class="auth-ghost" type="button" data-auth-toggle="register">Sign Up</button>
+                </div>
             </div>
-        </section>
+        </div>
     </div>
 </div>
 <script defer src="${pageContext.request.contextPath}/assets/js/site.js"></script>

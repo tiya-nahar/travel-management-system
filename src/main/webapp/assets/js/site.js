@@ -158,16 +158,38 @@
       root.classList.add('is-ready');
     });
 
-    root.querySelectorAll('.auth-duo-input').forEach(function (input) {
+    function setAuthMode(mode) {
+      const isRegister = mode === 'register';
+      root.classList.toggle('is-register', isRegister);
+      root.classList.toggle('is-login', !isRegister);
+
+      if (window.history && window.history.replaceState) {
+        const url = new URL(window.location.href);
+        if (isRegister) {
+          url.searchParams.set('mode', 'register');
+        } else {
+          url.searchParams.delete('mode');
+        }
+        window.history.replaceState(null, '', url.toString());
+      }
+    }
+
+    root.querySelectorAll('[data-auth-toggle]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        setAuthMode(button.getAttribute('data-auth-toggle'));
+      });
+    });
+
+    root.querySelectorAll('.auth-input, .auth-duo-input').forEach(function (input) {
       input.addEventListener('focus', function () {
-        const card = input.closest('[data-auth-card]');
+        const card = input.closest('[data-auth-panel], [data-auth-card]');
         if (card) {
           card.classList.add('is-focused');
         }
       });
 
       input.addEventListener('blur', function () {
-        const card = input.closest('[data-auth-card]');
+        const card = input.closest('[data-auth-panel], [data-auth-card]');
         if (!card) {
           return;
         }
