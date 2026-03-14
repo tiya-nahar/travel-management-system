@@ -237,4 +237,9 @@ DROP TEMPORARY TABLE IF EXISTS seed_transport;
 DROP TEMPORARY TABLE IF EXISTS seed_hotels;
 DROP TEMPORARY TABLE IF EXISTS seed_destinations;
 
+-- Seed some demo users
+INSERT INTO users (name, email, password, phone, role) VALUES
+('John Doe', 'john@example.com', 'password123', '1234567890', 'Customer'),
+('Jane Smith', 'jane@example.com', 'password123', '0987654321', 'Customer');
+
 -- Create real admins and customers through the application or via SQL as needed.

@@ -1,18 +1,19 @@
 package com.travel.servlet;
 
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
+import java.util.Map;
+
 import com.travel.dao.TravelDao;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
-import java.io.IOException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
-import java.util.Map;
 
 @WebServlet("/login")
 public class UserLoginServlet extends HttpServlet {
@@ -28,7 +29,7 @@ public class UserLoginServlet extends HttpServlet {
 
         ViewUtil.setCommon(req, "login");
         req.setAttribute("mode", sanitizeMode(req.getParameter("mode")));
-        req.setAttribute("message", req.getParameter("msg"));
+        req.setAttribute("message", escapeHtml(req.getParameter("msg")));
         req.setAttribute("next", sanitizeNext(req.getParameter("next")));
         req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
     }
@@ -82,10 +83,15 @@ public class UserLoginServlet extends HttpServlet {
     }
 
     private String sanitizeNext(String next) {
-        if (next == null || next.isBlank() || !next.startsWith("/")) {
+        if (next == null || next.isBlank() || !next.startsWith("/") || next.startsWith("//") || next.contains("\"") || next.contains("<")) {
             return "";
         }
         return next;
+    }
+
+    private String escapeHtml(String input) {
+        if (input == null) return null;
+        return input.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&#x27;");
     }
 
     private String sanitizeMode(String mode) {

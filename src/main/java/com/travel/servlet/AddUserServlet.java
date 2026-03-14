@@ -1,17 +1,18 @@
 package com.travel.servlet;
 
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.Map;
+
 import com.travel.dao.TravelDao;
+
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.Map;
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/users/add")
@@ -22,7 +23,7 @@ public class AddUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String name = value(req, "name");
-        String email = value(req, "email");
+        String email = value(req, "email").toLowerCase();
         String phone = value(req, "phone");
         String password = value(req, "password");
         boolean autoLogin = Boolean.parseBoolean(value(req, "autoLogin"));
@@ -84,7 +85,7 @@ public class AddUserServlet extends HttpServlet {
     }
 
     private String sanitizeNext(String next) {
-        if (next == null || next.isBlank() || !next.startsWith("/")) {
+        if (next == null || next.isBlank() || !next.startsWith("/") || next.startsWith("//") || next.contains("\"") || next.contains("<")) {
             return "";
         }
         return next;

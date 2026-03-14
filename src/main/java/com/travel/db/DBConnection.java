@@ -11,8 +11,20 @@ public final class DBConnection {
 
     private static final Properties PROPS = new Properties();
 
+    private static InputStream openPropsStream() {
+        ClassLoader contextLoader = Thread.currentThread().getContextClassLoader();
+        InputStream input = contextLoader != null ? contextLoader.getResourceAsStream("db.properties") : null;
+        if (input == null) {
+            input = DBConnection.class.getClassLoader().getResourceAsStream("db.properties");
+        }
+        if (input == null) {
+            input = DBConnection.class.getResourceAsStream("/db.properties");
+        }
+        return input;
+    }
+
     static {
-        try (InputStream input = DBConnection.class.getClassLoader().getResourceAsStream("db.properties")) {
+        try (InputStream input = openPropsStream()) {
             if (input == null) {
                 throw new IllegalStateException("db.properties not found in classpath");
             }

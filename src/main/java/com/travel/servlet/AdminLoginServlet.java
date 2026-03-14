@@ -1,18 +1,19 @@
 package com.travel.servlet;
 
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
+import java.util.Map;
+
 import com.travel.dao.TravelDao;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
-import java.io.IOException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
-import java.util.Map;
 
 @WebServlet("/admin-login")
 public class AdminLoginServlet extends HttpServlet {
@@ -29,7 +30,7 @@ public class AdminLoginServlet extends HttpServlet {
             return;
         }
 
-        req.setAttribute("message", req.getParameter("msg"));
+        req.setAttribute("message", escapeHtml(req.getParameter("msg")));
         req.getRequestDispatcher("/WEB-INF/views/admin-login.jsp").forward(req, resp);
     }
 
@@ -82,5 +83,10 @@ public class AdminLoginServlet extends HttpServlet {
 
     private String encode(String value) {
         return URLEncoder.encode(value, StandardCharsets.UTF_8);
+    }
+
+    private String escapeHtml(String input) {
+        if (input == null) return null;
+        return input.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&#x27;");
     }
 }

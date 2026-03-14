@@ -1,3 +1,4 @@
 {
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "disabled",
+    "tomcat.home": "d:\\travel-management-system\\.tools\\apache-tomcat-10.1.52"
 }
