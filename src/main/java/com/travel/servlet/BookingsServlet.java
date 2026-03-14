@@ -19,9 +19,10 @@ public class BookingsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ViewUtil.setCommon(req, "bookings");
         req.setAttribute("message", req.getParameter("msg"));
+        Integer userId = ViewUtil.currentCustomerId(req);
 
         try {
-            req.setAttribute("bookings", travelDao.fetchBookings());
+            req.setAttribute("bookings", travelDao.fetchBookingsForUser(userId));
             req.getRequestDispatcher("/WEB-INF/views/bookings.jsp").forward(req, resp);
         } catch (SQLException e) {
             throw new ServletException("Unable to load bookings", e);

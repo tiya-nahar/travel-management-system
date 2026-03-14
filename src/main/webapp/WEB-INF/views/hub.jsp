@@ -23,7 +23,12 @@
         <h3>Destinations</h3>
         <ul>
             <c:forEach var="d" items="${destinations}">
-                <li>${d.city}, ${d.country}</li>
+                <li style="display: flex; align-items: center; gap: 10px;">
+                    <c:if test="${not empty d.image_url}">
+                        <img src="${d.image_url}" alt="${d.city}" style="width: 52px; height: 52px; object-fit: cover; border-radius: 12px;" />
+                    </c:if>
+                    <span>${d.city}, ${d.country}</span>
+                </li>
             </c:forEach>
         </ul>
     </article>

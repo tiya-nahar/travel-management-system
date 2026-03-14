@@ -18,8 +18,9 @@ public class PaymentsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ViewUtil.setCommon(req, "payments");
+        Integer userId = ViewUtil.currentCustomerId(req);
         try {
-            req.setAttribute("payments", travelDao.fetchPayments());
+            req.setAttribute("payments", travelDao.fetchPaymentsForUser(userId));
             req.getRequestDispatcher("/WEB-INF/views/payments.jsp").forward(req, resp);
         } catch (SQLException e) {
             throw new ServletException("Unable to load payments", e);

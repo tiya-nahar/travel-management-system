@@ -1,46 +1,17 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AeroTrail | Admin Login</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css" />
+  <title>Redirecting...</title>
 </head>
-<body data-page="admin-login" class="admin-body">
-  <div class="admin-login">
-    <div class="admin-card">
-      <div class="brand">
-        <span class="brand-mark"></span>
-        <div class="brand-text">
-          <div class="brand-name">AeroTrail Admin</div>
-          <div class="brand-tag">Secure Console</div>
-        </div>
-      </div>
-      <h1>Administrator Login</h1>
-      <p class="meta">This portal is only for authorized administrators.</p>
-      <form id="adminLoginForm" class="admin-form">
-        <label class="input-wrap">
-          <span>Email Address</span>
-          <input id="adminEmail" type="email" placeholder="admin@aerotrail.com" required />
-        </label>
-        <label class="input-wrap">
-          <span>Password</span>
-          <input id="adminPassword" type="password" placeholder="••••••••" required />
-        </label>
-        <button class="btn btn-primary" type="submit">Sign In</button>
-      </form>
-      <div class="admin-footer">
-        <a href="index.html">Back to site</a>
-        <span class="meta">Need help? Contact support.</span>
-      </div>
-    </div>
-  </div>
-
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <script src="js/data.js"></script>
-  <script src="js/app.js"></script>
+<body>
+<p>Redirecting to the live admin login...</p>
+<script>
+(function () {
+  var base = window.location.protocol === 'file:' ? 'http://localhost:8080' : window.location.origin;
+  window.location.replace(base + '/travel-management-system/admin-login' + window.location.search + window.location.hash);
+})();
+</script>
 </body>
 </html>

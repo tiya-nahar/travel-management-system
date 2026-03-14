@@ -21,7 +21,6 @@ public class ReviewsServlet extends HttpServlet {
         req.setAttribute("message", req.getParameter("msg"));
         try {
             req.setAttribute("reviews", travelDao.fetchReviews());
-            req.setAttribute("users", travelDao.fetchCustomers());
             req.setAttribute("packageOptions", travelDao.fetchPackageOptions());
             req.getRequestDispatcher("/WEB-INF/views/reviews.jsp").forward(req, resp);
         } catch (SQLException e) {

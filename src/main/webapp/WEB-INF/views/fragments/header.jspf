@@ -29,7 +29,15 @@
         <a href="${pageContext.request.contextPath}/hub" class="${activePage eq 'hub' ? 'active' : ''}">Travel Hub</a>
     </nav>
     <div class="top-actions">
-        <button class="btn btn-ghost">Support</button>
+        <c:choose>
+            <c:when test="${not empty currentUser}">
+                <span class="meta">Hi, ${currentUser.name}</span>
+                <a class="btn btn-ghost" href="${pageContext.request.contextPath}/logout">Logout</a>
+            </c:when>
+            <c:otherwise>
+                <a class="btn btn-ghost" href="${pageContext.request.contextPath}/login">User Login</a>
+            </c:otherwise>
+        </c:choose>
         <a class="btn btn-primary" href="${pageContext.request.contextPath}/packages#book">Plan Trip</a>
     </div>
 </header>

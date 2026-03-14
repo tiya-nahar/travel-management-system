@@ -25,12 +25,13 @@ This project is now wired to a Java web backend using:
 ## Database Setup
 1. Start MySQL server.
 2. Execute `sql/travel.sql`.
-3. Update `src/main/resources/db.properties` if needed:
+3. Execute `sql/seed-data.sql` for demo data.
+4. Update `src/main/resources/db.properties` if needed:
 
 ```properties
 db.url=jdbc:mysql://localhost:3306/travel_management_system?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Kolkata
 db.username=root
-db.password=root
+db.password=admin
 ```
 
 ## Build

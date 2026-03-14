@@ -21,7 +21,13 @@ public class CreateBookingServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         try {
-            int userId = Integer.parseInt(req.getParameter("userId"));
+            Integer userId = ViewUtil.currentCustomerId(req);
+            if (userId == null) {
+                String msg = URLEncoder.encode("Please sign in to create a booking", StandardCharsets.UTF_8);
+                resp.sendRedirect(req.getContextPath() + "/login?msg=" + msg + "&next=%2Fpackages");
+                return;
+            }
+
             int packageId = Integer.parseInt(req.getParameter("packageId"));
             Date travelDate = Date.valueOf(req.getParameter("travelDate"));
             int people = Integer.parseInt(req.getParameter("people"));

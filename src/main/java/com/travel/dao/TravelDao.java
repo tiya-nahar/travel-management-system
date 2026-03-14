@@ -162,6 +162,62 @@ public class TravelDao {
         return packages;
     }
 
+    public Map<String, Object> authenticateAdmin(String email, String password) throws SQLException {
+        String sql = """
+                SELECT admin_id, name, email, role
+                FROM admin_users
+                WHERE LOWER(email) = ? AND password = ?
+                LIMIT 1
+                """;
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, email.trim().toLowerCase(Locale.ROOT));
+            ps.setString(2, password);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (!rs.next()) {
+                    return null;
+                }
+
+                Map<String, Object> admin = new LinkedHashMap<>();
+                admin.put("adminId", rs.getInt("admin_id"));
+                admin.put("name", rs.getString("name"));
+                admin.put("email", rs.getString("email"));
+                admin.put("role", rs.getString("role"));
+                return admin;
+            }
+        }
+    }
+
+    public Map<String, Object> authenticateCustomer(String email, String password) throws SQLException {
+        String sql = """
+                SELECT user_id, name, email, role
+                FROM users
+                WHERE LOWER(email) = ? AND password = ? AND role = 'Customer'
+                LIMIT 1
+                """;
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, email.trim().toLowerCase(Locale.ROOT));
+            ps.setString(2, password);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (!rs.next()) {
+                    return null;
+                }
+
+                Map<String, Object> user = new LinkedHashMap<>();
+                user.put("userId", rs.getInt("user_id"));
+                user.put("name", rs.getString("name"));
+                user.put("email", rs.getString("email"));
+                user.put("role", rs.getString("role"));
+                return user;
+            }
+        }
+    }
+
     public void addCustomer(String name, String email, String phone, String password) throws SQLException {
         String sql = """
                 INSERT INTO users (name, email, password, phone, role, profile_image)
@@ -177,6 +233,30 @@ public class TravelDao {
             ps.setString(5, "https://picsum.photos/seed/" + profileSeed(email) + "/300/300");
             ps.executeUpdate();
         }
+    }
+
+    public List<Map<String, Object>> fetchRecentBookings(int limit) throws SQLException {
+        String sql = """
+                SELECT b.booking_id, u.name AS user_name, p.title AS package_title,
+                       b.booking_date, b.travel_date, b.number_of_people, b.status
+                FROM bookings b
+                JOIN users u ON u.user_id = b.user_id
+                JOIN packages p ON p.package_id = b.package_id
+                ORDER BY b.booking_id DESC
+                LIMIT ?
+                """;
+
+        List<Map<String, Object>> rows = new ArrayList<>();
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, limit);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    rows.add(bookingFromResult(rs));
+                }
+            }
+        }
+        return rows;
     }
 
     public void createBookingWithPayment(int userId, int packageId, Date travelDate, int people,
@@ -250,25 +330,21 @@ public class TravelDao {
                 ORDER BY b.booking_id DESC
                 """;
 
-        List<Map<String, Object>> rows = new ArrayList<>();
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            while (rs.next()) {
-                Map<String, Object> row = new LinkedHashMap<>();
-                row.put("bookingId", rs.getInt("booking_id"));
-                row.put("userName", rs.getString("user_name"));
-                row.put("packageTitle", rs.getString("package_title"));
-                row.put("bookingDate", rs.getDate("booking_date"));
-                row.put("travelDate", rs.getDate("travel_date"));
-                row.put("numberOfPeople", rs.getInt("number_of_people"));
-                String status = rs.getString("status");
-                row.put("status", status);
-                row.put("statusClass", status == null ? "" : status.toLowerCase());
-                rows.add(row);
-            }
-        }
-        return rows;
+        return fetchBookings(sql, null);
+    }
+
+    public List<Map<String, Object>> fetchBookingsForUser(int userId) throws SQLException {
+        String sql = """
+                SELECT b.booking_id, u.name AS user_name, p.title AS package_title,
+                       b.booking_date, b.travel_date, b.number_of_people, b.status
+                FROM bookings b
+                JOIN users u ON u.user_id = b.user_id
+                JOIN packages p ON p.package_id = b.package_id
+                WHERE b.user_id = ?
+                ORDER BY b.booking_id DESC
+                """;
+
+        return fetchBookings(sql, userId);
     }
 
     public List<Map<String, Object>> fetchPayments() throws SQLException {
@@ -278,24 +354,20 @@ public class TravelDao {
                 ORDER BY payment_id DESC
                 """;
 
-        List<Map<String, Object>> rows = new ArrayList<>();
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            while (rs.next()) {
-                Map<String, Object> row = new LinkedHashMap<>();
-                row.put("paymentId", rs.getInt("payment_id"));
-                row.put("bookingId", rs.getInt("booking_id"));
-                row.put("amount", rs.getBigDecimal("amount"));
-                row.put("paymentMethod", rs.getString("payment_method"));
-                String paymentStatus = rs.getString("payment_status");
-                row.put("paymentStatus", paymentStatus);
-                row.put("paymentStatusClass", paymentStatus == null ? "" : paymentStatus.toLowerCase());
-                row.put("paymentDate", rs.getTimestamp("payment_date"));
-                rows.add(row);
-            }
-        }
-        return rows;
+        return fetchPayments(sql, null);
+    }
+
+    public List<Map<String, Object>> fetchPaymentsForUser(int userId) throws SQLException {
+        String sql = """
+                SELECT pay.payment_id, pay.booking_id, pay.amount, pay.payment_method,
+                       pay.payment_status, pay.payment_date
+                FROM payments pay
+                JOIN bookings b ON b.booking_id = pay.booking_id
+                WHERE b.user_id = ?
+                ORDER BY pay.payment_id DESC
+                """;
+
+        return fetchPayments(sql, userId);
     }
 
     public List<Map<String, Object>> fetchReviews() throws SQLException {
@@ -326,6 +398,30 @@ public class TravelDao {
         return rows;
     }
 
+    public List<Map<String, Object>> fetchLatestReviews(int limit) throws SQLException {
+        String sql = """
+                SELECT r.review_id, u.name AS user_name, p.title AS package_title,
+                       r.rating, r.comment, r.created_at
+                FROM reviews r
+                JOIN users u ON u.user_id = r.user_id
+                JOIN packages p ON p.package_id = r.package_id
+                ORDER BY r.review_id DESC
+                LIMIT ?
+                """;
+
+        List<Map<String, Object>> rows = new ArrayList<>();
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, limit);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    rows.add(reviewFromResult(rs));
+                }
+            }
+        }
+        return rows;
+    }
+
     public void addReview(int userId, int packageId, int rating, String comment) throws SQLException {
         String sql = "INSERT INTO reviews (user_id, package_id, rating, comment) VALUES (?, ?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();
@@ -343,7 +439,9 @@ public class TravelDao {
     }
 
     public List<Map<String, Object>> fetchDestinationsHub() throws SQLException {
-        return fetchSimpleRows("SELECT city, country FROM destinations ORDER BY destination_id", "city", "country");
+        return fetchSimpleRows(
+                "SELECT city, country, image_url FROM destinations ORDER BY destination_id",
+                "city", "country", "image_url");
     }
 
     public List<Map<String, Object>> fetchHotelsHub() throws SQLException {
@@ -353,6 +451,153 @@ public class TravelDao {
     public List<Map<String, Object>> fetchTransportHub() throws SQLException {
         return fetchSimpleRows("SELECT type, provider, seat_capacity FROM transport ORDER BY transport_id",
                 "type", "provider", "seat_capacity");
+    }
+
+    public List<Map<String, Object>> fetchAdminUsersList() throws SQLException {
+        String sql = """
+                SELECT user_id, name, email, phone, role, created_at
+                FROM users
+                ORDER BY user_id DESC
+                """;
+
+        List<Map<String, Object>> rows = new ArrayList<>();
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Map<String, Object> row = new LinkedHashMap<>();
+                row.put("userId", rs.getInt("user_id"));
+                row.put("name", rs.getString("name"));
+                row.put("email", rs.getString("email"));
+                row.put("phone", rs.getString("phone"));
+                row.put("role", rs.getString("role"));
+                row.put("createdAt", rs.getTimestamp("created_at"));
+                rows.add(row);
+            }
+        }
+        return rows;
+    }
+
+    public List<Map<String, Object>> fetchDestinationsAdmin() throws SQLException {
+        String sql = """
+                SELECT destination_id, city, country, description, image_url
+                FROM destinations
+                ORDER BY destination_id DESC
+                """;
+
+        List<Map<String, Object>> rows = new ArrayList<>();
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Map<String, Object> row = new LinkedHashMap<>();
+                row.put("destinationId", rs.getInt("destination_id"));
+                row.put("city", rs.getString("city"));
+                row.put("country", rs.getString("country"));
+                row.put("description", rs.getString("description"));
+                row.put("imageUrl", rs.getString("image_url"));
+                rows.add(row);
+            }
+        }
+        return rows;
+    }
+
+    public List<Map<String, Object>> fetchExperiencesAdmin() throws SQLException {
+        String sql = """
+                SELECT e.experience_id, d.city, e.title, e.type, e.price, e.duration_hours, e.created_at
+                FROM experiences e
+                JOIN destinations d ON d.destination_id = e.destination_id
+                ORDER BY e.experience_id DESC
+                """;
+
+        List<Map<String, Object>> rows = new ArrayList<>();
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Map<String, Object> row = new LinkedHashMap<>();
+                row.put("experienceId", rs.getInt("experience_id"));
+                row.put("city", rs.getString("city"));
+                row.put("title", rs.getString("title"));
+                row.put("type", rs.getString("type"));
+                row.put("price", rs.getBigDecimal("price"));
+                row.put("durationHours", rs.getInt("duration_hours"));
+                row.put("createdAt", rs.getTimestamp("created_at"));
+                rows.add(row);
+            }
+        }
+        return rows;
+    }
+
+    public List<Map<String, Object>> fetchMemoriesAdmin() throws SQLException {
+        String sql = """
+                SELECT m.memory_id, u.name AS user_name, d.city, m.caption, m.status, m.created_at
+                FROM memories m
+                JOIN users u ON u.user_id = m.user_id
+                LEFT JOIN destinations d ON d.destination_id = m.destination_id
+                ORDER BY m.memory_id DESC
+                """;
+
+        List<Map<String, Object>> rows = new ArrayList<>();
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Map<String, Object> row = new LinkedHashMap<>();
+                row.put("memoryId", rs.getInt("memory_id"));
+                row.put("userName", rs.getString("user_name"));
+                row.put("city", rs.getString("city"));
+                row.put("caption", rs.getString("caption"));
+                row.put("status", rs.getString("status"));
+                row.put("createdAt", rs.getTimestamp("created_at"));
+                rows.add(row);
+            }
+        }
+        return rows;
+    }
+
+    public List<Map<String, Object>> fetchBudgetRulesAdmin() throws SQLException {
+        String sql = """
+                SELECT rule_id, min_budget, max_budget, min_days, max_days, recommendation, created_at
+                FROM budget_rules
+                ORDER BY rule_id DESC
+                """;
+
+        return fetchGenericAdminRows(sql, "rule_id", "min_budget", "max_budget", "min_days",
+                "max_days", "recommendation", "created_at");
+    }
+
+    public List<Map<String, Object>> fetchTripTagsAdmin() throws SQLException {
+        String sql = """
+                SELECT t.tag_id, p.title, t.tag
+                FROM trip_tags t
+                JOIN packages p ON p.package_id = t.package_id
+                ORDER BY t.tag_id DESC
+                """;
+
+        return fetchGenericAdminRows(sql, "tag_id", "title", "tag");
+    }
+
+    public List<Map<String, Object>> fetchPricingRulesAdmin() throws SQLException {
+        String sql = """
+                SELECT rule_id, label, base_price, per_person, duration_multiplier, created_at
+                FROM pricing_rules
+                ORDER BY rule_id DESC
+                """;
+
+        return fetchGenericAdminRows(sql, "rule_id", "label", "base_price", "per_person",
+                "duration_multiplier", "created_at");
+    }
+
+    public List<Map<String, Object>> fetchDestinationInfoAdmin() throws SQLException {
+        String sql = """
+                SELECT i.info_id, d.city, i.best_season, i.climate, i.highlights
+                FROM destination_info i
+                JOIN destinations d ON d.destination_id = i.destination_id
+                ORDER BY i.info_id DESC
+                """;
+
+        return fetchGenericAdminRows(sql, "info_id", "city", "best_season", "climate", "highlights");
     }
 
     private List<Map<String, Object>> fetchSimpleRows(String sql, String... fields) throws SQLException {
@@ -367,6 +612,44 @@ public class TravelDao {
                     row.put(field, rs.getObject(field));
                 }
                 rows.add(row);
+            }
+        }
+        return rows;
+    }
+
+    private List<Map<String, Object>> fetchGenericAdminRows(String sql, String... fields) throws SQLException {
+        return fetchSimpleRows(sql, fields);
+    }
+
+    private List<Map<String, Object>> fetchBookings(String sql, Integer userId) throws SQLException {
+        List<Map<String, Object>> rows = new ArrayList<>();
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            if (userId != null) {
+                ps.setInt(1, userId);
+            }
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    rows.add(bookingFromResult(rs));
+                }
+            }
+        }
+        return rows;
+    }
+
+    private List<Map<String, Object>> fetchPayments(String sql, Integer userId) throws SQLException {
+        List<Map<String, Object>> rows = new ArrayList<>();
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            if (userId != null) {
+                ps.setInt(1, userId);
+            }
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    rows.add(paymentFromResult(rs));
+                }
             }
         }
         return rows;
@@ -410,6 +693,44 @@ public class TravelDao {
         row.put("country", rs.getString("country"));
         row.put("hotelName", rs.getString("hotel_name"));
         row.put("hotelRating", rs.getBigDecimal("hotel_rating"));
+        return row;
+    }
+
+    private Map<String, Object> bookingFromResult(ResultSet rs) throws SQLException {
+        Map<String, Object> row = new LinkedHashMap<>();
+        row.put("bookingId", rs.getInt("booking_id"));
+        row.put("userName", rs.getString("user_name"));
+        row.put("packageTitle", rs.getString("package_title"));
+        row.put("bookingDate", rs.getDate("booking_date"));
+        row.put("travelDate", rs.getDate("travel_date"));
+        row.put("numberOfPeople", rs.getInt("number_of_people"));
+        String status = rs.getString("status");
+        row.put("status", status);
+        row.put("statusClass", status == null ? "" : status.toLowerCase());
+        return row;
+    }
+
+    private Map<String, Object> paymentFromResult(ResultSet rs) throws SQLException {
+        Map<String, Object> row = new LinkedHashMap<>();
+        row.put("paymentId", rs.getInt("payment_id"));
+        row.put("bookingId", rs.getInt("booking_id"));
+        row.put("amount", rs.getBigDecimal("amount"));
+        row.put("paymentMethod", rs.getString("payment_method"));
+        String paymentStatus = rs.getString("payment_status");
+        row.put("paymentStatus", paymentStatus);
+        row.put("paymentStatusClass", paymentStatus == null ? "" : paymentStatus.toLowerCase());
+        row.put("paymentDate", rs.getTimestamp("payment_date"));
+        return row;
+    }
+
+    private Map<String, Object> reviewFromResult(ResultSet rs) throws SQLException {
+        Map<String, Object> row = new LinkedHashMap<>();
+        row.put("reviewId", rs.getInt("review_id"));
+        row.put("userName", rs.getString("user_name"));
+        row.put("packageTitle", rs.getString("package_title"));
+        row.put("rating", rs.getInt("rating"));
+        row.put("comment", rs.getString("comment"));
+        row.put("createdAt", rs.getTimestamp("created_at"));
         return row;
     }
 

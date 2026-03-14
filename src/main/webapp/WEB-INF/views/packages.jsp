@@ -75,48 +75,55 @@
 </div>
 
 <div class="action-grid">
-    <div id="add-user" class="panel">
-        <h3 style="margin-bottom: 8px;">Add Traveler</h3>
-        <p class="meta" style="margin-bottom: 12px;">Create a new customer profile before making a booking.</p>
-        <form action="${pageContext.request.contextPath}/users/add" method="post" class="booking-form">
-            <input name="name" type="text" placeholder="Full Name" required />
-            <input name="email" type="email" placeholder="Email Address" required />
-            <input name="phone" type="tel" placeholder="Phone Number" required />
-            <input name="password" type="text" placeholder="Temporary Password" required />
-            <button class="btn btn-soft" type="submit">Save Traveler</button>
-        </form>
+    <div id="account" class="panel">
+        <c:choose>
+            <c:when test="${not empty currentUser}">
+                <h3 style="margin-bottom: 8px;">Signed In Traveler</h3>
+                <p class="meta" style="margin-bottom: 12px;">Bookings will be created for your current account.</p>
+                <p><strong>${currentUser.name}</strong></p>
+                <p class="meta">${currentUser.email}</p>
+            </c:when>
+            <c:otherwise>
+                <h3 style="margin-bottom: 8px;">Create Account or Sign In</h3>
+                <p class="meta" style="margin-bottom: 12px;">Bookings now use your own user session, so sign in before reserving a package.</p>
+                <div class="admin-inline">
+                    <a class="btn btn-primary" href="${pageContext.request.contextPath}/login">User Login</a>
+                    <a class="btn btn-soft" href="${pageContext.request.contextPath}/login?mode=register">Create Account</a>
+                </div>
+            </c:otherwise>
+        </c:choose>
     </div>
 
     <div id="book" class="panel">
         <h3 style="margin-bottom: 8px;">Create Booking</h3>
-        <form action="${pageContext.request.contextPath}/bookings/create" method="post" class="booking-form">
-            <select name="userId" required>
-                <option value="">Select User</option>
-                <c:forEach var="user" items="${users}">
-                    <option value="${user.userId}">${user.name}</option>
-                </c:forEach>
-            </select>
-            <select name="packageId" required>
-                <option value="">Select Package</option>
-                <c:forEach var="pkg" items="${packageOptions}">
-                    <option value="${pkg.packageId}">${pkg.title}</option>
-                </c:forEach>
-            </select>
-            <input name="travelDate" type="date" required />
-            <input name="people" type="number" min="1" max="12" value="2" required />
-            <select name="status">
-                <option value="Confirmed">Confirmed</option>
-                <option value="Pending">Pending</option>
-                <option value="Cancelled">Cancelled</option>
-            </select>
-            <select name="paymentMethod">
-                <option value="UPI">UPI</option>
-                <option value="Card">Card</option>
-                <option value="Net Banking">Net Banking</option>
-                <option value="Cash">Cash</option>
-            </select>
-            <button class="btn btn-primary" type="submit">Save Booking + Payment</button>
-        </form>
+        <c:choose>
+            <c:when test="${empty currentUser}">
+                <p class="meta">Sign in first to book a package with your own traveler session.</p>
+            </c:when>
+            <c:when test="${empty packageOptions}">
+                <p class="meta">No packages are available to book right now.</p>
+            </c:when>
+            <c:otherwise>
+                <form action="${pageContext.request.contextPath}/bookings/create" method="post" class="booking-form">
+                    <select name="packageId" required>
+                        <option value="">Select Package</option>
+                        <c:forEach var="pkg" items="${packageOptions}">
+                            <option value="${pkg.packageId}">${pkg.title}</option>
+                        </c:forEach>
+                    </select>
+                    <input name="travelDate" type="date" required />
+                    <input name="people" type="number" min="1" max="12" value="2" required />
+                    <input name="status" type="hidden" value="Pending" />
+                    <select name="paymentMethod">
+                        <option value="UPI">UPI</option>
+                        <option value="Card">Card</option>
+                        <option value="Net Banking">Net Banking</option>
+                        <option value="Cash">Cash</option>
+                    </select>
+                    <button class="btn btn-primary" type="submit">Save Booking + Payment</button>
+                </form>
+            </c:otherwise>
+        </c:choose>
     </div>
 </div>
 

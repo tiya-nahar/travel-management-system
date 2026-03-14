@@ -1,0 +1,1944 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Count 7 /Kids [ 6 0 R 8 0 R 10 0 R 12 0 R 14 0 R 16 0 R 18 0 R ] >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+5 0 obj
+<< /Length 4167 >>
+stream
+0.04 0.17 0.25 rg
+0 800 595 42 re f
+BT
+/F2 11 Tf
+1.000 1.000 1.000 rg
+1 0 0 1 54 815 Tm
+(Travel Management System - Tools Guide) Tj
+ET
+BT
+/F2 24 Tf
+0.060 0.120 0.180 rg
+1 0 0 1 54 778 Tm
+(Travel Management System Tools Guide) Tj
+ET
+BT
+/F1 12 Tf
+0.340 0.420 0.500 rg
+1 0 0 1 54 760 Tm
+(A simple explanation of the technologies used in the project) Tj
+ET
+0.82 0.88 0.92 RG
+54 734 m 541 734 l S
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 708 Tm
+(This document explains the main tools and technologies used in the Travel Management) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 693 Tm
+(System project. It focuses on what each tool does, why it is used here, and where it) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 678 Tm
+(appears inside the codebase.) Tj
+ET
+BT
+/F1 10 Tf
+0.340 0.420 0.500 rg
+1 0 0 1 54 655 Tm
+(Project type: Java web application) Tj
+ET
+BT
+/F1 10 Tf
+0.340 0.420 0.500 rg
+1 0 0 1 54 636 Tm
+(Build output: WAR file) Tj
+ET
+BT
+/F1 10 Tf
+0.340 0.420 0.500 rg
+1 0 0 1 54 617 Tm
+(Main runtime flow: Browser -> Tomcat -> Servlet -> DAO -> JDBC -> MySQL -> JSP response) Tj
+ET
+BT
+/F2 16 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 54 598 Tm
+(1. Java 17) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 574 Tm
+(Java 17 is the core programming language used for the backend of this project. All) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 559 Tm
+(business logic, request handling, database access, and helper classes are written in) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 544 Tm
+(Java.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 521 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 521 Tm
+(Why it is used:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 502 Tm
+(Java is stable, strongly typed, and a standard choice for servlet-based web) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 487 Tm
+(applications.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 464 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 464 Tm
+(What it handles here:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 445 Tm
+(Servlets, DAO methods, database connection logic, redirects, and request forwarding.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 422 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 422 Tm
+(Where it appears:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 403 Tm
+(`src/main/java/com/travel/...`) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 380 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 380 Tm
+(Important note:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 361 Tm
+(The Maven compiler in `pom.xml` is configured to compile the project with Java 17.) Tj
+ET
+BT
+/F2 16 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 54 338 Tm
+(2. Maven) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 314 Tm
+(Maven is the build and dependency management tool used in this project.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 291 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 291 Tm
+(Why it is used:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 272 Tm
+(It keeps library versions organized and automates compiling, packaging, and) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 257 Tm
+(generating the WAR file.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 234 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 234 Tm
+(What it handles here:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 215 Tm
+(Dependency download, Java compilation, resource copying, and WAR creation.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 192 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 192 Tm
+(Where it appears:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 173 Tm
+(`pom.xml`) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 150 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 150 Tm
+(Important note:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 131 Tm
+(Running `mvn package` creates `target/travel-management-system.war`.) Tj
+ET
+BT
+/F2 16 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 54 108 Tm
+(3. WAR Packaging) Tj
+ET
+0.72 0.78 0.83 RG
+54 36 m 541 36 l S
+BT
+/F1 10 Tf
+0.350 0.420 0.500 rg
+1 0 0 1 499 20 Tm
+(Page 1) Tj
+ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 5 0 R >>
+endobj
+7 0 obj
+<< /Length 4532 >>
+stream
+0.04 0.17 0.25 rg
+0 800 595 42 re f
+BT
+/F2 11 Tf
+1.000 1.000 1.000 rg
+1 0 0 1 54 815 Tm
+(Travel Management System - Tools Guide) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 778 Tm
+(WAR stands for Web Application Archive. It is the deployment format used for Java) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 763 Tm
+(web applications that run on servlet containers like Tomcat.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 740 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 740 Tm
+(Why it is used:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 721 Tm
+(Tomcat deploys WAR files directly.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 698 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 698 Tm
+(What it handles here:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 679 Tm
+(Bundles compiled classes, JSP views, CSS, configuration files, and dependency jars) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 664 Tm
+(into one deployable file.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 641 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 641 Tm
+(Where it appears:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 622 Tm
+(`pom.xml` uses `<packaging>war</packaging>` Output goes to `target/travel-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 607 Tm
+(management-system.war`) Tj
+ET
+BT
+/F2 16 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 54 584 Tm
+(4. Jakarta Servlet 6) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 560 Tm
+(Jakarta Servlet is the server-side web framework used to handle HTTP requests and) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 545 Tm
+(responses.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 522 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 522 Tm
+(Why it is used:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 503 Tm
+(It is the controller layer of the application.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 480 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 480 Tm
+(What it handles here:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 461 Tm
+(URL mapping, request parameter reading, validation, forwarding to JSP pages, and) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 446 Tm
+(form submission handling.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 423 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 423 Tm
+(Where it appears:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 404 Tm
+(`src/main/java/com/travel/servlet/`) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 381 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 381 Tm
+(Example servlets in this project:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 362 Tm
+(`DashboardServlet`, `PackagesServlet`, `CreateBookingServlet`, `AddReviewServlet`,) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 347 Tm
+(`AddUserServlet`) Tj
+ET
+BT
+/F2 16 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 54 324 Tm
+(5. JSP) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 300 Tm
+(JSP stands for JavaServer Pages. It is the view technology used to generate HTML on) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 285 Tm
+(the server side.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 262 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 262 Tm
+(Why it is used:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 243 Tm
+(It lets the backend pass dynamic data directly into page templates.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 220 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 220 Tm
+(What it handles here:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 201 Tm
+(Page layout, rendering package cards, showing dashboard values, listing payments,) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 186 Tm
+(and rendering booking forms.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 163 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 163 Tm
+(Where it appears:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 144 Tm
+(`src/main/webapp/WEB-INF/views/`) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 121 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 121 Tm
+(Important note:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 102 Tm
+(The JSP files are inside `WEB-INF`, so they cannot be accessed directly from the) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 87 Tm
+(browser. They are rendered through servlets.) Tj
+ET
+0.72 0.78 0.83 RG
+54 36 m 541 36 l S
+BT
+/F1 10 Tf
+0.350 0.420 0.500 rg
+1 0 0 1 499 20 Tm
+(Page 2) Tj
+ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 7 0 R >>
+endobj
+9 0 obj
+<< /Length 4362 >>
+stream
+0.04 0.17 0.25 rg
+0 800 595 42 re f
+BT
+/F2 11 Tf
+1.000 1.000 1.000 rg
+1 0 0 1 54 815 Tm
+(Travel Management System - Tools Guide) Tj
+ET
+BT
+/F2 16 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 54 778 Tm
+(6. JSTL) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 754 Tm
+(JSTL stands for Jakarta Standard Tag Library. It adds reusable JSP tags for loops,) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 739 Tm
+(conditions, and formatting.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 716 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 716 Tm
+(Why it is used:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 697 Tm
+(It keeps JSP pages cleaner than writing Java code directly inside them.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 674 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 674 Tm
+(What it handles here:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 655 Tm
+(`c:forEach`, `c:if`, `c:choose`, and number formatting with `fmt:formatNumber`.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 632 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 632 Tm
+(Where it appears:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 613 Tm
+(JSP files in `src/main/webapp/WEB-INF/views/`) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 590 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 590 Tm
+(Dependency location:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 571 Tm
+(`pom.xml`) Tj
+ET
+BT
+/F2 16 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 54 548 Tm
+(7. JDBC) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 524 Tm
+(JDBC stands for Java Database Connectivity. It is the standard Java API for talking) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 509 Tm
+(to relational databases.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 486 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 486 Tm
+(Why it is used:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 467 Tm
+(It gives direct SQL-level access to MySQL.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 444 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 444 Tm
+(What it handles here:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 425 Tm
+(Opening database connections, running SQL queries, reading result sets, and writing) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 410 Tm
+(inserts and updates.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 387 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 387 Tm
+(Where it appears:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 368 Tm
+(`src/main/java/com/travel/db/DBConnection.java`) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 353 Tm
+(`src/main/java/com/travel/dao/TravelDao.java`) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 330 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 330 Tm
+(Important note:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 311 Tm
+(The project uses plain JDBC, not Hibernate or Spring Data.) Tj
+ET
+BT
+/F2 16 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 54 288 Tm
+(8. DAO Pattern) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 264 Tm
+(DAO stands for Data Access Object. It is not a library, but it is an important) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 249 Tm
+(architectural pattern used in this project.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 226 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 226 Tm
+(Why it is used:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 207 Tm
+(It separates SQL code from servlet code.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 184 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 184 Tm
+(What it handles here:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 165 Tm
+(Fetching packages, dashboard stats, bookings, payments, reviews, users, and creating) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 150 Tm
+(new records.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 127 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 127 Tm
+(Where it appears:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 108 Tm
+(`src/main/java/com/travel/dao/TravelDao.java`) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 85 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 85 Tm
+(Benefit:) Tj
+ET
+0.72 0.78 0.83 RG
+54 36 m 541 36 l S
+BT
+/F1 10 Tf
+0.350 0.420 0.500 rg
+1 0 0 1 499 20 Tm
+(Page 3) Tj
+ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 9 0 R >>
+endobj
+11 0 obj
+<< /Length 4223 >>
+stream
+0.04 0.17 0.25 rg
+0 800 595 42 re f
+BT
+/F2 11 Tf
+1.000 1.000 1.000 rg
+1 0 0 1 54 815 Tm
+(Travel Management System - Tools Guide) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 778 Tm
+(Servlets stay focused on HTTP logic while the DAO handles database logic.) Tj
+ET
+BT
+/F2 16 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 54 755 Tm
+(9. MySQL) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 731 Tm
+(MySQL is the relational database used by this application.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 708 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 708 Tm
+(Why it is used:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 689 Tm
+(It stores all core business data in structured tables.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 666 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 666 Tm
+(What it stores here:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 647 Tm
+(Users, destinations, hotels, transport, packages, bookings, payments, reviews, and) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 632 Tm
+(media tables.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 609 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 609 Tm
+(Where it appears:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 590 Tm
+(Schema: `sql/travel.sql` Seed data: `sql/seed-data.sql` Config:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 575 Tm
+(`src/main/resources/db.properties`) Tj
+ET
+BT
+/F2 16 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 54 552 Tm
+(10. MySQL Connector/J) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 528 Tm
+(MySQL Connector/J is the JDBC driver that allows Java code to talk to MySQL.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 505 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 505 Tm
+(Why it is used:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 486 Tm
+(JDBC needs a database-specific driver to connect to MySQL.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 463 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 463 Tm
+(What it handles here:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 444 Tm
+(Translates Java database calls into MySQL-compatible communication.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 421 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 421 Tm
+(Where it appears:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 402 Tm
+(`pom.xml`) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 379 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 379 Tm
+(Current version in this project:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 360 Tm
+(`9.6.0`) Tj
+ET
+BT
+/F2 16 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 54 337 Tm
+(11. Apache Tomcat) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 313 Tm
+(Apache Tomcat is the servlet container used to run this application locally.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 290 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 290 Tm
+(Why it is used:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 271 Tm
+(It executes servlets, serves JSP pages, and hosts the WAR file.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 248 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 248 Tm
+(What it handles here:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 229 Tm
+(URL routing at runtime, servlet execution, JSP compilation, static asset serving,) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 214 Tm
+(and session management.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 191 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 191 Tm
+(Local runtime used in this setup:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 172 Tm
+(Tomcat `10.1.52`) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 149 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 149 Tm
+(Local path:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 130 Tm
+(`.tools/apache-tomcat-10.1.52`) Tj
+ET
+BT
+/F2 16 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 54 107 Tm
+(12. HTML and CSS) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 83 Tm
+(HTML and CSS define the structure and styling of the user interface.) Tj
+ET
+0.72 0.78 0.83 RG
+54 36 m 541 36 l S
+BT
+/F1 10 Tf
+0.350 0.420 0.500 rg
+1 0 0 1 499 20 Tm
+(Page 4) Tj
+ET
+endstream
+endobj
+12 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 11 0 R >>
+endobj
+13 0 obj
+<< /Length 4365 >>
+stream
+0.04 0.17 0.25 rg
+0 800 595 42 re f
+BT
+/F2 11 Tf
+1.000 1.000 1.000 rg
+1 0 0 1 54 815 Tm
+(Travel Management System - Tools Guide) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 778 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 778 Tm
+(Why they are used:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 759 Tm
+(JSP eventually renders HTML, and CSS controls the look and layout.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 736 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 736 Tm
+(What they handle here:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 717 Tm
+(Top navigation, dashboard hero section, package cards, forms, tables, spacing, and) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 702 Tm
+(colors.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 679 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 679 Tm
+(Where they appear:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 660 Tm
+(JSP markup in `src/main/webapp/WEB-INF/views/` Styles in) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 645 Tm
+(`src/main/webapp/assets/css/style.css`) Tj
+ET
+BT
+/F2 16 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 54 622 Tm
+(13. SQL Scripts) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 598 Tm
+(SQL scripts are used to create and populate the database.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 575 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 575 Tm
+(Why they are used:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 556 Tm
+(They make setup repeatable.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 533 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 533 Tm
+(What they handle here:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 514 Tm
+(Table creation, schema definition, and sample data insertion.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 491 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 491 Tm
+(Where they appear:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 472 Tm
+(`sql/travel.sql` `sql/seed-data.sql`) Tj
+ET
+BT
+/F2 16 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 54 449 Tm
+(14. Placeholder Image Service) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 425 Tm
+(This project currently uses demo image URLs from Picsum for package, hotel,) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 410 Tm
+(destination, and profile visuals.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 387 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 387 Tm
+(Why it is used:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 368 Tm
+(It quickly provides working image URLs without storing local image files.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 345 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 345 Tm
+(What it handles here:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 326 Tm
+(Demo package images, profile images, destination visuals, and hotel photos.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 303 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 303 Tm
+(Where it appears:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 284 Tm
+(Seed data inserted through `sql/seed-data.sql`) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 261 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 261 Tm
+(Important note:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 242 Tm
+(This is useful for demo data, but for production you would normally store your own) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 227 Tm
+(images or use cloud storage.) Tj
+ET
+BT
+/F2 16 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 54 204 Tm
+(15. Configuration File) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 180 Tm
+(The database connection settings are stored in a properties file.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 157 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 157 Tm
+(Why it is used:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 138 Tm
+(It separates credentials and connection settings from Java code.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 115 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 115 Tm
+(What it handles here:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 96 Tm
+(MySQL URL, username, password, and JDBC driver class.) Tj
+ET
+0.72 0.78 0.83 RG
+54 36 m 541 36 l S
+BT
+/F1 10 Tf
+0.350 0.420 0.500 rg
+1 0 0 1 499 20 Tm
+(Page 5) Tj
+ET
+endstream
+endobj
+14 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 13 0 R >>
+endobj
+15 0 obj
+<< /Length 4046 >>
+stream
+0.04 0.17 0.25 rg
+0 800 595 42 re f
+BT
+/F2 11 Tf
+1.000 1.000 1.000 rg
+1 0 0 1 54 815 Tm
+(Travel Management System - Tools Guide) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 778 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 778 Tm
+(Where it appears:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 759 Tm
+(`src/main/resources/db.properties`) Tj
+ET
+BT
+/F2 16 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 54 736 Tm
+(16. How Everything Works Together) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 712 Tm
+(The project follows a simple layered structure:) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 689 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 689 Tm
+(Step 1:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 670 Tm
+(The browser sends a request such as `/packages`.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 647 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 647 Tm
+(Step 2:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 628 Tm
+(Tomcat receives the request and sends it to the mapped servlet.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 605 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 605 Tm
+(Step 3:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 586 Tm
+(The servlet reads parameters and calls methods from `TravelDao`.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 563 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 563 Tm
+(Step 4:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 544 Tm
+(`TravelDao` uses JDBC and MySQL Connector/J to query MySQL.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 521 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 521 Tm
+(Step 5:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 502 Tm
+(The servlet stores the result in request attributes.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 479 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 479 Tm
+(Step 6:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 460 Tm
+(The request is forwarded to a JSP page.) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 437 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 437 Tm
+(Step 7:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 418 Tm
+(JSP and JSTL render the final HTML and CSS-based UI for the browser.) Tj
+ET
+BT
+/F2 16 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 54 395 Tm
+(17. Quick Stack Summary) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 371 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 371 Tm
+(Language:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 352 Tm
+(Java 17) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 329 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 329 Tm
+(Build tool:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 310 Tm
+(Maven) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 287 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 287 Tm
+(Packaging:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 268 Tm
+(WAR) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 245 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 245 Tm
+(Web framework:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 226 Tm
+(Jakarta Servlet 6) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 203 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 203 Tm
+(View layer:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 184 Tm
+(JSP + JSTL) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 161 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 161 Tm
+(Data access:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 142 Tm
+(JDBC + DAO pattern) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 119 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 119 Tm
+(Database:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 100 Tm
+(MySQL) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 77 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 77 Tm
+(Driver:) Tj
+ET
+0.72 0.78 0.83 RG
+54 36 m 541 36 l S
+BT
+/F1 10 Tf
+0.350 0.420 0.500 rg
+1 0 0 1 499 20 Tm
+(Page 6) Tj
+ET
+endstream
+endobj
+16 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 15 0 R >>
+endobj
+17 0 obj
+<< /Length 1455 >>
+stream
+0.04 0.17 0.25 rg
+0 800 595 42 re f
+BT
+/F2 11 Tf
+1.000 1.000 1.000 rg
+1 0 0 1 54 815 Tm
+(Travel Management System - Tools Guide) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 778 Tm
+(MySQL Connector/J) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 755 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 755 Tm
+(Runtime server:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 736 Tm
+(Apache Tomcat 10.1) Tj
+ET
+BT
+/F2 12 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 62 713 Tm
+(-) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 76 713 Tm
+(UI layer:) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 694 Tm
+(HTML + CSS) Tj
+ET
+BT
+/F2 16 Tf
+0.070 0.190 0.280 rg
+1 0 0 1 54 671 Tm
+(18. Conclusion) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 647 Tm
+(This project is a classic Java web application built with a straightforward and) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 632 Tm
+(understandable stack. It does not depend on a heavy framework like Spring Boot.) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 617 Tm
+(Instead, it uses core Java web technologies directly, which makes it useful for) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 602 Tm
+(learning servlet architecture, JSP rendering, JDBC-based database work, and) Tj
+ET
+BT
+/F1 11 Tf
+0.140 0.180 0.230 rg
+1 0 0 1 54 587 Tm
+(traditional WAR deployment.) Tj
+ET
+0.72 0.78 0.83 RG
+54 36 m 541 36 l S
+BT
+/F1 10 Tf
+0.350 0.420 0.500 rg
+1 0 0 1 499 20 Tm
+(Page 7) Tj
+ET
+endstream
+endobj
+18 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 17 0 R >>
+endobj
+xref
+0 19
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000164 00000 n 
+0000000234 00000 n 
+0000000309 00000 n 
+0000004528 00000 n 
+0000004664 00000 n 
+0000009248 00000 n 
+0000009384 00000 n 
+0000013798 00000 n 
+0000013935 00000 n 
+0000018211 00000 n 
+0000018349 00000 n 
+0000022767 00000 n 
+0000022905 00000 n 
+0000027004 00000 n 
+0000027142 00000 n 
+0000028650 00000 n 
+trailer
+<< /Size 19 /Root 1 0 R >>
+startxref
+28788
+%%EOF

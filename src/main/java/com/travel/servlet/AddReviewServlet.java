@@ -19,7 +19,13 @@ public class AddReviewServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
-            int userId = Integer.parseInt(req.getParameter("userId"));
+            Integer userId = ViewUtil.currentCustomerId(req);
+            if (userId == null) {
+                String msg = URLEncoder.encode("Please sign in to add a review", StandardCharsets.UTF_8);
+                resp.sendRedirect(req.getContextPath() + "/login?msg=" + msg + "&next=%2Freviews");
+                return;
+            }
+
             int packageId = Integer.parseInt(req.getParameter("packageId"));
             int rating = Integer.parseInt(req.getParameter("rating"));
             String comment = req.getParameter("comment");

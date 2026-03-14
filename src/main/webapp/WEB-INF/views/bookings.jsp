@@ -15,7 +15,6 @@
         <thead>
         <tr>
             <th>ID</th>
-            <th>User</th>
             <th>Package</th>
             <th>Booking Date</th>
             <th>Travel Date</th>
@@ -24,17 +23,25 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="b" items="${bookings}">
-            <tr>
-                <td>${b.bookingId}</td>
-                <td>${b.userName}</td>
-                <td>${b.packageTitle}</td>
-                <td>${b.bookingDate}</td>
-                <td>${b.travelDate}</td>
-                <td>${b.numberOfPeople}</td>
-                <td><span class="badge ${b.statusClass}">${b.status}</span></td>
-            </tr>
-        </c:forEach>
+        <c:choose>
+            <c:when test="${empty bookings}">
+                <tr>
+                    <td colspan="6">You do not have any bookings yet.</td>
+                </tr>
+            </c:when>
+            <c:otherwise>
+                <c:forEach var="b" items="${bookings}">
+                    <tr>
+                        <td>${b.bookingId}</td>
+                        <td>${b.packageTitle}</td>
+                        <td>${b.bookingDate}</td>
+                        <td>${b.travelDate}</td>
+                        <td>${b.numberOfPeople}</td>
+                        <td><span class="badge ${b.statusClass}">${b.status}</span></td>
+                    </tr>
+                </c:forEach>
+            </c:otherwise>
+        </c:choose>
         </tbody>
     </table>
 </div>

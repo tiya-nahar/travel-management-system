@@ -18,9 +18,12 @@ public class DashboardServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ViewUtil.setCommon(req, "dashboard");
+        req.setAttribute("message", req.getParameter("msg"));
         try {
             req.setAttribute("stats", travelDao.fetchDashboardStats());
             req.setAttribute("topPackages", travelDao.fetchTopPackages(3));
+            req.setAttribute("latestReviews", travelDao.fetchLatestReviews(3));
+            req.setAttribute("cities", travelDao.fetchCities());
             req.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req, resp);
         } catch (SQLException e) {
             throw new ServletException("Unable to load dashboard", e);

@@ -1,158 +1,240 @@
+CREATE DATABASE IF NOT EXISTS travel_management_system;
 USE travel_management_system;
 
-INSERT INTO users (user_id, name, email, password, phone, role, profile_image, created_at)
-VALUES
-    (1, 'Aarav Sharma', 'aarav.sharma@example.com', 'pass123', '9876543210', 'Customer', 'https://picsum.photos/seed/profile-aarav/300/300', '2026-03-01 10:00:00'),
-    (2, 'Diya Patel', 'diya.patel@example.com', 'pass123', '9876543211', 'Customer', 'https://picsum.photos/seed/profile-diya/300/300', '2026-03-01 10:05:00'),
-    (3, 'Rohan Mehta', 'rohan.mehta@example.com', 'pass123', '9876543212', 'Customer', 'https://picsum.photos/seed/profile-rohan/300/300', '2026-03-01 10:10:00'),
-    (4, 'Meera Nair', 'meera.nair@example.com', 'pass123', '9876543213', 'Customer', 'https://picsum.photos/seed/profile-meera/300/300', '2026-03-01 10:15:00'),
-    (5, 'Kabir Singh', 'kabir.singh@example.com', 'pass123', '9876543214', 'Customer', 'https://picsum.photos/seed/profile-kabir/300/300', '2026-03-01 10:20:00'),
-    (6, 'Admin User', 'admin@aerotrail.com', 'admin_pass', '9876543215', 'Admin', 'https://picsum.photos/seed/profile-admin/300/300', '2026-03-01 10:30:00')
-ON DUPLICATE KEY UPDATE
-    name = VALUES(name),
-    email = VALUES(email),
-    password = VALUES(password),
-    phone = VALUES(phone),
-    role = VALUES(role),
-    profile_image = VALUES(profile_image),
-    created_at = VALUES(created_at);
+DROP TEMPORARY TABLE IF EXISTS seed_destinations;
+CREATE TEMPORARY TABLE seed_destinations (
+    city VARCHAR(100) PRIMARY KEY,
+    country VARCHAR(100) NOT NULL,
+    description TEXT NOT NULL,
+    image_url VARCHAR(255)
+);
 
-INSERT INTO destinations (destination_id, city, country, description, image_url)
-VALUES
-    (1, 'Goa', 'India', 'Beachfront sunsets, water sports, and relaxed coastal stays.', 'https://picsum.photos/seed/goa-destination/1200/800'),
-    (2, 'Jaipur', 'India', 'Palaces, forts, markets, and a strong heritage travel vibe.', 'https://picsum.photos/seed/jaipur-destination/1200/800'),
-    (3, 'Munnar', 'India', 'Tea gardens, cool weather, and scenic hill views in Kerala.', 'https://picsum.photos/seed/munnar-destination/1200/800'),
-    (4, 'Manali', 'India', 'Mountain drives, snow points, and adventure-friendly stays.', 'https://picsum.photos/seed/manali-destination/1200/800'),
-    (5, 'Srinagar', 'India', 'Lakeside scenery, mountain backdrops, and premium valley stays.', 'https://picsum.photos/seed/srinagar-destination/1200/800'),
-    (6, 'Port Blair', 'India', 'Island hopping, turquoise water, and coastal sightseeing in Andaman.', 'https://picsum.photos/seed/andaman-destination/1200/800')
-ON DUPLICATE KEY UPDATE
-    city = VALUES(city),
-    country = VALUES(country),
-    description = VALUES(description),
-    image_url = VALUES(image_url);
+INSERT INTO seed_destinations (city, country, description, image_url) VALUES
+    ('Jaipur', 'India',
+     'Historic forts, colorful bazaars, and royal heritage experiences.',
+     'https://picsum.photos/seed/jaipur-palace/1200/800'),
+    ('Udaipur', 'India',
+     'Lakeside palaces, sunset boat rides, and relaxed old-city charm.',
+     'https://picsum.photos/seed/udaipur-lake/1200/800'),
+    ('Munnar', 'India',
+     'Tea gardens, cool mountain weather, and scenic valley viewpoints.',
+     'https://picsum.photos/seed/munnar-hills/1200/800'),
+    ('Rishikesh', 'India',
+     'River rafting, yoga retreats, and Himalayan foothill escapes.',
+     'https://picsum.photos/seed/rishikesh-river/1200/800'),
+    ('Darjeeling', 'India',
+     'Tea estates, toy train routes, and panoramic mountain views.',
+     'https://picsum.photos/seed/darjeeling-tea/1200/800'),
+    ('Varanasi', 'India',
+     'Ancient ghats, spiritual rituals, and immersive cultural walks.',
+     'https://picsum.photos/seed/varanasi-ghat/1200/800');
 
-INSERT INTO hotels (hotel_id, name, city, rating, address, image_url)
-VALUES
-    (1, 'Coral Bay Resort', 'Goa', 4.5, 'Candolim Beach Road, Goa', 'https://picsum.photos/seed/goa-hotel/1000/700'),
-    (2, 'Rajmahal Heritage Stay', 'Jaipur', 4.7, 'MI Road, Jaipur', 'https://picsum.photos/seed/jaipur-hotel/1000/700'),
-    (3, 'Misty Lake Retreat', 'Munnar', 4.6, 'Tea Estate View Point, Munnar', 'https://picsum.photos/seed/munnar-hotel/1000/700'),
-    (4, 'Snowcrest Lodge', 'Manali', 4.4, 'Mall Road Extension, Manali', 'https://picsum.photos/seed/manali-hotel/1000/700'),
-    (5, 'Dal View Palace', 'Srinagar', 4.8, 'Boulevard Road, Srinagar', 'https://picsum.photos/seed/srinagar-hotel/1000/700'),
-    (6, 'Blue Horizon Stay', 'Port Blair', 4.5, 'Marine Hill, Port Blair', 'https://picsum.photos/seed/andaman-hotel/1000/700')
-ON DUPLICATE KEY UPDATE
-    name = VALUES(name),
-    city = VALUES(city),
-    rating = VALUES(rating),
-    address = VALUES(address),
-    image_url = VALUES(image_url);
+UPDATE destinations d
+JOIN seed_destinations s
+    ON d.city = s.city
+   AND d.country = s.country
+SET d.description = s.description,
+    d.image_url = s.image_url;
 
-INSERT INTO transport (transport_id, type, provider, seat_capacity)
-VALUES
-    (1, 'Flight', 'IndiGo', 180),
-    (2, 'Volvo Coach', 'ZingBus', 42),
-    (3, 'Train', 'Vande Bharat', 320),
-    (4, 'Ferry', 'Makruzz', 220)
-ON DUPLICATE KEY UPDATE
-    type = VALUES(type),
-    provider = VALUES(provider),
-    seat_capacity = VALUES(seat_capacity);
+INSERT INTO destinations (city, country, description, image_url)
+SELECT s.city, s.country, s.description, s.image_url
+FROM seed_destinations s
+LEFT JOIN destinations d
+    ON d.city = s.city
+   AND d.country = s.country
+WHERE d.destination_id IS NULL;
 
-INSERT INTO packages (package_id, destination_id, title, description, price, duration_days, max_people, main_image, created_at)
-VALUES
-    (1, 1, 'Goa Beach Escape', '4-day Goa trip with beach stay, local transfers, breakfast, and sunset cruise add-ons.', 18999.00, 4, 6, 'https://picsum.photos/seed/goa-package/1200/800', '2026-03-01 11:00:00'),
-    (2, 2, 'Jaipur Royal Heritage Trail', '5-day Jaipur package covering Amber Fort, City Palace, local shopping, and curated hotel stay.', 24999.00, 5, 8, 'https://picsum.photos/seed/jaipur-package/1200/800', '2026-03-01 11:10:00'),
-    (3, 3, 'Kerala Backwater Retreat', '5-day Munnar and Kerala retreat with scenic drives, plantation views, and premium stay.', 21999.00, 5, 6, 'https://picsum.photos/seed/munnar-package/1200/800', '2026-03-01 11:20:00'),
-    (4, 4, 'Manali Snow Adventure', '6-day mountain trip with Solang Valley sightseeing, local cab, and adventure-ready itinerary.', 27999.00, 6, 6, 'https://picsum.photos/seed/manali-package/1200/800', '2026-03-01 11:30:00'),
-    (5, 5, 'Kashmir Valley Escape', '6-day premium Srinagar stay with lake views, garden visits, and valley excursions.', 32999.00, 6, 6, 'https://picsum.photos/seed/srinagar-package/1200/800', '2026-03-01 11:40:00'),
-    (6, 6, 'Andaman Island Getaway', '6-day island package with ferry transfers, coastal hotel stay, and beach activity options.', 38999.00, 6, 6, 'https://picsum.photos/seed/andaman-package/1200/800', '2026-03-01 11:50:00')
-ON DUPLICATE KEY UPDATE
-    destination_id = VALUES(destination_id),
-    title = VALUES(title),
-    description = VALUES(description),
-    price = VALUES(price),
-    duration_days = VALUES(duration_days),
-    max_people = VALUES(max_people),
-    main_image = VALUES(main_image),
-    created_at = VALUES(created_at);
+DROP TEMPORARY TABLE IF EXISTS seed_hotels;
+CREATE TEMPORARY TABLE seed_hotels (
+    name VARCHAR(150),
+    city VARCHAR(100),
+    rating DECIMAL(2,1),
+    address TEXT,
+    image_url VARCHAR(255),
+    PRIMARY KEY (name, city)
+);
 
-INSERT INTO package_details (detail_id, package_id, hotel_id, transport_id)
-VALUES
-    (1, 1, 1, 1),
-    (2, 2, 2, 3),
-    (3, 3, 3, 3),
-    (4, 4, 4, 2),
-    (5, 5, 5, 1),
-    (6, 6, 6, 4)
-ON DUPLICATE KEY UPDATE
-    package_id = VALUES(package_id),
-    hotel_id = VALUES(hotel_id),
-    transport_id = VALUES(transport_id);
+INSERT INTO seed_hotels (name, city, rating, address, image_url) VALUES
+    ('Amber Courtyard Retreat', 'Jaipur', 4.6,
+     'Near Amer Fort Road, Jaipur, Rajasthan',
+     'https://picsum.photos/seed/amber-courtyard/1200/800'),
+    ('Lake Palace View Hotel', 'Udaipur', 4.7,
+     'Pichola Lakefront, Udaipur, Rajasthan',
+     'https://picsum.photos/seed/lake-palace-view/1200/800'),
+    ('Tea Valley Residency', 'Munnar', 4.5,
+     'Chithirapuram Hills, Munnar, Kerala',
+     'https://picsum.photos/seed/tea-valley-residency/1200/800'),
+    ('Ganga Riverside Stay', 'Rishikesh', 4.4,
+     'Tapovan Riverside, Rishikesh, Uttarakhand',
+     'https://picsum.photos/seed/ganga-riverside-stay/1200/800'),
+    ('Summit Tea Estate Lodge', 'Darjeeling', 4.5,
+     'Observatory Hill Road, Darjeeling, West Bengal',
+     'https://picsum.photos/seed/summit-tea-estate/1200/800'),
+    ('Ghat Heritage House', 'Varanasi', 4.3,
+     'Dashashwamedh Ghat Road, Varanasi, Uttar Pradesh',
+     'https://picsum.photos/seed/ghat-heritage-house/1200/800');
 
-INSERT INTO package_images (image_id, package_id, image_url, caption)
-VALUES
-    (1, 1, 'https://picsum.photos/seed/goa-gallery-1/1200/800', 'Sunset beach view'),
-    (2, 2, 'https://picsum.photos/seed/jaipur-gallery-1/1200/800', 'Heritage city highlights'),
-    (3, 3, 'https://picsum.photos/seed/munnar-gallery-1/1200/800', 'Tea garden landscape'),
-    (4, 4, 'https://picsum.photos/seed/manali-gallery-1/1200/800', 'Snow adventure trail'),
-    (5, 5, 'https://picsum.photos/seed/srinagar-gallery-1/1200/800', 'Lake and mountain frame'),
-    (6, 6, 'https://picsum.photos/seed/andaman-gallery-1/1200/800', 'Island beach scene')
-ON DUPLICATE KEY UPDATE
-    package_id = VALUES(package_id),
-    image_url = VALUES(image_url),
-    caption = VALUES(caption);
+UPDATE hotels h
+JOIN seed_hotels s
+    ON h.name = s.name
+   AND h.city = s.city
+SET h.rating = s.rating,
+    h.address = s.address,
+    h.image_url = s.image_url;
 
-INSERT INTO destination_media (media_id, destination_id, media_type, media_url)
-VALUES
-    (1, 1, 'image', 'https://picsum.photos/seed/goa-media/1200/800'),
-    (2, 2, 'image', 'https://picsum.photos/seed/jaipur-media/1200/800'),
-    (3, 3, 'image', 'https://picsum.photos/seed/munnar-media/1200/800'),
-    (4, 4, 'image', 'https://picsum.photos/seed/manali-media/1200/800'),
-    (5, 5, 'image', 'https://picsum.photos/seed/srinagar-media/1200/800'),
-    (6, 6, 'image', 'https://picsum.photos/seed/andaman-media/1200/800')
-ON DUPLICATE KEY UPDATE
-    destination_id = VALUES(destination_id),
-    media_type = VALUES(media_type),
-    media_url = VALUES(media_url);
+INSERT INTO hotels (name, city, rating, address, image_url)
+SELECT s.name, s.city, s.rating, s.address, s.image_url
+FROM seed_hotels s
+LEFT JOIN hotels h
+    ON h.name = s.name
+   AND h.city = s.city
+WHERE h.hotel_id IS NULL;
 
-INSERT INTO bookings (booking_id, user_id, package_id, booking_date, travel_date, number_of_people, status)
-VALUES
-    (1, 1, 1, '2026-03-02', '2026-04-12', 2, 'Confirmed'),
-    (2, 2, 2, '2026-03-03', '2026-04-20', 3, 'Pending'),
-    (3, 3, 4, '2026-03-04', '2026-05-08', 4, 'Confirmed'),
-    (4, 4, 5, '2026-03-05', '2026-05-16', 2, 'Cancelled'),
-    (5, 5, 6, '2026-03-06', '2026-06-02', 2, 'Confirmed')
-ON DUPLICATE KEY UPDATE
-    user_id = VALUES(user_id),
-    package_id = VALUES(package_id),
-    booking_date = VALUES(booking_date),
-    travel_date = VALUES(travel_date),
-    number_of_people = VALUES(number_of_people),
-    status = VALUES(status);
+DROP TEMPORARY TABLE IF EXISTS seed_transport;
+CREATE TEMPORARY TABLE seed_transport (
+    type VARCHAR(50),
+    provider VARCHAR(100) PRIMARY KEY,
+    seat_capacity INT
+);
 
-INSERT INTO payments (payment_id, booking_id, amount, payment_method, payment_status, payment_date)
-VALUES
-    (1, 1, 37998.00, 'UPI', 'Paid', '2026-03-02 12:15:00'),
-    (2, 2, 74997.00, 'Card', 'Pending', '2026-03-03 14:30:00'),
-    (3, 3, 111996.00, 'Net Banking', 'Paid', '2026-03-04 16:45:00'),
-    (4, 4, 65998.00, 'Card', 'Pending', '2026-03-05 18:00:00'),
-    (5, 5, 77998.00, 'UPI', 'Paid', '2026-03-06 09:25:00')
-ON DUPLICATE KEY UPDATE
-    booking_id = VALUES(booking_id),
-    amount = VALUES(amount),
-    payment_method = VALUES(payment_method),
-    payment_status = VALUES(payment_status),
-    payment_date = VALUES(payment_date);
+INSERT INTO seed_transport (type, provider, seat_capacity) VALUES
+    ('Flight', 'AeroTrail Air Connect', 180),
+    ('Coach', 'AeroTrail RoadLink', 40),
+    ('Cab', 'AeroTrail Private Transfer', 4);
 
-INSERT INTO reviews (review_id, user_id, package_id, rating, comment, created_at)
+UPDATE transport t
+JOIN seed_transport s
+    ON t.provider = s.provider
+SET t.type = s.type,
+    t.seat_capacity = s.seat_capacity;
+
+INSERT INTO transport (type, provider, seat_capacity)
+SELECT s.type, s.provider, s.seat_capacity
+FROM seed_transport s
+LEFT JOIN transport t
+    ON t.provider = s.provider
+WHERE t.transport_id IS NULL;
+
+DROP TEMPORARY TABLE IF EXISTS seed_packages;
+CREATE TEMPORARY TABLE seed_packages (
+    title VARCHAR(150) PRIMARY KEY,
+    city VARCHAR(100) NOT NULL,
+    description TEXT NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    duration_days INT NOT NULL,
+    max_people INT NOT NULL,
+    main_image VARCHAR(255),
+    hotel_name VARCHAR(150) NOT NULL,
+    transport_provider VARCHAR(100) NOT NULL
+);
+
+INSERT INTO seed_packages
+    (title, city, description, price, duration_days, max_people, main_image, hotel_name, transport_provider)
 VALUES
-    (1, 1, 1, 5, 'Amazing beach property, smooth booking flow, and very good value for the price.', '2026-03-03 09:10:00'),
-    (2, 2, 2, 4, 'Great heritage experience and comfortable stay. Shopping stops were a plus.', '2026-03-04 11:20:00'),
-    (3, 3, 4, 5, 'Manali itinerary was packed and scenic. Hotel and transport were handled well.', '2026-03-05 17:45:00'),
-    (4, 4, 3, 4, 'Peaceful hill views and nice resort atmosphere. Good choice for a short retreat.', '2026-03-06 13:05:00'),
-    (5, 5, 6, 5, 'Island package felt premium and the beach visuals were exactly what we wanted.', '2026-03-07 19:30:00')
-ON DUPLICATE KEY UPDATE
-    user_id = VALUES(user_id),
-    package_id = VALUES(package_id),
-    rating = VALUES(rating),
-    comment = VALUES(comment),
-    created_at = VALUES(created_at);
+    ('Jaipur Royal Weekend', 'Jaipur',
+     'A short heritage break with fort visits, local cuisine, and market walks.',
+     21999.00, 3, 6,
+     'https://picsum.photos/seed/jaipur-royal-weekend/1200/800',
+     'Amber Courtyard Retreat', 'AeroTrail RoadLink'),
+    ('Udaipur Lake Escape', 'Udaipur',
+     'A romantic lakeside stay with palace tours, old-city evenings, and boat rides.',
+     26999.00, 4, 4,
+     'https://picsum.photos/seed/udaipur-lake-escape/1200/800',
+     'Lake Palace View Hotel', 'AeroTrail Private Transfer'),
+    ('Munnar Tea Trail', 'Munnar',
+     'Cool-weather hill holiday with tea gardens, waterfalls, and valley viewpoints.',
+     23999.00, 4, 5,
+     'https://picsum.photos/seed/munnar-tea-trail/1200/800',
+     'Tea Valley Residency', 'AeroTrail Air Connect'),
+    ('Rishikesh River Recharge', 'Rishikesh',
+     'Adventure and wellness mix with rafting, cafe stops, and riverfront yoga.',
+     19999.00, 3, 6,
+     'https://picsum.photos/seed/rishikesh-river-recharge/1200/800',
+     'Ganga Riverside Stay', 'AeroTrail RoadLink'),
+    ('Darjeeling Mountain Calm', 'Darjeeling',
+     'Tea estate views, sunrise points, and a relaxed Himalayan hill-station stay.',
+     24999.00, 4, 4,
+     'https://picsum.photos/seed/darjeeling-mountain-calm/1200/800',
+     'Summit Tea Estate Lodge', 'AeroTrail Air Connect'),
+    ('Varanasi Spiritual Circuit', 'Varanasi',
+     'An immersive cultural trip with ghat walks, temple routes, and evening aarti.',
+     18999.00, 3, 6,
+     'https://picsum.photos/seed/varanasi-spiritual-circuit/1200/800',
+     'Ghat Heritage House', 'AeroTrail Private Transfer');
+
+UPDATE packages p
+JOIN destinations d
+    ON d.destination_id = p.destination_id
+JOIN seed_packages s
+    ON s.title = p.title
+   AND s.city = d.city
+SET p.description = s.description,
+    p.price = s.price,
+    p.duration_days = s.duration_days,
+    p.max_people = s.max_people,
+    p.main_image = s.main_image;
+
+INSERT INTO packages (destination_id, title, description, price, duration_days, max_people, main_image)
+SELECT d.destination_id, s.title, s.description, s.price, s.duration_days, s.max_people, s.main_image
+FROM seed_packages s
+JOIN destinations d
+    ON d.city = s.city
+LEFT JOIN packages p
+    ON p.title = s.title
+WHERE p.package_id IS NULL;
+
+INSERT INTO package_details (package_id, hotel_id, transport_id)
+SELECT p.package_id, h.hotel_id, t.transport_id
+FROM seed_packages s
+JOIN packages p
+    ON p.title = s.title
+JOIN hotels h
+    ON h.name = s.hotel_name
+   AND h.city = s.city
+JOIN transport t
+    ON t.provider = s.transport_provider
+LEFT JOIN package_details pd
+    ON pd.package_id = p.package_id
+WHERE pd.detail_id IS NULL;
+
+DROP TEMPORARY TABLE IF EXISTS seed_destination_info;
+CREATE TEMPORARY TABLE seed_destination_info (
+    city VARCHAR(100) PRIMARY KEY,
+    best_season VARCHAR(80),
+    climate VARCHAR(120),
+    highlights VARCHAR(255)
+);
+
+INSERT INTO seed_destination_info (city, best_season, climate, highlights) VALUES
+    ('Jaipur', 'October to March', 'Warm days and cool evenings', 'Amer Fort, City Palace, Johari Bazaar'),
+    ('Udaipur', 'September to March', 'Pleasant lakeside weather', 'Lake Pichola, City Palace, Sajjangarh'),
+    ('Munnar', 'September to May', 'Cool and misty hills', 'Tea Gardens, Echo Point, Attukad Falls'),
+    ('Rishikesh', 'September to April', 'Fresh mornings and sunny afternoons', 'Ganga Aarti, River Rafting, Laxman Jhula'),
+    ('Darjeeling', 'October to April', 'Cool mountain climate', 'Tiger Hill, Tea Estates, Toy Train'),
+    ('Varanasi', 'October to March', 'Mild winter and clear evenings', 'Dashashwamedh Ghat, Kashi Vishwanath, Ganga Aarti');
+
+UPDATE destination_info i
+JOIN destinations d
+    ON d.destination_id = i.destination_id
+JOIN seed_destination_info s
+    ON s.city = d.city
+SET i.best_season = s.best_season,
+    i.climate = s.climate,
+    i.highlights = s.highlights;
+
+INSERT INTO destination_info (destination_id, best_season, climate, highlights)
+SELECT d.destination_id, s.best_season, s.climate, s.highlights
+FROM seed_destination_info s
+JOIN destinations d
+    ON d.city = s.city
+LEFT JOIN destination_info i
+    ON i.destination_id = d.destination_id
+WHERE i.info_id IS NULL;
+
+DROP TEMPORARY TABLE IF EXISTS seed_destination_info;
+DROP TEMPORARY TABLE IF EXISTS seed_packages;
+DROP TEMPORARY TABLE IF EXISTS seed_transport;
+DROP TEMPORARY TABLE IF EXISTS seed_hotels;
+DROP TEMPORARY TABLE IF EXISTS seed_destinations;
+
+-- Create real admins and customers through the application or via SQL as needed.

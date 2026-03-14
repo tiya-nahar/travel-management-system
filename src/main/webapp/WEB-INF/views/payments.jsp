@@ -24,16 +24,25 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="p" items="${payments}">
-            <tr>
-                <td>${p.paymentId}</td>
-                <td>${p.bookingId}</td>
-                <td>Rs. <fmt:formatNumber value="${p.amount}" type="number" /></td>
-                <td>${p.paymentMethod}</td>
-                <td><span class="badge ${p.paymentStatusClass}">${p.paymentStatus}</span></td>
-                <td>${p.paymentDate}</td>
-            </tr>
-        </c:forEach>
+        <c:choose>
+            <c:when test="${empty payments}">
+                <tr>
+                    <td colspan="6">You do not have any payments yet.</td>
+                </tr>
+            </c:when>
+            <c:otherwise>
+                <c:forEach var="p" items="${payments}">
+                    <tr>
+                        <td>${p.paymentId}</td>
+                        <td>${p.bookingId}</td>
+                        <td>Rs. <fmt:formatNumber value="${p.amount}" type="number" /></td>
+                        <td>${p.paymentMethod}</td>
+                        <td><span class="badge ${p.paymentStatusClass}">${p.paymentStatus}</span></td>
+                        <td>${p.paymentDate}</td>
+                    </tr>
+                </c:forEach>
+            </c:otherwise>
+        </c:choose>
         </tbody>
     </table>
 </div>

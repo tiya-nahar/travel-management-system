@@ -41,7 +41,6 @@ public class PackagesServlet extends HttpServlet {
         try {
             req.setAttribute("packages", travelDao.fetchPackages(search, city, duration, sort));
             req.setAttribute("cities", travelDao.fetchCities());
-            req.setAttribute("users", travelDao.fetchCustomers());
             req.setAttribute("packageOptions", travelDao.fetchPackageOptions());
             req.getRequestDispatcher("/WEB-INF/views/packages.jsp").forward(req, resp);
         } catch (SQLException e) {

@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <c:set var="pageTitle" value="Payments" />
@@ -7,9 +7,8 @@
 <div class="page-head">
     <div>
         <h1>Payments</h1>
-        <p>Table: payments with booking references</p>
+        <p>View completed, pending, and failed transactions in one view.</p>
     </div>
-    <a class="btn btn-soft" href="${pageContext.request.contextPath}/bookings">View Bookings</a>
 </div>
 
 <div class="table-wrap">
@@ -25,16 +24,25 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="payment" items="${payments}">
-            <tr>
-                <td>${payment.paymentId}</td>
-                <td>${payment.bookingId}</td>
-                <td>Rs. <fmt:formatNumber value="${payment.amount}" type="number" /></td>
-                <td>${payment.paymentMethod}</td>
-                <td><span class="badge ${payment.paymentStatusClass}">${payment.paymentStatus}</span></td>
-                <td>${payment.paymentDate}</td>
-            </tr>
-        </c:forEach>
+        <c:choose>
+            <c:when test="${empty payments}">
+                <tr>
+                    <td colspan="6">You do not have any payments yet.</td>
+                </tr>
+            </c:when>
+            <c:otherwise>
+                <c:forEach var="p" items="${payments}">
+                    <tr>
+                        <td>${p.paymentId}</td>
+                        <td>${p.bookingId}</td>
+                        <td>Rs. <fmt:formatNumber value="${p.amount}" type="number" /></td>
+                        <td>${p.paymentMethod}</td>
+                        <td><span class="badge ${p.paymentStatusClass}">${p.paymentStatus}</span></td>
+                        <td>${p.paymentDate}</td>
+                    </tr>
+                </c:forEach>
+            </c:otherwise>
+        </c:choose>
         </tbody>
     </table>
 </div>
