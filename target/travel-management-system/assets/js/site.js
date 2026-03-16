@@ -143,10 +143,53 @@
   });
 
   document.querySelectorAll('[data-toast]').forEach(function (button) {
-    button.addEventListener('click', function () {
+    button.addEventListener('click', function (event) {
+      if (button.tagName === 'A') {
+        const href = button.getAttribute('href');
+        if (href === '#') {
+          event.preventDefault();
+        }
+      }
       showToast(button.getAttribute('data-toast') || 'Done.');
     });
   });
+
+  const userMenu = document.querySelector('[data-user-menu]');
+  if (userMenu) {
+    const trigger = userMenu.querySelector('.user-trigger');
+    const dropdown = userMenu.querySelector('.user-dropdown');
+
+    function closeMenu() {
+      userMenu.classList.remove('is-open');
+      if (trigger) {
+        trigger.setAttribute('aria-expanded', 'false');
+      }
+    }
+
+    if (trigger) {
+      trigger.addEventListener('click', function (event) {
+        event.stopPropagation();
+        const isOpen = userMenu.classList.toggle('is-open');
+        trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+    }
+
+    if (dropdown) {
+      dropdown.addEventListener('click', function (event) {
+        event.stopPropagation();
+      });
+    }
+
+    document.addEventListener('click', function () {
+      closeMenu();
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') {
+        closeMenu();
+      }
+    });
+  }
 
   function initAuthMotion() {
     const root = document.querySelector('[data-auth-root]');
