@@ -44,7 +44,7 @@
                                 <div class="user-email">${currentUser.email}</div>
                             </div>
                         </div>
-                        <a href="#" data-toast="Profile page coming soon.">My Profile</a>
+                        <a href="${pageContext.request.contextPath}/profile">My Profile</a>
                         <a href="#" data-toast="Settings page coming soon.">Settings</a>
                         <a href="${pageContext.request.contextPath}/bookings">My Trips</a>
                         <div class="user-dropdown__divider"></div>
