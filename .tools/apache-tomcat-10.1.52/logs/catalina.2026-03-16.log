@@ -591,3 +591,49 @@
 16-Mar-2026 21:15:02.395 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\prakh\OneDrive\Desktop\mca_web_design\travel-management-system\.tools\apache-tomcat-10.1.52\webapps\manager] has finished in [145] ms
 16-Mar-2026 21:15:02.407 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
 16-Mar-2026 21:15:02.506 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [6986] milliseconds
+16-Mar-2026 21:54:06.749 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/10.1.52
+16-Mar-2026 21:54:06.756 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Jan 23 2026 19:29:07 UTC
+16-Mar-2026 21:54:06.757 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 10.1.52.0
+16-Mar-2026 21:54:06.757 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Windows 11
+16-Mar-2026 21:54:06.757 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            10.0
+16-Mar-2026 21:54:06.758 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+16-Mar-2026 21:54:06.758 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             C:\Program Files\Eclipse Adoptium\jdk-17.0.18.8-hotspot
+16-Mar-2026 21:54:06.758 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           17.0.18+8
+16-Mar-2026 21:54:06.759 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Eclipse Adoptium
+16-Mar-2026 21:54:06.759 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         D:\travel-management-system\.tools\apache-tomcat-10.1.52
+16-Mar-2026 21:54:06.760 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         D:\travel-management-system\.tools\apache-tomcat-10.1.52
+16-Mar-2026 21:54:06.773 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=D:\travel-management-system\.tools\apache-tomcat-10.1.52\conf\logging.properties
+16-Mar-2026 21:54:06.773 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+16-Mar-2026 21:54:06.774 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+16-Mar-2026 21:54:06.774 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+16-Mar-2026 21:54:06.774 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dsun.io.useCanonCaches=false
+16-Mar-2026 21:54:06.774 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
+16-Mar-2026 21:54:06.775 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+16-Mar-2026 21:54:06.775 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
+16-Mar-2026 21:54:06.775 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util=ALL-UNNAMED
+16-Mar-2026 21:54:06.776 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+16-Mar-2026 21:54:06.776 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+16-Mar-2026 21:54:06.776 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=D:\travel-management-system\.tools\apache-tomcat-10.1.52
+16-Mar-2026 21:54:06.776 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=D:\travel-management-system\.tools\apache-tomcat-10.1.52
+16-Mar-2026 21:54:06.776 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=D:\travel-management-system\.tools\apache-tomcat-10.1.52\temp
+16-Mar-2026 21:54:06.853 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent Loaded Apache Tomcat Native library [2.0.12] using APR version [1.7.6].
+16-Mar-2026 21:54:06.858 INFO [main] org.apache.catalina.core.AprLifecycleListener.initializeSSL OpenSSL successfully initialized [OpenSSL 3.5.4 30 Sep 2025]
+16-Mar-2026 21:54:07.083 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8080"]
+16-Mar-2026 21:54:07.128 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [592] milliseconds
+16-Mar-2026 21:54:07.241 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+16-Mar-2026 21:54:07.242 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/10.1.52]
+16-Mar-2026 21:54:07.295 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deploying web application archive [D:\travel-management-system\.tools\apache-tomcat-10.1.52\webapps\ROOT.war]
+16-Mar-2026 21:54:07.767 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deployment of web application archive [D:\travel-management-system\.tools\apache-tomcat-10.1.52\webapps\ROOT.war] has finished in [472] ms
+16-Mar-2026 21:54:07.774 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deploying web application archive [D:\travel-management-system\.tools\apache-tomcat-10.1.52\webapps\travel-management-system.war]
+16-Mar-2026 21:54:08.552 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+16-Mar-2026 21:54:08.593 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deployment of web application archive [D:\travel-management-system\.tools\apache-tomcat-10.1.52\webapps\travel-management-system.war] has finished in [820] ms
+16-Mar-2026 21:54:08.597 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [D:\travel-management-system\.tools\apache-tomcat-10.1.52\webapps\docs]
+16-Mar-2026 21:54:08.639 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [D:\travel-management-system\.tools\apache-tomcat-10.1.52\webapps\docs] has finished in [42] ms
+16-Mar-2026 21:54:08.640 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [D:\travel-management-system\.tools\apache-tomcat-10.1.52\webapps\examples]
+16-Mar-2026 21:54:09.023 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [D:\travel-management-system\.tools\apache-tomcat-10.1.52\webapps\examples] has finished in [384] ms
+16-Mar-2026 21:54:09.024 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [D:\travel-management-system\.tools\apache-tomcat-10.1.52\webapps\host-manager]
+16-Mar-2026 21:54:09.056 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [D:\travel-management-system\.tools\apache-tomcat-10.1.52\webapps\host-manager] has finished in [33] ms
+16-Mar-2026 21:54:09.056 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [D:\travel-management-system\.tools\apache-tomcat-10.1.52\webapps\manager]
+16-Mar-2026 21:54:09.082 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [D:\travel-management-system\.tools\apache-tomcat-10.1.52\webapps\manager] has finished in [26] ms
+16-Mar-2026 21:54:09.086 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+16-Mar-2026 21:54:09.131 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [2003] milliseconds

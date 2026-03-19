@@ -164,3 +164,17 @@
 0:0:0:0:0:0:0:1 - - [16/Mar/2026:21:15:21 +0530] "GET /travel-management-system/login HTTP/1.1" 200 11330
 0:0:0:0:0:0:0:1 - - [16/Mar/2026:21:15:27 +0530] "GET /travel-management-system/login HTTP/1.1" 200 11330
 0:0:0:0:0:0:0:1 - - [16/Mar/2026:21:15:33 +0530] "GET /travel-management-system/login HTTP/1.1" 200 11330
+127.0.0.1 - - [16/Mar/2026:21:54:14 +0530] "GET / HTTP/1.1" 200 11437
+127.0.0.1 - - [16/Mar/2026:21:54:22 +0530] "GET /travel-management-system/login HTTP/1.1" 200 11330
+127.0.0.1 - - [16/Mar/2026:21:54:23 +0530] "GET /travel-management-system/assets/css/style.css?v=3 HTTP/1.1" 200 50212
+127.0.0.1 - - [16/Mar/2026:21:54:25 +0530] "POST /travel-management-system/login HTTP/1.1" 302 -
+127.0.0.1 - - [16/Mar/2026:21:54:25 +0530] "GET /travel-management-system/dashboard?msg=Welcome+back%2C+Ayush+Ranjan HTTP/1.1" 200 22299
+127.0.0.1 - - [16/Mar/2026:21:54:26 +0530] "GET /travel-management-system/assets/css/style.css HTTP/1.1" 200 50212
+127.0.0.1 - - [16/Mar/2026:21:54:26 +0530] "GET /travel-management-system/assets/js/site.js HTTP/1.1" 200 8520
+127.0.0.1 - - [16/Mar/2026:21:54:35 +0530] "GET /travel-management-system/bookings HTTP/1.1" 200 5182
+127.0.0.1 - - [16/Mar/2026:21:54:38 +0530] "GET /travel-management-system/logout HTTP/1.1" 302 -
+127.0.0.1 - - [16/Mar/2026:21:54:38 +0530] "GET /travel-management-system/login?msg=Signed+out+successfully HTTP/1.1" 200 11414
+127.0.0.1 - - [16/Mar/2026:21:54:53 +0530] "GET /travel-management-system/login?msg=Signed+out+successfully HTTP/1.1" 200 11414
+127.0.0.1 - - [16/Mar/2026:21:54:57 +0530] "GET /travel-management-system/login HTTP/1.1" 200 11330
+127.0.0.1 - - [16/Mar/2026:21:55:23 +0530] "POST /travel-management-system/login HTTP/1.1" 302 -
+127.0.0.1 - - [16/Mar/2026:21:55:23 +0530] "GET /travel-management-system/dashboard?msg=Welcome+back%2C+Ayush+Ranjan HTTP/1.1" 200 22299
