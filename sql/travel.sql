@@ -56,6 +56,9 @@ CREATE TABLE IF NOT EXISTS bookings (
     booking_date DATE,
     travel_date DATE,
     number_of_people INT,
+    traveler_name VARCHAR(80),
+    contact_phone VARCHAR(15),
+    special_request VARCHAR(250),
     status VARCHAR(50),
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (package_id) REFERENCES packages(package_id)

@@ -113,6 +113,9 @@
                     </select>
                     <input name="travelDate" type="date" required />
                     <input name="people" type="number" min="1" max="12" value="2" required />
+                    <input name="travelerName" type="text" minlength="2" maxlength="80" placeholder="Traveler Full Name" required />
+                    <input name="contactPhone" type="tel" minlength="10" maxlength="15" placeholder="Contact Phone" required />
+                    <textarea name="specialRequest" rows="3" maxlength="250" placeholder="Special requests (optional)"></textarea>
                     <input name="status" type="hidden" value="Pending" />
                     <select name="paymentMethod">
                         <option value="UPI">UPI</option>

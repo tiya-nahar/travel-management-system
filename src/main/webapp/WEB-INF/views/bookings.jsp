@@ -19,6 +19,9 @@
             <th>Booking Date</th>
             <th>Travel Date</th>
             <th>People</th>
+            <th>Traveler</th>
+            <th>Contact</th>
+            <th>Special Request</th>
             <th>Status</th>
         </tr>
         </thead>
@@ -26,7 +29,7 @@
         <c:choose>
             <c:when test="${empty bookings}">
                 <tr>
-                    <td colspan="6">You do not have any bookings yet.</td>
+                    <td colspan="9">You do not have any bookings yet.</td>
                 </tr>
             </c:when>
             <c:otherwise>
@@ -37,6 +40,9 @@
                         <td>${b.bookingDate}</td>
                         <td>${b.travelDate}</td>
                         <td>${b.numberOfPeople}</td>
+                        <td>${empty b.travelerName ? '-' : b.travelerName}</td>
+                        <td>${empty b.contactPhone ? '-' : b.contactPhone}</td>
+                        <td>${empty b.specialRequest ? '-' : b.specialRequest}</td>
                         <td><span class="badge ${b.statusClass}">${b.status}</span></td>
                     </tr>
                 </c:forEach>

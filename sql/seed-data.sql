@@ -242,4 +242,69 @@ INSERT INTO users (name, email, password, phone, role) VALUES
 ('John Doe', 'john@example.com', 'password123', '1234567890', 'Customer'),
 ('Jane Smith', 'jane@example.com', 'password123', '0987654321', 'Customer');
 
+-- Backfill columns for existing databases that were created before booking detail fields.
+ALTER TABLE bookings ADD COLUMN IF NOT EXISTS traveler_name VARCHAR(80);
+ALTER TABLE bookings ADD COLUMN IF NOT EXISTS contact_phone VARCHAR(15);
+ALTER TABLE bookings ADD COLUMN IF NOT EXISTS special_request VARCHAR(250);
+
+-- Seed demo bookings with richer traveler details from the updated booking form.
+INSERT INTO bookings (
+        user_id, package_id, booking_date, travel_date, number_of_people,
+        traveler_name, contact_phone, special_request, status
+)
+SELECT u.user_id,
+             p.package_id,
+             CURDATE(),
+             DATE_ADD(CURDATE(), INTERVAL 20 DAY),
+             2,
+             'John Doe',
+             '9876543210',
+             'Need an early check-in if possible.',
+             'Pending'
+FROM users u
+JOIN packages p ON p.title = 'Jaipur Royal Weekend'
+WHERE u.email = 'john@example.com'
+    AND NOT EXISTS (
+            SELECT 1
+            FROM bookings b
+            WHERE b.user_id = u.user_id
+                AND b.package_id = p.package_id
+                AND b.travel_date = DATE_ADD(CURDATE(), INTERVAL 20 DAY)
+    );
+
+INSERT INTO bookings (
+        user_id, package_id, booking_date, travel_date, number_of_people,
+        traveler_name, contact_phone, special_request, status
+)
+SELECT u.user_id,
+             p.package_id,
+             CURDATE(),
+             DATE_ADD(CURDATE(), INTERVAL 35 DAY),
+             4,
+             'Jane Smith',
+             '9123456780',
+             'Looking for 2 adjacent rooms with mountain view.',
+             'Confirmed'
+FROM users u
+JOIN packages p ON p.title = 'Darjeeling Mountain Calm'
+WHERE u.email = 'jane@example.com'
+    AND NOT EXISTS (
+            SELECT 1
+            FROM bookings b
+            WHERE b.user_id = u.user_id
+                AND b.package_id = p.package_id
+                AND b.travel_date = DATE_ADD(CURDATE(), INTERVAL 35 DAY)
+    );
+
+INSERT INTO payments (booking_id, amount, payment_method, payment_status, payment_date)
+SELECT b.booking_id,
+             p.price * b.number_of_people,
+             'UPI',
+             CASE WHEN b.status = 'Confirmed' THEN 'Paid' ELSE 'Pending' END,
+             NOW()
+FROM bookings b
+JOIN packages p ON p.package_id = b.package_id
+LEFT JOIN payments pay ON pay.booking_id = b.booking_id
+WHERE pay.payment_id IS NULL;
+
 -- Create real admins and customers through the application or via SQL as needed.

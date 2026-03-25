@@ -227,6 +227,9 @@
                                 <th>Package</th>
                                 <th>Travel Date</th>
                                 <th>People</th>
+                                <th>Traveler</th>
+                                <th>Contact</th>
+                                <th>Special Request</th>
                                 <th>Status</th>
                             </tr>
                             </thead>
@@ -238,6 +241,9 @@
                                     <td>${booking.packageTitle}</td>
                                     <td>${booking.travelDate}</td>
                                     <td>${booking.numberOfPeople}</td>
+                                    <td>${empty booking.travelerName ? '-' : booking.travelerName}</td>
+                                    <td>${empty booking.contactPhone ? '-' : booking.contactPhone}</td>
+                                    <td>${empty booking.specialRequest ? '-' : booking.specialRequest}</td>
                                     <td><span class="badge ${booking.statusClass}">${booking.status}</span></td>
                                 </tr>
                             </c:forEach>

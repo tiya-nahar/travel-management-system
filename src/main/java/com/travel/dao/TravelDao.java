@@ -1,13 +1,12 @@
 package com.travel.dao;
 
-import com.travel.db.DBConnection;
-
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +14,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import com.travel.db.DBConnection;
 
 public class TravelDao {
 
@@ -238,7 +239,8 @@ public class TravelDao {
     public List<Map<String, Object>> fetchRecentBookings(int limit) throws SQLException {
         String sql = """
                 SELECT b.booking_id, u.name AS user_name, p.title AS package_title,
-                       b.booking_date, b.travel_date, b.number_of_people, b.status
+                  b.booking_date, b.travel_date, b.number_of_people,
+                  b.traveler_name, b.contact_phone, b.special_request, b.status
                 FROM bookings b
                 JOIN users u ON u.user_id = b.user_id
                 JOIN packages p ON p.package_id = b.package_id
@@ -260,11 +262,15 @@ public class TravelDao {
     }
 
     public void createBookingWithPayment(int userId, int packageId, Date travelDate, int people,
+                                         String travelerName, String contactPhone, String specialRequest,
                                          String status, String paymentMethod) throws SQLException {
         String packageSql = "SELECT price FROM packages WHERE package_id = ?";
         String bookingSql = """
-                INSERT INTO bookings (user_id, package_id, booking_date, travel_date, number_of_people, status)
-                VALUES (?, ?, CURDATE(), ?, ?, ?)
+                INSERT INTO bookings (
+                    user_id, package_id, booking_date, travel_date, number_of_people,
+                    traveler_name, contact_phone, special_request, status
+                )
+                VALUES (?, ?, CURDATE(), ?, ?, ?, ?, ?, ?)
                 """;
         String paymentSql = """
                 INSERT INTO payments (booking_id, amount, payment_method, payment_status, payment_date)
@@ -274,6 +280,8 @@ public class TravelDao {
         try (Connection conn = DBConnection.getConnection()) {
             conn.setAutoCommit(false);
             try {
+                ensureBookingDetailColumns(conn);
+
                 BigDecimal price;
                 try (PreparedStatement ps = conn.prepareStatement(packageSql)) {
                     ps.setInt(1, packageId);
@@ -291,7 +299,10 @@ public class TravelDao {
                     ps.setInt(2, packageId);
                     ps.setDate(3, travelDate);
                     ps.setInt(4, people);
-                    ps.setString(5, status);
+                    ps.setString(5, travelerName);
+                    ps.setString(6, contactPhone);
+                    ps.setString(7, specialRequest);
+                    ps.setString(8, status);
                     ps.executeUpdate();
 
                     try (ResultSet keys = ps.getGeneratedKeys()) {
@@ -323,7 +334,8 @@ public class TravelDao {
     public List<Map<String, Object>> fetchBookings() throws SQLException {
         String sql = """
                 SELECT b.booking_id, u.name AS user_name, p.title AS package_title,
-                       b.booking_date, b.travel_date, b.number_of_people, b.status
+                  b.booking_date, b.travel_date, b.number_of_people,
+                  b.traveler_name, b.contact_phone, b.special_request, b.status
                 FROM bookings b
                 JOIN users u ON u.user_id = b.user_id
                 JOIN packages p ON p.package_id = b.package_id
@@ -336,7 +348,8 @@ public class TravelDao {
     public List<Map<String, Object>> fetchBookingsForUser(int userId) throws SQLException {
         String sql = """
                 SELECT b.booking_id, u.name AS user_name, p.title AS package_title,
-                       b.booking_date, b.travel_date, b.number_of_people, b.status
+                  b.booking_date, b.travel_date, b.number_of_people,
+                  b.traveler_name, b.contact_phone, b.special_request, b.status
                 FROM bookings b
                 JOIN users u ON u.user_id = b.user_id
                 JOIN packages p ON p.package_id = b.package_id
@@ -704,10 +717,40 @@ public class TravelDao {
         row.put("bookingDate", rs.getDate("booking_date"));
         row.put("travelDate", rs.getDate("travel_date"));
         row.put("numberOfPeople", rs.getInt("number_of_people"));
+        row.put("travelerName", rs.getString("traveler_name"));
+        row.put("contactPhone", rs.getString("contact_phone"));
+        row.put("specialRequest", rs.getString("special_request"));
         String status = rs.getString("status");
         row.put("status", status);
         row.put("statusClass", status == null ? "" : status.toLowerCase());
         return row;
+    }
+
+    private void ensureBookingDetailColumns(Connection conn) throws SQLException {
+        String[] statements = {
+                "ALTER TABLE bookings ADD COLUMN IF NOT EXISTS traveler_name VARCHAR(80)",
+                "ALTER TABLE bookings ADD COLUMN IF NOT EXISTS contact_phone VARCHAR(15)",
+                "ALTER TABLE bookings ADD COLUMN IF NOT EXISTS special_request VARCHAR(250)"
+        };
+        String[] fallbackStatements = {
+                "ALTER TABLE bookings ADD COLUMN traveler_name VARCHAR(80)",
+                "ALTER TABLE bookings ADD COLUMN contact_phone VARCHAR(15)",
+                "ALTER TABLE bookings ADD COLUMN special_request VARCHAR(250)"
+        };
+
+        try (Statement statement = conn.createStatement()) {
+            for (int i = 0; i < statements.length; i++) {
+                try {
+                    statement.execute(statements[i]);
+                } catch (SQLSyntaxErrorException ignored) {
+                    try {
+                        statement.execute(fallbackStatements[i]);
+                    } catch (SQLSyntaxErrorException duplicateIgnored) {
+                        // Ignore duplicate-column error in fallback mode.
+                    }
+                }
+            }
+        }
     }
 
     private Map<String, Object> paymentFromResult(ResultSet rs) throws SQLException {
