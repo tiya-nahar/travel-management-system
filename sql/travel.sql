@@ -74,6 +74,18 @@ CREATE TABLE IF NOT EXISTS payments (
     FOREIGN KEY (booking_id) REFERENCES bookings(booking_id)
 );
 
+CREATE TABLE IF NOT EXISTS booking_linked_services (
+    linked_service_id INT PRIMARY KEY AUTO_INCREMENT,
+    booking_id INT NOT NULL,
+    service_type VARCHAR(20) NOT NULL,
+    provider_name VARCHAR(150) NOT NULL,
+    traveler_count INT DEFAULT 1,
+    service_status VARCHAR(30) DEFAULT 'Reserved',
+    notes VARCHAR(200),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (booking_id) REFERENCES bookings(booking_id)
+);
+
 CREATE TABLE IF NOT EXISTS package_images (
     image_id INT PRIMARY KEY AUTO_INCREMENT,
     package_id INT,

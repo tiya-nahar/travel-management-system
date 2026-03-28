@@ -13,15 +13,15 @@
         </div>
         <div>
             <h4>Support</h4>
-            <a href="#">Help Center</a>
-            <a href="#">Safety</a>
-            <a href="#">Refunds</a>
+            <a href="${pageContext.request.contextPath}/dashboard#itinerary">Help Center</a>
+            <a href="${pageContext.request.contextPath}/dashboard#flights">Safety</a>
+            <a href="${pageContext.request.contextPath}/payments">Refunds</a>
         </div>
         <div>
             <h4>Company</h4>
-            <a href="#">About</a>
-            <a href="#">Careers</a>
-            <a href="#">Partner With Us</a>
+            <a href="${pageContext.request.contextPath}/hub">About</a>
+            <a href="${pageContext.request.contextPath}/admin-login">Careers</a>
+            <a href="${pageContext.request.contextPath}/packages">Partner With Us</a>
         </div>
     </div>
     <div class="footer-bottom">(c) 2026 AeroTrail Travel Management System</div>

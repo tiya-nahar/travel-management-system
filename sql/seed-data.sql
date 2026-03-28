@@ -27,7 +27,19 @@ INSERT INTO seed_destinations (city, country, description, image_url) VALUES
      'https://picsum.photos/seed/darjeeling-tea/1200/800'),
     ('Varanasi', 'India',
      'Ancient ghats, spiritual rituals, and immersive cultural walks.',
-     'https://picsum.photos/seed/varanasi-ghat/1200/800');
+        'https://picsum.photos/seed/varanasi-ghat/1200/800'),
+        ('Goa', 'India',
+        'Beach shacks, water sports, and laid-back coastal nightlife.',
+        'https://picsum.photos/seed/goa-beach/1200/800'),
+        ('Manali', 'India',
+        'Snow views, pine forests, and adventure-friendly mountain roads.',
+        'https://picsum.photos/seed/manali-hills/1200/800'),
+        ('Pondicherry', 'India',
+        'French-quarter charm, sea-facing cafes, and peaceful promenades.',
+        'https://picsum.photos/seed/pondicherry-sea/1200/800'),
+        ('Mysuru', 'India',
+        'Palace architecture, silk markets, and heritage city trails.',
+        'https://picsum.photos/seed/mysuru-palace/1200/800');
 
 UPDATE destinations d
 JOIN seed_destinations s
@@ -72,7 +84,19 @@ INSERT INTO seed_hotels (name, city, rating, address, image_url) VALUES
      'https://picsum.photos/seed/summit-tea-estate/1200/800'),
     ('Ghat Heritage House', 'Varanasi', 4.3,
      'Dashashwamedh Ghat Road, Varanasi, Uttar Pradesh',
-     'https://picsum.photos/seed/ghat-heritage-house/1200/800');
+        'https://picsum.photos/seed/ghat-heritage-house/1200/800'),
+        ('Calangute Seabreeze Resort', 'Goa', 4.6,
+        'Calangute Beach Road, North Goa',
+        'https://picsum.photos/seed/calangute-seabreeze/1200/800'),
+        ('Solang Valley Heights', 'Manali', 4.5,
+        'Near Solang Ropeway, Manali, Himachal Pradesh',
+        'https://picsum.photos/seed/solang-valley-heights/1200/800'),
+        ('Promenade Azure Stay', 'Pondicherry', 4.4,
+        'White Town Promenade, Pondicherry',
+        'https://picsum.photos/seed/promenade-azure/1200/800'),
+        ('Royal Boulevard Palace Inn', 'Mysuru', 4.5,
+        'Sayyaji Rao Road, Mysuru, Karnataka',
+        'https://picsum.photos/seed/royal-boulevard/1200/800');
 
 UPDATE hotels h
 JOIN seed_hotels s
@@ -99,8 +123,14 @@ CREATE TEMPORARY TABLE seed_transport (
 
 INSERT INTO seed_transport (type, provider, seat_capacity) VALUES
     ('Flight', 'AeroTrail Air Connect', 180),
+    ('Flight', 'SkyWing Direct', 164),
+    ('Train', 'AeroTrail Rail Express', 320),
+    ('Train', 'Western Rail Comfort', 280),
+    ('Bus', 'AeroTrail Sleeper Bus', 36),
+    ('Bus', 'Highway Premium Coach', 32),
     ('Coach', 'AeroTrail RoadLink', 40),
-    ('Cab', 'AeroTrail Private Transfer', 4);
+    ('Cab', 'AeroTrail Private Transfer', 4),
+    ('Cab', 'CityHop Cabs', 4);
 
 UPDATE transport t
 JOIN seed_transport s
@@ -160,7 +190,27 @@ VALUES
      'An immersive cultural trip with ghat walks, temple routes, and evening aarti.',
      18999.00, 3, 6,
      'https://picsum.photos/seed/varanasi-spiritual-circuit/1200/800',
-     'Ghat Heritage House', 'AeroTrail Private Transfer');
+        'Ghat Heritage House', 'AeroTrail Private Transfer'),
+        ('Goa Sunset Escape', 'Goa',
+        'Relaxed coastal holiday with beach hopping, nightlife, and sea-food trails.',
+        27999.00, 4, 5,
+        'https://picsum.photos/seed/goa-sunset-escape/1200/800',
+        'Calangute Seabreeze Resort', 'SkyWing Direct'),
+        ('Manali Snowline Retreat', 'Manali',
+        'Scenic mountain retreat with valley drives, cafe stops, and adventure add-ons.',
+        25999.00, 5, 5,
+        'https://picsum.photos/seed/manali-snowline-retreat/1200/800',
+        'Solang Valley Heights', 'Western Rail Comfort'),
+        ('Pondicherry Coastal Calm', 'Pondicherry',
+        'Slow-paced seaside vacation with heritage lanes and sunrise promenade walks.',
+        20999.00, 3, 4,
+        'https://picsum.photos/seed/pondicherry-coastal-calm/1200/800',
+        'Promenade Azure Stay', 'AeroTrail RoadLink'),
+        ('Mysuru Heritage Mosaic', 'Mysuru',
+        'Culture-focused city break with palace tours, gardens, and local food markets.',
+        19999.00, 3, 6,
+        'https://picsum.photos/seed/mysuru-heritage-mosaic/1200/800',
+        'Royal Boulevard Palace Inn', 'CityHop Cabs');
 
 UPDATE packages p
 JOIN destinations d
@@ -211,7 +261,11 @@ INSERT INTO seed_destination_info (city, best_season, climate, highlights) VALUE
     ('Munnar', 'September to May', 'Cool and misty hills', 'Tea Gardens, Echo Point, Attukad Falls'),
     ('Rishikesh', 'September to April', 'Fresh mornings and sunny afternoons', 'Ganga Aarti, River Rafting, Laxman Jhula'),
     ('Darjeeling', 'October to April', 'Cool mountain climate', 'Tiger Hill, Tea Estates, Toy Train'),
-    ('Varanasi', 'October to March', 'Mild winter and clear evenings', 'Dashashwamedh Ghat, Kashi Vishwanath, Ganga Aarti');
+    ('Varanasi', 'October to March', 'Mild winter and clear evenings', 'Dashashwamedh Ghat, Kashi Vishwanath, Ganga Aarti'),
+    ('Goa', 'November to February', 'Warm sunny coast', 'Calangute Beach, Fort Aguada, Baga Nightlife'),
+    ('Manali', 'October to June', 'Cool mountain weather', 'Solang Valley, Atal Tunnel, Old Manali Cafes'),
+    ('Pondicherry', 'October to March', 'Pleasant sea breeze', 'White Town, Rock Beach, Auroville Day Trip'),
+    ('Mysuru', 'October to February', 'Comfortable and dry climate', 'Mysore Palace, Brindavan Gardens, Chamundi Hills');
 
 UPDATE destination_info i
 JOIN destinations d
@@ -237,15 +291,24 @@ DROP TEMPORARY TABLE IF EXISTS seed_transport;
 DROP TEMPORARY TABLE IF EXISTS seed_hotels;
 DROP TEMPORARY TABLE IF EXISTS seed_destinations;
 
--- Seed some demo users
-INSERT INTO users (name, email, password, phone, role) VALUES
-('John Doe', 'john@example.com', 'password123', '1234567890', 'Customer'),
-('Jane Smith', 'jane@example.com', 'password123', '0987654321', 'Customer');
+-- Seed some demo users (idempotent)
+INSERT INTO users (name, email, password, phone, role)
+SELECT 'John Doe', 'john@example.com', 'password123', '1234567890', 'Customer'
+WHERE NOT EXISTS (SELECT 1 FROM users WHERE email = 'john@example.com');
 
--- Backfill columns for existing databases that were created before booking detail fields.
-ALTER TABLE bookings ADD COLUMN IF NOT EXISTS traveler_name VARCHAR(80);
-ALTER TABLE bookings ADD COLUMN IF NOT EXISTS contact_phone VARCHAR(15);
-ALTER TABLE bookings ADD COLUMN IF NOT EXISTS special_request VARCHAR(250);
+INSERT INTO users (name, email, password, phone, role)
+SELECT 'Jane Smith', 'jane@example.com', 'password123', '0987654321', 'Customer'
+WHERE NOT EXISTS (SELECT 1 FROM users WHERE email = 'jane@example.com');
+
+INSERT INTO users (name, email, password, phone, role)
+SELECT 'Aman Verma', 'aman@example.com', 'password123', '9000011111', 'Customer'
+WHERE NOT EXISTS (SELECT 1 FROM users WHERE email = 'aman@example.com');
+
+INSERT INTO users (name, email, password, phone, role)
+SELECT 'Priya Nair', 'priya@example.com', 'password123', '9000022222', 'Customer'
+WHERE NOT EXISTS (SELECT 1 FROM users WHERE email = 'priya@example.com');
+
+-- Booking detail columns are handled by schema and DAO fallback migration logic.
 
 -- Seed demo bookings with richer traveler details from the updated booking form.
 INSERT INTO bookings (
@@ -271,6 +334,54 @@ WHERE u.email = 'john@example.com'
                 AND b.package_id = p.package_id
                 AND b.travel_date = DATE_ADD(CURDATE(), INTERVAL 20 DAY)
     );
+
+    INSERT INTO bookings (
+        user_id, package_id, booking_date, travel_date, number_of_people,
+        traveler_name, contact_phone, special_request, status
+    )
+    SELECT u.user_id,
+             p.package_id,
+             CURDATE(),
+             DATE_ADD(CURDATE(), INTERVAL 28 DAY),
+             3,
+             'Aman Verma',
+             '9000011111',
+             'Need airport pickup and vegetarian meals.',
+             'Confirmed'
+    FROM users u
+    JOIN packages p ON p.title = 'Goa Sunset Escape'
+    WHERE u.email = 'aman@example.com'
+        AND NOT EXISTS (
+            SELECT 1
+            FROM bookings b
+            WHERE b.user_id = u.user_id
+            AND b.package_id = p.package_id
+            AND b.travel_date = DATE_ADD(CURDATE(), INTERVAL 28 DAY)
+        );
+
+    INSERT INTO bookings (
+        user_id, package_id, booking_date, travel_date, number_of_people,
+        traveler_name, contact_phone, special_request, status
+    )
+    SELECT u.user_id,
+             p.package_id,
+             CURDATE(),
+             DATE_ADD(CURDATE(), INTERVAL 45 DAY),
+             2,
+             'Priya Nair',
+             '9000022222',
+             'Request room with mountain view and late checkout.',
+             'Pending'
+    FROM users u
+    JOIN packages p ON p.title = 'Manali Snowline Retreat'
+    WHERE u.email = 'priya@example.com'
+        AND NOT EXISTS (
+            SELECT 1
+            FROM bookings b
+            WHERE b.user_id = u.user_id
+            AND b.package_id = p.package_id
+            AND b.travel_date = DATE_ADD(CURDATE(), INTERVAL 45 DAY)
+        );
 
 INSERT INTO bookings (
         user_id, package_id, booking_date, travel_date, number_of_people,
@@ -306,5 +417,133 @@ FROM bookings b
 JOIN packages p ON p.package_id = b.package_id
 LEFT JOIN payments pay ON pay.booking_id = b.booking_id
 WHERE pay.payment_id IS NULL;
+
+CREATE TABLE IF NOT EXISTS booking_linked_services (
+    linked_service_id INT PRIMARY KEY AUTO_INCREMENT,
+    booking_id INT NOT NULL,
+    service_type VARCHAR(20) NOT NULL,
+    provider_name VARCHAR(150) NOT NULL,
+    traveler_count INT DEFAULT 1,
+    service_status VARCHAR(30) DEFAULT 'Reserved',
+    notes VARCHAR(200),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (booking_id) REFERENCES bookings(booking_id)
+);
+
+INSERT INTO booking_linked_services (booking_id, service_type, provider_name, traveler_count, service_status, notes)
+SELECT b.booking_id,
+    'Hotel',
+    COALESCE(h.name, 'Hotel to be assigned'),
+    b.number_of_people,
+    'Reserved',
+    'Auto-linked from package'
+FROM bookings b
+LEFT JOIN package_details pd ON pd.package_id = b.package_id
+LEFT JOIN hotels h ON h.hotel_id = pd.hotel_id
+LEFT JOIN booking_linked_services bls
+    ON bls.booking_id = b.booking_id AND bls.service_type = 'Hotel'
+WHERE bls.linked_service_id IS NULL;
+
+INSERT INTO booking_linked_services (booking_id, service_type, provider_name, traveler_count, service_status, notes)
+SELECT b.booking_id,
+    'Flight',
+    COALESCE(
+        (SELECT t.provider
+         FROM package_details pd
+         JOIN transport t ON t.transport_id = pd.transport_id
+         WHERE pd.package_id = b.package_id AND LOWER(t.type) LIKE '%flight%'
+         LIMIT 1),
+        (SELECT t.provider FROM transport t WHERE LOWER(t.type) LIKE '%flight%' ORDER BY t.transport_id LIMIT 1),
+        'Flight to be assigned'
+    ),
+    b.number_of_people,
+    'Reserved',
+    'Auto-linked by system'
+FROM bookings b
+LEFT JOIN booking_linked_services bls
+    ON bls.booking_id = b.booking_id AND bls.service_type = 'Flight'
+WHERE bls.linked_service_id IS NULL;
+
+INSERT INTO booking_linked_services (booking_id, service_type, provider_name, traveler_count, service_status, notes)
+SELECT b.booking_id,
+    'Train',
+    COALESCE(
+        (SELECT t.provider
+         FROM package_details pd
+         JOIN transport t ON t.transport_id = pd.transport_id
+         WHERE pd.package_id = b.package_id AND LOWER(t.type) LIKE '%train%'
+         LIMIT 1),
+        (SELECT t.provider FROM transport t WHERE LOWER(t.type) LIKE '%train%' ORDER BY t.transport_id LIMIT 1),
+        'Train to be assigned'
+    ),
+    b.number_of_people,
+    'Reserved',
+    'Auto-linked by system'
+FROM bookings b
+LEFT JOIN booking_linked_services bls
+    ON bls.booking_id = b.booking_id AND bls.service_type = 'Train'
+WHERE bls.linked_service_id IS NULL;
+
+INSERT INTO booking_linked_services (booking_id, service_type, provider_name, traveler_count, service_status, notes)
+SELECT b.booking_id,
+    'Bus',
+    COALESCE(
+        (SELECT t.provider
+         FROM package_details pd
+         JOIN transport t ON t.transport_id = pd.transport_id
+         WHERE pd.package_id = b.package_id AND LOWER(t.type) LIKE '%bus%'
+         LIMIT 1),
+        (SELECT t.provider FROM transport t WHERE LOWER(t.type) LIKE '%bus%' OR LOWER(t.type) LIKE '%coach%' ORDER BY t.transport_id LIMIT 1),
+        'Bus to be assigned'
+    ),
+    b.number_of_people,
+    'Reserved',
+    'Auto-linked by system'
+FROM bookings b
+LEFT JOIN booking_linked_services bls
+    ON bls.booking_id = b.booking_id AND bls.service_type = 'Bus'
+WHERE bls.linked_service_id IS NULL;
+
+INSERT INTO booking_linked_services (booking_id, service_type, provider_name, traveler_count, service_status, notes)
+SELECT b.booking_id,
+    'Cab',
+    COALESCE(
+        (SELECT t.provider
+         FROM package_details pd
+         JOIN transport t ON t.transport_id = pd.transport_id
+         WHERE pd.package_id = b.package_id AND LOWER(t.type) LIKE '%cab%'
+         LIMIT 1),
+        (SELECT t.provider FROM transport t WHERE LOWER(t.type) LIKE '%cab%' OR LOWER(t.type) LIKE '%taxi%' ORDER BY t.transport_id LIMIT 1),
+        'Cab to be assigned'
+    ),
+    b.number_of_people,
+    'Reserved',
+    'Auto-linked by system'
+FROM bookings b
+LEFT JOIN booking_linked_services bls
+    ON bls.booking_id = b.booking_id AND bls.service_type = 'Cab'
+WHERE bls.linked_service_id IS NULL;
+
+INSERT INTO reviews (user_id, package_id, rating, comment)
+SELECT u.user_id, p.package_id, 5,
+             'Amazing itinerary and smooth booking experience. Highly recommended!'
+FROM users u
+JOIN packages p ON p.title = 'Goa Sunset Escape'
+WHERE u.email = 'aman@example.com'
+    AND NOT EXISTS (
+            SELECT 1 FROM reviews r
+            WHERE r.user_id = u.user_id AND r.package_id = p.package_id
+    );
+
+INSERT INTO reviews (user_id, package_id, rating, comment)
+SELECT u.user_id, p.package_id, 4,
+             'Beautiful stay and great support team. Food options were excellent.'
+FROM users u
+JOIN packages p ON p.title = 'Manali Snowline Retreat'
+WHERE u.email = 'priya@example.com'
+    AND NOT EXISTS (
+            SELECT 1 FROM reviews r
+            WHERE r.user_id = u.user_id AND r.package_id = p.package_id
+    );
 
 -- Create real admins and customers through the application or via SQL as needed.

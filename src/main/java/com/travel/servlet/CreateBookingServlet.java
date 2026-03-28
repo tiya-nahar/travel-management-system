@@ -61,7 +61,7 @@ public class CreateBookingServlet extends HttpServlet {
                     status,
                     paymentMethod
                 );
-            String msg = URLEncoder.encode("Booking and payment saved", StandardCharsets.UTF_8);
+            String msg = URLEncoder.encode("Booking, linked travel services, and payment saved", StandardCharsets.UTF_8);
             resp.sendRedirect(req.getContextPath() + "/bookings?msg=" + msg);
         } catch (IllegalArgumentException | SQLException e) {
             String msg = URLEncoder.encode("Booking failed: " + e.getMessage(), StandardCharsets.UTF_8);

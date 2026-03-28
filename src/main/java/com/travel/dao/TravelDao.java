@@ -240,7 +240,13 @@ public class TravelDao {
         String sql = """
                 SELECT b.booking_id, u.name AS user_name, p.title AS package_title,
                   b.booking_date, b.travel_date, b.number_of_people,
-                  b.traveler_name, b.contact_phone, b.special_request, b.status
+                                    b.traveler_name, b.contact_phone, b.special_request, b.status,
+                                    COALESCE((
+                                            SELECT GROUP_CONCAT(CONCAT(bls.service_type, ': ', bls.provider_name)
+                                                                                    ORDER BY bls.linked_service_id SEPARATOR ', ')
+                                            FROM booking_linked_services bls
+                                            WHERE bls.booking_id = b.booking_id
+                                    ), '') AS linked_services
                 FROM bookings b
                 JOIN users u ON u.user_id = b.user_id
                 JOIN packages p ON p.package_id = b.package_id
@@ -281,6 +287,7 @@ public class TravelDao {
             conn.setAutoCommit(false);
             try {
                 ensureBookingDetailColumns(conn);
+                ensureLinkedServicesTable(conn);
 
                 BigDecimal price;
                 try (PreparedStatement ps = conn.prepareStatement(packageSql)) {
@@ -321,6 +328,8 @@ public class TravelDao {
                     ps.executeUpdate();
                 }
 
+                linkServicesForBooking(conn, bookingId, packageId, people);
+
                 conn.commit();
             } catch (SQLException e) {
                 conn.rollback();
@@ -335,7 +344,13 @@ public class TravelDao {
         String sql = """
                 SELECT b.booking_id, u.name AS user_name, p.title AS package_title,
                   b.booking_date, b.travel_date, b.number_of_people,
-                  b.traveler_name, b.contact_phone, b.special_request, b.status
+                                    b.traveler_name, b.contact_phone, b.special_request, b.status,
+                                    COALESCE((
+                                            SELECT GROUP_CONCAT(CONCAT(bls.service_type, ': ', bls.provider_name)
+                                                                                    ORDER BY bls.linked_service_id SEPARATOR ', ')
+                                            FROM booking_linked_services bls
+                                            WHERE bls.booking_id = b.booking_id
+                                    ), '') AS linked_services
                 FROM bookings b
                 JOIN users u ON u.user_id = b.user_id
                 JOIN packages p ON p.package_id = b.package_id
@@ -349,7 +364,13 @@ public class TravelDao {
         String sql = """
                 SELECT b.booking_id, u.name AS user_name, p.title AS package_title,
                   b.booking_date, b.travel_date, b.number_of_people,
-                  b.traveler_name, b.contact_phone, b.special_request, b.status
+                                    b.traveler_name, b.contact_phone, b.special_request, b.status,
+                                    COALESCE((
+                                            SELECT GROUP_CONCAT(CONCAT(bls.service_type, ': ', bls.provider_name)
+                                                                                    ORDER BY bls.linked_service_id SEPARATOR ', ')
+                                            FROM booking_linked_services bls
+                                            WHERE bls.booking_id = b.booking_id
+                                    ), '') AS linked_services
                 FROM bookings b
                 JOIN users u ON u.user_id = b.user_id
                 JOIN packages p ON p.package_id = b.package_id
@@ -409,6 +430,76 @@ public class TravelDao {
             }
         }
         return rows;
+    }
+
+    public List<Map<String, Object>> fetchReviewsForUser(int userId) throws SQLException {
+        String sql = """
+                SELECT r.review_id, u.name AS user_name, p.title AS package_title,
+                       r.rating, r.comment, r.created_at
+                FROM reviews r
+                JOIN users u ON u.user_id = r.user_id
+                JOIN packages p ON p.package_id = r.package_id
+                WHERE r.user_id = ?
+                ORDER BY r.review_id DESC
+                """;
+
+        List<Map<String, Object>> rows = new ArrayList<>();
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    rows.add(reviewFromResult(rs));
+                }
+            }
+        }
+        return rows;
+    }
+
+    public void updateCustomerProfile(int userId, String name, String email, String phone) throws SQLException {
+        String sql = """
+                UPDATE users
+                SET name = ?, email = ?, phone = ?
+                WHERE user_id = ?
+                """;
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, name.trim());
+            ps.setString(2, email.trim().toLowerCase(Locale.ROOT));
+            ps.setString(3, phone == null || phone.isBlank() ? null : phone.trim());
+            ps.setInt(4, userId);
+            ps.executeUpdate();
+        }
+    }
+
+    public boolean changeCustomerPassword(int userId, String currentPassword, String newPassword) throws SQLException {
+        String readSql = "SELECT password FROM users WHERE user_id = ?";
+        String updateSql = "UPDATE users SET password = ? WHERE user_id = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement readPs = conn.prepareStatement(readSql)) {
+            readPs.setInt(1, userId);
+
+            try (ResultSet rs = readPs.executeQuery()) {
+                if (!rs.next()) {
+                    return false;
+                }
+
+                String savedPassword = rs.getString("password");
+                if (savedPassword == null || !savedPassword.equals(currentPassword)) {
+                    return false;
+                }
+            }
+
+            try (PreparedStatement updatePs = conn.prepareStatement(updateSql)) {
+                updatePs.setString(1, newPassword);
+                updatePs.setInt(2, userId);
+                updatePs.executeUpdate();
+            }
+        }
+
+        return true;
     }
 
     public List<Map<String, Object>> fetchLatestReviews(int limit) throws SQLException {
@@ -723,7 +814,126 @@ public class TravelDao {
         String status = rs.getString("status");
         row.put("status", status);
         row.put("statusClass", status == null ? "" : status.toLowerCase());
+        row.put("linkedServices", rs.getString("linked_services"));
         return row;
+    }
+
+    private void ensureLinkedServicesTable(Connection conn) throws SQLException {
+        String createSql = """
+                CREATE TABLE IF NOT EXISTS booking_linked_services (
+                    linked_service_id INT PRIMARY KEY AUTO_INCREMENT,
+                    booking_id INT NOT NULL,
+                    service_type VARCHAR(20) NOT NULL,
+                    provider_name VARCHAR(150) NOT NULL,
+                    traveler_count INT DEFAULT 1,
+                    service_status VARCHAR(30) DEFAULT 'Reserved',
+                    notes VARCHAR(200),
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    FOREIGN KEY (booking_id) REFERENCES bookings(booking_id)
+                )
+                """;
+        try (Statement statement = conn.createStatement()) {
+            statement.execute(createSql);
+        }
+    }
+
+    private void linkServicesForBooking(Connection conn, int bookingId, int packageId, int travelers) throws SQLException {
+        String insertSql = """
+                INSERT INTO booking_linked_services (
+                    booking_id, service_type, provider_name, traveler_count, service_status, notes
+                )
+                VALUES (?, ?, ?, ?, 'Reserved', ?)
+                """;
+
+        try (PreparedStatement ps = conn.prepareStatement(insertSql)) {
+            String hotel = fetchHotelForPackage(conn, packageId);
+            insertLinkedService(ps, bookingId, "Hotel", hotel, travelers, "Auto-linked from selected package");
+
+            insertLinkedService(ps, bookingId, "Flight", fetchTransportProvider(conn, packageId, "flight"),
+                    travelers, "Auto-linked by system");
+            insertLinkedService(ps, bookingId, "Train", fetchTransportProvider(conn, packageId, "train"),
+                    travelers, "Auto-linked by system");
+            insertLinkedService(ps, bookingId, "Bus", fetchTransportProvider(conn, packageId, "bus"),
+                    travelers, "Auto-linked by system");
+            insertLinkedService(ps, bookingId, "Cab", fetchTransportProvider(conn, packageId, "cab"),
+                    travelers, "Auto-linked by system");
+        }
+    }
+
+    private void insertLinkedService(PreparedStatement ps, int bookingId, String serviceType, String provider,
+                                     int travelers, String notes) throws SQLException {
+        ps.setInt(1, bookingId);
+        ps.setString(2, serviceType);
+        ps.setString(3, provider);
+        ps.setInt(4, travelers);
+        ps.setString(5, notes);
+        ps.executeUpdate();
+    }
+
+    private String fetchHotelForPackage(Connection conn, int packageId) throws SQLException {
+        String sql = """
+                SELECT h.name
+                FROM package_details pd
+                JOIN hotels h ON h.hotel_id = pd.hotel_id
+                WHERE pd.package_id = ?
+                ORDER BY pd.detail_id
+                LIMIT 1
+                """;
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, packageId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("name");
+                }
+            }
+        }
+
+        return "Hotel to be assigned";
+    }
+
+    private String fetchTransportProvider(Connection conn, int packageId, String typeKeyword) throws SQLException {
+        String packageLinkedSql = """
+                SELECT t.provider
+                FROM package_details pd
+                JOIN transport t ON t.transport_id = pd.transport_id
+                WHERE pd.package_id = ?
+                  AND LOWER(t.type) LIKE ?
+                ORDER BY pd.detail_id
+                LIMIT 1
+                """;
+
+        String fallbackSql = """
+                SELECT provider
+                FROM transport
+                WHERE LOWER(type) LIKE ?
+                ORDER BY transport_id
+                LIMIT 1
+                """;
+
+        String like = "%" + typeKeyword.toLowerCase(Locale.ROOT) + "%";
+
+        try (PreparedStatement ps = conn.prepareStatement(packageLinkedSql)) {
+            ps.setInt(1, packageId);
+            ps.setString(2, like);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("provider");
+                }
+            }
+        }
+
+        try (PreparedStatement ps = conn.prepareStatement(fallbackSql)) {
+            ps.setString(1, like);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("provider");
+                }
+            }
+        }
+
+        String prettyType = typeKeyword.substring(0, 1).toUpperCase(Locale.ROOT) + typeKeyword.substring(1).toLowerCase(Locale.ROOT);
+        return prettyType + " to be assigned";
     }
 
     private void ensureBookingDetailColumns(Connection conn) throws SQLException {

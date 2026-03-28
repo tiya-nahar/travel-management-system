@@ -110,21 +110,24 @@
         <button class="btn btn-soft" type="button" data-toast="Flight alerts enabled for your route.">Set Price Alert</button>
     </div>
     <div class="service-grid">
-        <article class="service-card">
-            <h3>Best fares today</h3>
-            <p class="meta">Get dynamic pricing and airline options in one view.</p>
-            <button class="btn btn-primary" type="button" data-toast="Searching best fares for your route.">Check Fares</button>
-        </article>
-        <article class="service-card">
-            <h3>Flexible tickets</h3>
-            <p class="meta">Modify dates easily with upgrade protection.</p>
-            <button class="btn btn-ghost" type="button" data-toast="Flexible ticket options loaded.">View Flex Options</button>
-        </article>
-        <article class="service-card">
-            <h3>Student &amp; senior deals</h3>
-            <p class="meta">Verified discounts with instant fare breakdowns.</p>
-            <button class="btn btn-ghost" type="button" data-toast="Discount fares are available.">Apply Discounts</button>
-        </article>
+        <c:choose>
+            <c:when test="${empty flightOptions}">
+                <article class="service-card">
+                    <h3>No flight providers yet</h3>
+                    <p class="meta">Add flight transport rows to start showing live flight options.</p>
+                </article>
+            </c:when>
+            <c:otherwise>
+                <c:forEach var="flight" items="${flightOptions}">
+                    <article class="service-card">
+                        <h3>${flight.provider}</h3>
+                        <p class="meta">Type: ${flight.type}</p>
+                        <p class="meta">Seats per service: ${flight.seat_capacity}</p>
+                        <button class="btn btn-primary" type="button" data-toast="${flight.provider} options loaded.">Check Fares</button>
+                    </article>
+                </c:forEach>
+            </c:otherwise>
+        </c:choose>
     </div>
 </section>
 
@@ -137,21 +140,26 @@
         <button class="btn btn-soft" type="button" data-toast="Hotel recommendations refreshed.">Refresh Picks</button>
     </div>
     <div class="service-grid">
-        <article class="service-card">
-            <h3>Top-rated stays</h3>
-            <p class="meta">Only properties above 4.3 rating.</p>
-            <button class="btn btn-primary" type="button" data-scroll-target="packages">Browse Stays</button>
-        </article>
-        <article class="service-card">
-            <h3>Pay at hotel</h3>
-            <p class="meta">Reserve now, pay later with no hidden fees.</p>
-            <button class="btn btn-ghost" type="button" data-toast="Pay-at-hotel options ready.">View Options</button>
-        </article>
-        <article class="service-card">
-            <h3>Family rooms</h3>
-            <p class="meta">Extra space with add-on amenities.</p>
-            <button class="btn btn-ghost" type="button" data-toast="Family stays loaded.">See Rooms</button>
-        </article>
+        <c:choose>
+            <c:when test="${empty hotelOptions}">
+                <article class="service-card">
+                    <h3>No hotels available</h3>
+                    <p class="meta">Seed hotel data to show stays here.</p>
+                </article>
+            </c:when>
+            <c:otherwise>
+                <c:forEach var="hotel" items="${hotelOptions}" varStatus="st">
+                    <c:if test="${st.index lt 6}">
+                        <article class="service-card">
+                            <h3>${hotel.name}</h3>
+                            <p class="meta">${hotel.city}</p>
+                            <p class="meta">Rating: ${hotel.rating}</p>
+                            <button class="btn btn-ghost" type="button" data-toast="${hotel.name} details opened.">View Stay</button>
+                        </article>
+                    </c:if>
+                </c:forEach>
+            </c:otherwise>
+        </c:choose>
     </div>
 </section>
 
@@ -164,21 +172,24 @@
         <button class="btn btn-soft" type="button" data-toast="Rail pass options opened.">Rail Passes</button>
     </div>
     <div class="service-grid">
-        <article class="service-card">
-            <h3>Live seat status</h3>
-            <p class="meta">PNR insights with platform details.</p>
-            <button class="btn btn-primary" type="button" data-toast="Checking live seat status.">Check Status</button>
-        </article>
-        <article class="service-card">
-            <h3>Vande Bharat picks</h3>
-            <p class="meta">Premium routes with comfort seating.</p>
-            <button class="btn btn-ghost" type="button" data-toast="Premium train routes ready.">View Routes</button>
-        </article>
-        <article class="service-card">
-            <h3>Multi-city rail</h3>
-            <p class="meta">Plan long routes with easy stops.</p>
-            <button class="btn btn-ghost" type="button" data-toast="Multi-city rail planning opened.">Plan Route</button>
-        </article>
+        <c:choose>
+            <c:when test="${empty trainOptions}">
+                <article class="service-card">
+                    <h3>No train providers yet</h3>
+                    <p class="meta">Add train transport data to enable this section.</p>
+                </article>
+            </c:when>
+            <c:otherwise>
+                <c:forEach var="train" items="${trainOptions}">
+                    <article class="service-card">
+                        <h3>${train.provider}</h3>
+                        <p class="meta">Type: ${train.type}</p>
+                        <p class="meta">Seat capacity: ${train.seat_capacity}</p>
+                        <button class="btn btn-ghost" type="button" data-toast="${train.provider} routes loaded.">View Routes</button>
+                    </article>
+                </c:forEach>
+            </c:otherwise>
+        </c:choose>
     </div>
 </section>
 
@@ -191,21 +202,24 @@
         <button class="btn btn-soft" type="button" data-toast="Cab quotes are ready.">Get Quote</button>
     </div>
     <div class="service-grid">
-        <article class="service-card">
-            <h3>Airport pickups</h3>
-            <p class="meta">On-time drivers with live tracking.</p>
-            <button class="btn btn-primary" type="button" data-toast="Airport cab scheduled.">Book Pickup</button>
-        </article>
-        <article class="service-card">
-            <h3>Local hourly</h3>
-            <p class="meta">Flexible hourly rentals.</p>
-            <button class="btn btn-ghost" type="button" data-toast="Hourly cab options ready.">View Plans</button>
-        </article>
-        <article class="service-card">
-            <h3>Outstation</h3>
-            <p class="meta">One-way or round-trip pricing.</p>
-            <button class="btn btn-ghost" type="button" data-toast="Outstation pricing loaded.">See Fare</button>
-        </article>
+        <c:choose>
+            <c:when test="${empty cabOptions}">
+                <article class="service-card">
+                    <h3>No cab providers yet</h3>
+                    <p class="meta">Add cab transport rows to enable ride options.</p>
+                </article>
+            </c:when>
+            <c:otherwise>
+                <c:forEach var="cab" items="${cabOptions}">
+                    <article class="service-card">
+                        <h3>${cab.provider}</h3>
+                        <p class="meta">Type: ${cab.type}</p>
+                        <p class="meta">Seats: ${cab.seat_capacity}</p>
+                        <button class="btn btn-primary" type="button" data-toast="${cab.provider} cabs are available.">Book Pickup</button>
+                    </article>
+                </c:forEach>
+            </c:otherwise>
+        </c:choose>
     </div>
 </section>
 
@@ -218,21 +232,24 @@
         <button class="btn btn-soft" type="button" data-toast="Bus routes loaded.">View Routes</button>
     </div>
     <div class="service-grid">
-        <article class="service-card">
-            <h3>Overnight sleepers</h3>
-            <p class="meta">Comfort seats with charging and clean stops.</p>
-            <button class="btn btn-primary" type="button" data-toast="Sleeper buses available.">Find Sleepers</button>
-        </article>
-        <article class="service-card">
-            <h3>Weekend escapes</h3>
-            <p class="meta">Short routes for quick getaways.</p>
-            <button class="btn btn-ghost" type="button" data-toast="Weekend bus routes ready.">Browse Trips</button>
-        </article>
-        <article class="service-card">
-            <h3>Luxury coaches</h3>
-            <p class="meta">Premium road journeys with lounge seating.</p>
-            <button class="btn btn-ghost" type="button" data-toast="Luxury bus seats available.">View Coaches</button>
-        </article>
+        <c:choose>
+            <c:when test="${empty busOptions}">
+                <article class="service-card">
+                    <h3>No bus providers yet</h3>
+                    <p class="meta">Add bus or coach transport entries to show routes.</p>
+                </article>
+            </c:when>
+            <c:otherwise>
+                <c:forEach var="bus" items="${busOptions}">
+                    <article class="service-card">
+                        <h3>${bus.provider}</h3>
+                        <p class="meta">Type: ${bus.type}</p>
+                        <p class="meta">Seats: ${bus.seat_capacity}</p>
+                        <button class="btn btn-ghost" type="button" data-toast="${bus.provider} schedules loaded.">View Routes</button>
+                    </article>
+                </c:forEach>
+            </c:otherwise>
+        </c:choose>
     </div>
 </section>
 
@@ -245,11 +262,11 @@
     </div>
     <div class="package-grid">
         <c:choose>
-            <c:when test="${empty topPackages}">
+            <c:when test="${empty holidayPackages}">
                 <div class="panel">No packages have been added yet.</div>
             </c:when>
             <c:otherwise>
-                <c:forEach var="pkg" items="${topPackages}">
+                <c:forEach var="pkg" items="${holidayPackages}">
                     <article class="card">
                         <img src="${pkg.mainImage}" alt="${pkg.title}" />
                         <div class="card-body">

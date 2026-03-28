@@ -456,7 +456,7 @@
                         <input type="checkbox" name="remember">
                         <span>Remember me</span>
                     </label>
-                    <a href="#" class="form-link">Forgot password?</a>
+                    <a href="#" class="form-link" data-toast="Please contact support to reset your password.">Forgot password?</a>
                 </div>
 
                 <button type="submit" class="submit-btn">Sign In</button>
