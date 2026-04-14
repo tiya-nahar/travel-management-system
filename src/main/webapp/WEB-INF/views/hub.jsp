@@ -6,19 +6,11 @@
 <div class="page-head">
     <div>
         <h1>Travel Hub</h1>
-        <p>Directory of travelers, destinations, hotels, and transport partners.</p>
+        <p>Directory of destinations, hotels, and transport partners.</p>
     </div>
 </div>
 
 <div class="hub-grid">
-    <article class="hub-card">
-        <h3>Travelers</h3>
-        <ul>
-            <c:forEach var="u" items="${users}">
-                <li>${u.name} | ${u.role}</li>
-            </c:forEach>
-        </ul>
-    </article>
     <article class="hub-card">
         <h3>Destinations</h3>
         <ul>

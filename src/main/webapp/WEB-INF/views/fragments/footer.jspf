@@ -8,7 +8,6 @@
         <div>
             <h4>Explore</h4>
             <a href="${pageContext.request.contextPath}/packages">Holidays</a>
-            <a href="${pageContext.request.contextPath}/hub">Destinations</a>
             <a href="${pageContext.request.contextPath}/reviews">Traveler Stories</a>
         </div>
         <div>
@@ -19,7 +18,6 @@
         </div>
         <div>
             <h4>Company</h4>
-            <a href="${pageContext.request.contextPath}/hub">About</a>
             <a href="${pageContext.request.contextPath}/admin-login">Careers</a>
             <a href="${pageContext.request.contextPath}/packages">Partner With Us</a>
         </div>

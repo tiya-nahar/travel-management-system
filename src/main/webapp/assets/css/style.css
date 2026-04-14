@@ -1473,6 +1473,20 @@ a { color: inherit; }
   box-shadow: var(--shadow);
 }
 
+.search-card__hint {
+  margin-bottom: 12px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.search-mode {
+  display: none;
+}
+
+.search-mode.is-active {
+  display: block;
+}
+
 .search-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

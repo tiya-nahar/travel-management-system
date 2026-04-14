@@ -73,6 +73,8 @@
   const exploreBtn = document.getElementById('exploreDealsBtn');
   const saveShareBtn = document.getElementById('saveShareBtn');
   const tabButtons = Array.from(document.querySelectorAll('.tab-btn[data-mode]'));
+  const searchModes = Array.from(document.querySelectorAll('.search-mode[data-search-mode]'));
+  const searchHint = document.querySelector('[data-search-hint]');
   const sectionMap = {
     flights: 'flights',
     hotels: 'hotels',
@@ -87,12 +89,31 @@
       button.classList.toggle('active', button.dataset.mode === mode);
     });
 
+    searchModes.forEach(function (panel) {
+      panel.classList.toggle('is-active', panel.dataset.searchMode === mode);
+    });
+
     if (!searchBtn) {
       return;
     }
 
     searchBtn.dataset.mode = mode;
-    searchBtn.textContent = mode === 'packages' ? 'Search Holidays' : 'Search ' + mode.charAt(0).toUpperCase() + mode.slice(1);
+
+    if (searchHint) {
+      searchHint.textContent = mode === 'hotels'
+        ? 'Find stays by city, dates, guest count, and preferred stay type.'
+        : mode === 'packages'
+          ? 'Explore curated holidays and compare trip styles.'
+          : 'Search flights, stays, and transfers from one place.';
+    }
+
+    if (mode === 'hotels') {
+      searchBtn.textContent = 'Search Hotels';
+    } else if (mode === 'packages') {
+      searchBtn.textContent = 'Search Holidays';
+    } else {
+      searchBtn.textContent = 'Search ' + mode.charAt(0).toUpperCase() + mode.slice(1);
+    }
   }
 
   tabButtons.forEach(function (button) {
