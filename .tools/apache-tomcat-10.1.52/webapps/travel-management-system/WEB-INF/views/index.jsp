@@ -35,43 +35,213 @@
             <button class="tab-btn" type="button" data-mode="buses">Buses</button>
             <button class="tab-btn" type="button" data-mode="packages">Holidays</button>
         </div>
-        <form class="search-card">
-            <div class="search-grid">
-                <div class="input-wrap">
-                    <label for="fromCity">From</label>
-                    <input id="fromCity" type="text" placeholder="Delhi" />
-                </div>
-                <div class="input-wrap">
-                    <label for="toCity">To</label>
-                    <input id="toCity" type="text" placeholder="Goa" />
-                </div>
-                <div class="input-wrap">
-                    <label for="departDate">Depart</label>
-                    <input id="departDate" type="date" />
-                </div>
-                <div class="input-wrap">
-                    <label for="returnDate">Return</label>
-                    <input id="returnDate" type="date" />
-                </div>
-                <div class="input-wrap">
-                    <label for="travellers">Travellers</label>
-                    <select id="travellers">
-                        <option>1 Traveller</option>
-                        <option>2 Travellers</option>
-                        <option>3 Travellers</option>
-                        <option>4+ Travellers</option>
-                    </select>
-                </div>
-                <div class="input-wrap">
-                    <label for="budget">Budget</label>
-                    <select id="budget">
-                        <option>INR 10k - 25k</option>
-                        <option>INR 25k - 50k</option>
-                        <option>INR 50k - 1L</option>
-                        <option>INR 1L+</option>
-                    </select>
+        <form class="search-card" data-search-card>
+            <p class="search-card__hint" data-search-hint>Search flights, stays, and transfers from one place.</p>
+
+            <div class="search-mode is-active" data-search-mode="flights">
+                <div class="search-grid">
+                    <div class="input-wrap">
+                        <label for="fromCity">From</label>
+                        <input id="fromCity" type="text" placeholder="Delhi" />
+                    </div>
+                    <div class="input-wrap">
+                        <label for="toCity">To</label>
+                        <input id="toCity" type="text" placeholder="Goa" />
+                    </div>
+                    <div class="input-wrap">
+                        <label for="departDate">Depart</label>
+                        <input id="departDate" type="date" />
+                    </div>
+                    <div class="input-wrap">
+                        <label for="returnDate">Return</label>
+                        <input id="returnDate" type="date" />
+                    </div>
+                    <div class="input-wrap">
+                        <label for="travellers">Travellers</label>
+                        <select id="travellers">
+                            <option>1 Traveller</option>
+                            <option>2 Travellers</option>
+                            <option>3 Travellers</option>
+                            <option>4+ Travellers</option>
+                        </select>
+                    </div>
+                    <div class="input-wrap">
+                        <label for="budget">Budget</label>
+                        <select id="budget">
+                            <option>INR 10k - 25k</option>
+                            <option>INR 25k - 50k</option>
+                            <option>INR 50k - 1L</option>
+                            <option>INR 1L+</option>
+                        </select>
+                    </div>
                 </div>
             </div>
+
+            <div class="search-mode" data-search-mode="hotels">
+                <div class="search-grid">
+                    <div class="input-wrap full">
+                        <label for="hotelDestination">City or hotel</label>
+                        <input id="hotelDestination" type="text" placeholder="Goa, Jaipur, Manali, or a hotel name" />
+                    </div>
+                    <div class="input-wrap">
+                        <label for="checkInDate">Check-in</label>
+                        <input id="checkInDate" type="date" />
+                    </div>
+                    <div class="input-wrap">
+                        <label for="checkOutDate">Check-out</label>
+                        <input id="checkOutDate" type="date" />
+                    </div>
+                    <div class="input-wrap">
+                        <label for="rooms">Rooms</label>
+                        <select id="rooms">
+                            <option>1 Room</option>
+                            <option>2 Rooms</option>
+                            <option>3 Rooms</option>
+                            <option>4+ Rooms</option>
+                        </select>
+                    </div>
+                    <div class="input-wrap">
+                        <label for="guests">Guests</label>
+                        <select id="guests">
+                            <option>1 Guest</option>
+                            <option>2 Guests</option>
+                            <option>3 Guests</option>
+                            <option>4+ Guests</option>
+                        </select>
+                    </div>
+                    <div class="input-wrap full">
+                        <label for="stayType">Stay type</label>
+                        <select id="stayType">
+                            <option>Any stay</option>
+                            <option>Hotel</option>
+                            <option>Resort</option>
+                            <option>Homestay</option>
+                            <option>Apartment</option>
+                        </select>
+                    </div>
+                    <div class="input-wrap full">
+                        <label for="hotelBudget">Budget</label>
+                        <select id="hotelBudget">
+                            <option>INR 10k - 25k</option>
+                            <option>INR 25k - 50k</option>
+                            <option>INR 50k - 1L</option>
+                            <option>INR 1L+</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="search-mode" data-search-mode="trains">
+                <div class="search-grid">
+                    <div class="input-wrap">
+                        <label for="trainFrom">From</label>
+                        <input id="trainFrom" type="text" placeholder="Delhi" />
+                    </div>
+                    <div class="input-wrap">
+                        <label for="trainTo">To</label>
+                        <input id="trainTo" type="text" placeholder="Jaipur" />
+                    </div>
+                    <div class="input-wrap">
+                        <label for="trainDate">Journey date</label>
+                        <input id="trainDate" type="date" />
+                    </div>
+                    <div class="input-wrap">
+                        <label for="trainClass">Class</label>
+                        <select id="trainClass">
+                            <option>Any class</option>
+                            <option>Sleeper</option>
+                            <option>AC 3 Tier</option>
+                            <option>AC 2 Tier</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="search-mode" data-search-mode="cabs">
+                <div class="search-grid">
+                    <div class="input-wrap">
+                        <label for="pickupCity">Pickup</label>
+                        <input id="pickupCity" type="text" placeholder="Airport, station, or hotel" />
+                    </div>
+                    <div class="input-wrap">
+                        <label for="dropCity">Drop</label>
+                        <input id="dropCity" type="text" placeholder="Your destination" />
+                    </div>
+                    <div class="input-wrap">
+                        <label for="pickupTime">Pickup time</label>
+                        <input id="pickupTime" type="time" />
+                    </div>
+                    <div class="input-wrap">
+                        <label for="cabType">Cab type</label>
+                        <select id="cabType">
+                            <option>Any cab</option>
+                            <option>Hatchback</option>
+                            <option>Sedan</option>
+                            <option>SUV</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="search-mode" data-search-mode="buses">
+                <div class="search-grid">
+                    <div class="input-wrap">
+                        <label for="busFrom">From</label>
+                        <input id="busFrom" type="text" placeholder="Delhi" />
+                    </div>
+                    <div class="input-wrap">
+                        <label for="busTo">To</label>
+                        <input id="busTo" type="text" placeholder="Manali" />
+                    </div>
+                    <div class="input-wrap">
+                        <label for="busDate">Journey date</label>
+                        <input id="busDate" type="date" />
+                    </div>
+                    <div class="input-wrap">
+                        <label for="busType">Bus type</label>
+                        <select id="busType">
+                            <option>Any bus</option>
+                            <option>Sleeper</option>
+                            <option>Seater</option>
+                            <option>Volvo</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="search-mode" data-search-mode="packages">
+                <div class="search-grid">
+                    <div class="input-wrap full">
+                        <label for="packageCity">Destination</label>
+                        <input id="packageCity" type="text" placeholder="Beach, hill station, or city break" />
+                    </div>
+                    <div class="input-wrap">
+                        <label for="packageDays">Days</label>
+                        <select id="packageDays">
+                            <option>3-4 days</option>
+                            <option>5-6 days</option>
+                            <option>7-8 days</option>
+                        </select>
+                    </div>
+                    <div class="input-wrap">
+                        <label for="packageTravellers">Travellers</label>
+                        <select id="packageTravellers">
+                            <option>1-2</option>
+                            <option>3-4</option>
+                            <option>5+</option>
+                        </select>
+                    </div>
+                    <div class="input-wrap full">
+                        <label for="packageStyle">Trip style</label>
+                        <select id="packageStyle">
+                            <option>Relaxed</option>
+                            <option>Balanced</option>
+                            <option>Adventure</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
             <div class="search-actions">
                 <button id="searchTripsBtn" class="btn btn-primary" type="button" data-mode="flights">Search Flights</button>
                 <button id="exploreDealsBtn" class="btn btn-soft" type="button">Explore Deals</button>

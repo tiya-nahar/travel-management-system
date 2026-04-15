@@ -944,10 +944,6 @@ a { color: inherit; }
   padding: 0 4px;
 }
 
-.auth-field:focus-within {
-  /* focus state handled by input:focus */
-}
-
 .auth-actions {
   display: flex;
   justify-content: space-between;
@@ -1688,6 +1684,11 @@ select {
   border-radius: 12px;
   padding: 10px 14px;
   font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  line-height: 1.1;
   cursor: pointer;
 }
 
@@ -1696,6 +1697,71 @@ select {
 .btn-soft { background: #f6efe6; color: var(--brand); }
 
 .btn-ghost { background: transparent; color: var(--brand); border: 1px solid rgba(14, 74, 84, 0.3); }
+
+.btn-danger { background: #d94b41; color: #fff; }
+
+.btn-xs {
+  padding: 6px 10px;
+  font-size: 0.82rem;
+  border-radius: 10px;
+}
+
+.admin-row-actions {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.inline-form { display: inline-flex; }
+
+.admin-row-actions .inline-form {
+  margin: 0;
+}
+
+.admin-row-actions .btn {
+  white-space: nowrap;
+}
+
+.status-select {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 6px 8px;
+  font-size: 0.82rem;
+  background: #fff;
+}
+
+#payments .inline-form {
+  gap: 6px;
+  align-items: center;
+}
+
+#payments .inline-form .status-select {
+  width: 110px;
+}
+
+.admin-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.admin-form-grid .full { grid-column: 1 / -1; }
+
+.admin-form-grid textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.admin-form-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
 
 .package-grid {
   display: grid;
@@ -1816,6 +1882,11 @@ th { background: #f7efe6; }
 .badge.paid { background: #daf9e7; color: #0d5f35; }
 
 .badge.pending { background: #fff2cb; color: #946200; }
+
+.badge.refunded,
+.badge.completed { background: #e2e7ff; color: #233f9f; }
+
+.badge.notrequested { background: #f2f2f2; color: #555; }
 
 .badge.cancelled,
 .badge.failed { background: #ffdfe0; color: #972127; }

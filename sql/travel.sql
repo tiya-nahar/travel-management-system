@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS users (
     password VARCHAR(100),
     phone VARCHAR(15),
     role VARCHAR(20),
+    is_active TINYINT(1) NOT NULL DEFAULT 1,
     profile_image VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -45,6 +46,10 @@ CREATE TABLE IF NOT EXISTS packages (
     duration_days INT,
     max_people INT,
     main_image VARCHAR(255),
+    category VARCHAR(30) NOT NULL DEFAULT 'family',
+    available_slots INT NOT NULL DEFAULT 0,
+    discount_percent DECIMAL(5,2) NOT NULL DEFAULT 0,
+    is_available TINYINT(1) NOT NULL DEFAULT 1,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (destination_id) REFERENCES destinations(destination_id)
 );
@@ -71,6 +76,11 @@ CREATE TABLE IF NOT EXISTS payments (
     payment_method VARCHAR(50),
     payment_status VARCHAR(50),
     payment_date TIMESTAMP,
+    gateway_transaction_id VARCHAR(80),
+    refund_status VARCHAR(30) DEFAULT 'NotRequested',
+    refund_amount DECIMAL(10,2),
+    refund_reason VARCHAR(255),
+    refunded_at TIMESTAMP NULL,
     FOREIGN KEY (booking_id) REFERENCES bookings(booking_id)
 );
 

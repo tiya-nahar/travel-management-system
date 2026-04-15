@@ -27,7 +27,6 @@
         <a href="${pageContext.request.contextPath}/bookings" class="${activePage eq 'bookings' ? 'active' : ''}">My Trips</a>
         <a href="${pageContext.request.contextPath}/payments" class="${activePage eq 'payments' ? 'active' : ''}">Payments</a>
         <a href="${pageContext.request.contextPath}/reviews" class="${activePage eq 'reviews' ? 'active' : ''}">Reviews</a>
-        <a href="${pageContext.request.contextPath}/hub" class="${activePage eq 'hub' ? 'active' : ''}">Travel Hub</a>
     </nav>
     <div class="top-actions">
         <c:choose>

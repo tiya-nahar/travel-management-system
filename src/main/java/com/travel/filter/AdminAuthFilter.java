@@ -6,7 +6,6 @@ import java.nio.charset.StandardCharsets;
 
 import com.travel.servlet.AdminLoginServlet;
 
-import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebFilter;
@@ -16,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @WebFilter("/admin.html")
-public class AdminAuthFilter extends HttpFilter implements Filter {
+public class AdminAuthFilter extends HttpFilter {
 
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse resp, FilterChain chain)
